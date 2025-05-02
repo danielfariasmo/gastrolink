@@ -57,6 +57,20 @@ $camarero = "CREATE TABLE IF NOT EXISTS camarero (
 mysqli_query($connection, $camarero) or die('ERROR: No se puede crear la tabla camarero: ' . mysqli_error($connection));
 
 /*---------------------------------------------------------------
+EVENTO
+---------------------------------------------------------------*/
+$evento = "CREATE TABLE IF NOT EXISTS evento (
+    id_evento INT AUTO_INCREMENT PRIMARY KEY,
+    id_restaurante INT NOT NULL,
+    nombre_evento VARCHAR(100),
+    fecha_inicio DATE,
+    fecha_fin DATE,
+    descripcion TEXT,
+    FOREIGN KEY (id_restaurante) REFERENCES restaurante(id_restaurante)
+);";
+mysqli_query($connection, $evento) or die('ERROR: No se puede crear la tabla evento: ' . mysqli_error($connection));
+
+/*---------------------------------------------------------------
 OFERTA
 ---------------------------------------------------------------*/
 $oferta = "CREATE TABLE IF NOT EXISTS oferta (
@@ -72,6 +86,21 @@ $oferta = "CREATE TABLE IF NOT EXISTS oferta (
     FOREIGN KEY (id_evento) REFERENCES evento(id_evento)
 );";
 mysqli_query($connection, $oferta) or die('ERROR: No se puede crear la tabla oferta: ' . mysqli_error($connection));
+
+/*---------------------------------------------------------------
+RECETA
+---------------------------------------------------------------*/
+$receta = "CREATE TABLE IF NOT EXISTS receta (
+    id_receta INT AUTO_INCREMENT PRIMARY KEY,
+    id_cocinero INT NOT NULL,
+    titulo VARCHAR(100),
+    introduccion TEXT,
+    ingredientes TEXT,
+    pasos TEXT,
+    fecha_publicacion DATE,
+    FOREIGN KEY (id_cocinero) REFERENCES cocinero(id_cocinero)
+);";
+mysqli_query($connection, $receta) or die('ERROR: No se puede crear la tabla receta: ' . mysqli_error($connection));
 
 /*---------------------------------------------------------------
 CANDIDATURA
@@ -100,35 +129,6 @@ $cv = "CREATE TABLE IF NOT EXISTS cv_enviado (
     FOREIGN KEY (id_restaurante) REFERENCES restaurante(id_restaurante)
 );";
 mysqli_query($connection, $cv) or die('ERROR: No se puede crear la tabla cv_enviado: ' . mysqli_error($connection));
-
-/*---------------------------------------------------------------
-EVENTO
----------------------------------------------------------------*/
-$evento = "CREATE TABLE IF NOT EXISTS evento (
-    id_evento INT AUTO_INCREMENT PRIMARY KEY,
-    id_restaurante INT NOT NULL,
-    nombre_evento VARCHAR(100),
-    fecha_inicio DATE,
-    fecha_fin DATE,
-    descripcion TEXT,
-    FOREIGN KEY (id_restaurante) REFERENCES restaurante(id_restaurante)
-);";
-
-/*---------------------------------------------------------------
-RECETA
----------------------------------------------------------------*/
-mysqli_query($connection, $evento) or die('ERROR: No se puede crear la tabla evento: ' . mysqli_error($connection));
-$receta = "CREATE TABLE IF NOT EXISTS receta (
-    id_receta INT AUTO_INCREMENT PRIMARY KEY,
-    id_cocinero INT NOT NULL,
-    titulo VARCHAR(100),
-    introduccion TEXT,
-    ingredientes TEXT,
-    pasos TEXT,
-    fecha_publicacion DATE,
-    FOREIGN KEY (id_cocinero) REFERENCES cocinero(id_cocinero)
-);";
-mysqli_query($connection, $receta) or die('ERROR: No se puede crear la tabla receta: ' . mysqli_error($connection));
 
 /*---------------------------------------------------------------
 FAVORITO
