@@ -2,7 +2,7 @@
 /*---------------------------------------------------------------
 Función para generar el hash de la contraseña
 ---------------------------------------------------------------*/
-function hashPassword($password) {
+function hashPassword($password):string {
     return password_hash($password, PASSWORD_DEFAULT);
 }
 
@@ -13,7 +13,7 @@ $usuario = "CREATE TABLE IF NOT EXISTS usuario (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     correo VARCHAR(100) NOT NULL UNIQUE,
-    contraseña VARCHAR(255) NOT NULL,
+    clave VARCHAR(255) NOT NULL,
     img_usuario VARCHAR(255),
     tipo_usuario ENUM('restaurante', 'cocinero', 'camarero') NOT NULL
 );";
