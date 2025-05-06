@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FAVICON-->
+    <link rel="icon" type="image/png" href="../../img/logo.png  " sizes="16x16">
+    <link rel="stylesheet" href="../css/restaurantes.css">
+    <title>Restaurantes</title>
+</head>
+<body>
+    <!-- Aquí se cargará el menú -->
+    <div id="menu-container"></div>
+    
+    <main>
+        <!-- Banner -->
+        <div class="banner">
+            <img src="../../img/bannerrestaurante.webp" alt="Icono de imagen">
+        </div>
+
+        <!-- Filtros -->
+        <div class="container">
+            <div class="filters">
+                <button class="filter-btn active">Todos</button>
+                <button class="filter-btn">Mediterráneo</button>
+                <button class="filter-btn">Italiano</button>
+                <button class="filter-btn">Asiático</button>
+                <button class="filter-btn">Vegetariano</button>
+                <button class="filter-btn">Tapas</button>
+            </div>
+        </div>
+
+        <!-- Sección de Restaurantes -->
+        <section class="restaurants-section">
+            <div class="container">
+                <div class="restaurants-grid">
+                    <!-- Restaurante 1 -->
+                    <a href="detalle-restaurante.php?id=1" class="restaurant-card">
+                        <div class="restaurant-image">
+                            <img src="../../img/restaurante1.jpeg" alt="Restaurante El Mediterráneo">
+                        </div>
+                        <div class="restaurant-details">
+                            <h3 class="restaurant-name">El Mediterráneo</h3>
+                            <p class="restaurant-type">Cocina mediterránea, Madrid</p>
+                            <div class="restaurant-meta">
+                                <div class="restaurant-rating">
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                </div>
+                                <div class="restaurant-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Restaurante 2 -->
+                    <a href="detalle-restaurante.php?id=2" class="restaurant-card">
+                        <div class="restaurant-image">
+                            <img src="../../img/restaurante2.jpg" alt="Restaurante La Trattoria">
+                        </div>
+                        <div class="restaurant-details">
+                            <h3 class="restaurant-name">La Trattoria</h3>
+                            <p class="restaurant-type">Cocina italiana, Barcelona</p>
+                            <div class="restaurant-meta">
+                                <div class="restaurant-rating">
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star">☆</span>
+                                </div>
+                                <div class="restaurant-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Restaurante 3 -->
+                    <a href="detalle-restaurante.php?id=3" class="restaurant-card">
+                        <div class="restaurant-image">
+                            <img src="../../img/restaurante3.jpg" alt="Restaurante Sakura">
+                        </div>
+                        <div class="restaurant-details">
+                            <h3 class="restaurant-name">Sakura</h3>
+                            <p class="restaurant-type">Cocina japonesa, Valencia</p>
+                            <div class="restaurant-meta">
+                                <div class="restaurant-rating">
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star">☆</span>
+                                </div>
+                                <div class="restaurant-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Restaurante 4 -->
+                    <a href="detalle-restaurante.php?id=4" class="restaurant-card">
+                        <div class="restaurant-image">
+                            <img src="../../img/restaurante4.jpg" alt="Restaurante El Asador">
+                        </div>
+                        <div class="restaurant-details">
+                            <h3 class="restaurant-name">El Asador</h3>
+                            <p class="restaurant-type">Carnes a la brasa, Sevilla</p>
+                            <div class="restaurant-meta">
+                                <div class="restaurant-rating">
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                </div>
+                                <div class="restaurant-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Restaurante 5 -->
+                    <a href="detalle-restaurante.php?id=5" class="restaurant-card">
+                        <div class="restaurant-image">
+                            <img src="../../img/restaurante5.jpg" alt="Restaurante Green Life">
+                        </div>
+                        <div class="restaurant-details">
+                            <h3 class="restaurant-name">Green Life</h3>
+                            <p class="restaurant-type">Vegetariano, Bilbao</p>
+                            <div class="restaurant-meta">
+                                <div class="restaurant-rating">
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star">☆</span>
+                                </div>
+                                <div class="restaurant-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Restaurante 6 -->
+                    <a href="detalle-restaurante.php?id=6" class="restaurant-card">
+                        <div class="restaurant-image">
+                            <img src="../../img/restaurante6.jpg" alt="Restaurante La Taberna">
+                        </div>
+                        <div class="restaurant-details">
+                            <h3 class="restaurant-name">La Taberna</h3>
+                            <p class="restaurant-type">Tapas, Granada</p>
+                            <div class="restaurant-meta">
+                                <div class="restaurant-rating">
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star">☆</span>
+                                </div>
+                                <div class="restaurant-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Restaurante 7 -->
+                    <a href="detalle-restaurante.php?id=7" class="restaurant-card">
+                        <div class="restaurant-image">
+                            <img src="../../img/restaurante7.jpg" alt="Restaurante El Cantábrico">
+                        </div>
+                        <div class="restaurant-details">
+                            <h3 class="restaurant-name">El Cantábrico</h3>
+                            <p class="restaurant-type">Mariscos, Santander</p>
+                            <div class="restaurant-meta">
+                                <div class="restaurant-rating">
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                </div>
+                                <div class="restaurant-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Restaurante 8 -->
+                    <a href="detalle-restaurante.php?id=8" class="restaurant-card">
+                        <div class="restaurant-image">
+                            <img src="../../img/restaurante8.jpg" alt="Restaurante Spice Route">
+                        </div>
+                        <div class="restaurant-details">
+                            <h3 class="restaurant-name">Spice Route</h3>
+                            <p class="restaurant-type">Cocina india, Málaga</p>
+                            <div class="restaurant-meta">
+                                <div class="restaurant-rating">
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star">☆</span>
+                                </div>
+                                <div class="restaurant-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Restaurante 9 -->
+                    <a href="detalle-restaurante.php?id=9" class="restaurant-card">
+                        <div class="restaurant-image">
+                            <img src="https://via.placeholder.com/300x200" alt="Restaurante La Bodega">
+                        </div>
+                        <div class="restaurant-details">
+                            <h3 class="restaurant-name">La Bodega</h3>
+                            <p class="restaurant-type">Cocina tradicional, Zaragoza</p>
+                            <div class="restaurant-meta">
+                                <div class="restaurant-rating">
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star">☆</span>
+                                </div>
+                                <div class="restaurant-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Restaurante 10 -->
+                    <a href="detalle-restaurante.php?id=10" class="restaurant-card">
+                        <div class="restaurant-image">
+                            <img src="https://via.placeholder.com/300x200" alt="Restaurante El Mexicano">
+                        </div>
+                        <div class="restaurant-details">
+                            <h3 class="restaurant-name">El Mexicano</h3>
+                            <p class="restaurant-type">Cocina mexicana, Alicante</p>
+                            <div class="restaurant-meta">
+                                <div class="restaurant-rating">
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star">☆</span>
+                                </div>
+                                <div class="restaurant-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Restaurante 11 -->
+                    <a href="detalle-restaurante.php?id=11" class="restaurant-card">
+                        <div class="restaurant-image">
+                            <img src="https://via.placeholder.com/300x200" alt="Restaurante La Parrilla">
+                        </div>
+                        <div class="restaurant-details">
+                            <h3 class="restaurant-name">La Parrilla</h3>
+                            <p class="restaurant-type">Parrillada argentina, Murcia</p>
+                            <div class="restaurant-meta">
+                                <div class="restaurant-rating">
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star">☆</span>
+                                </div>
+                                <div class="restaurant-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Restaurante 12 -->
+                    <a href="detalle-restaurante.php?id=12" class="restaurant-card">
+                        <div class="restaurant-image">
+                            <img src="https://via.placeholder.com/300x200" alt="Restaurante El Rincón Gallego">
+                        </div>
+                        <div class="restaurant-details">
+                            <h3 class="restaurant-name">El Rincón Gallego</h3>
+                            <p class="restaurant-type">Cocina gallega, A Coruña</p>
+                            <div class="restaurant-meta">
+                                <div class="restaurant-rating">
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                    <span class="star filled">★</span>
+                                </div>
+                                <div class="restaurant-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Paginación -->
+                <div class="pagination">
+                    <a href="#" class="arrow">←</a>
+                    <a href="#" class="active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#" class="arrow">→</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Aquí se cargará el footer -->
+    <div id="footer-container"></div>
+    <!-- Script para cargar los componentes PHP -->
+    <script src="../js/cargamenuyfooter.js"></script>
+    <!-- Script de paginacion de restaurante -->
+    <script src="../js/restaurantes.js"></script>
+</body>
+</html>

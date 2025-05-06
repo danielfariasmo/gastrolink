@@ -52,7 +52,7 @@
 
     .footer-main {
         padding: 40px 0;
-    }
+    }   
 
     .footer-sections {
         display: flex;

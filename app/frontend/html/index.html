@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GrupoLink</title>
     <link rel="stylesheet" href="../css/index.css">
+    <!-- FAVICON-->
+    <link rel="icon" type="image/png" href="../../img/logo.png  " sizes="16x16">
+    <!-- Carga estrellas -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <!-- Aquí se cargará el menú -->
@@ -22,7 +25,7 @@
                     <button class="btn primary">Comenzar ahora</button>
                 </div>
                 <div class="hero-image">
-                    <img src="public/images/chef-cooking.png" alt="GrupoLink Hero">
+                    <img src="../../img/ejemplo.jfif" alt="GrupoLink Hero">
                 </div>
             </div>
         </section>
@@ -31,7 +34,7 @@
         <section class="connections">
             <div class="container">
                 <div class="connections-image">
-                    <img src="public/images/restaurant-interior.png" alt="Conexiones">
+                    <img src="../../img/ejemplo.jfif" alt="Conexiones">
                 </div>
                 <div class="connections-content">
                     <h2>GrupoLink</h2>
@@ -205,25 +208,7 @@
 
     <!-- Aquí se cargará el footer -->
     <div id="footer-container"></div>
-
     <!-- Script para cargar los componentes PHP -->
-    <script>
-        // Función para cargar componentes PHP
-        async function loadComponent(url, containerId) {
-            try {
-                const response = await fetch(url);
-                const html = await response.text();
-                document.getElementById(containerId).innerHTML = html;
-            } catch (error) {
-                console.error(`Error cargando ${url}:`, error);
-            }
-        }
-
-        // Cargar componentes cuando el DOM esté listo
-        document.addEventListener('DOMContentLoaded', function() {
-            loadComponent('../../backend/components/menu.php', 'menu-container');
-            loadComponent('../../backend/components/footer.php', 'footer-container');
-        });
-    </script>
+    <script src="../js/cargamenuyfooter.js"></script>
 </body>
 </html>

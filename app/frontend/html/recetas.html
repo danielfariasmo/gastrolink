@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/recetas.css">
+    <!-- FAVICON-->
+    <link rel="icon" type="image/png" href="../../img/logo.png  " sizes="16x16">
+    <title>Recetas Gastronómicas</title>
+  
+</head>
+<body>
+     <!-- Aquí se cargará el menú -->
+     <div id="menu-container"></div>
+    
+    <main>
+        <!-- Banner -->
+        <div class="banner">
+            <img src="../../img/recetas.jfif" alt="Icono de imagen">
+        </div>
+
+        <!-- Filtros -->
+        <div class="container">
+            <div class="filters">
+                <button class="filter-btn active">Todos</button>
+                <button class="filter-btn">Entrantes</button>
+                <button class="filter-btn">Platos principales</button>
+                <button class="filter-btn">Postres</button>
+                <button class="filter-btn">Vegetarianos</button>
+                <button class="filter-btn">Sin gluten</button>
+            </div>
+        </div>
+
+        <!-- Sección de Recetas -->
+        <section class="recipes-section">
+            <div class="container">
+                <div class="recipes-grid">
+                    <!-- Receta 1 -->
+                    <a href="detalle-receta.php?id=1" class="recipe-card">
+                        <div class="recipe-image">
+                            <img src="../../img/paella.jpg" alt="Paella valenciana">
+                        </div>
+                        <div class="recipe-details">
+                            <h3 class="recipe-title">Paella Valenciana</h3>
+                            <p class="recipe-description">Auténtica paella valenciana con pollo, conejo y verduras de temporada</p>
+                            <div class="recipe-meta">
+                                <div class="recipe-rating">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">☆</span>
+                                </div>
+                                <div class="recipe-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Receta 2 -->
+                    <a href="detalle-receta.php?id=2" class="recipe-card">
+                        <div class="recipe-image">
+                            <img src="../../img/gazpacho.webp" alt="Gazpacho andaluz">
+                        </div>
+                        <div class="recipe-details">
+                            <h3 class="recipe-title">Gazpacho Andaluz</h3>
+                            <p class="recipe-description">Refrescante sopa fría de tomate y pepino, perfecta para los días calurosos</p>
+                            <div class="recipe-meta">
+                                <div class="recipe-rating">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                </div>
+                                <div class="recipe-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Receta 3 -->
+                    <a href="detalle-receta.php?id=3" class="recipe-card">
+                        <div class="recipe-image">
+                            <img src="../../img/tortilla.webp" alt="Tortilla española">
+                        </div>
+                        <div class="recipe-details">
+                            <h3 class="recipe-title">Tortilla Española</h3>
+                            <p class="recipe-description">Clásica tortilla de patatas con cebolla caramelizada y huevos camperos</p>
+                            <div class="recipe-meta">
+                                <div class="recipe-rating">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">☆</span>
+                                </div>
+                                <div class="recipe-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Receta 4 -->
+                    <a href="detalle-receta.php?id=4" class="recipe-card">
+                        <div class="recipe-image">
+                            <img src="../../img/crema.webp" alt="Crema catalana">
+                        </div>
+                        <div class="recipe-details">
+                            <h3 class="recipe-title">Crema Catalana</h3>
+                            <p class="recipe-description">Postre tradicional catalán con una deliciosa capa de azúcar caramelizado</p>
+                            <div class="recipe-meta">
+                                <div class="recipe-rating">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                </div>
+                                <div class="recipe-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Receta 5 -->
+                    <a href="detalle-receta.php?id=5" class="recipe-card">
+                        <div class="recipe-image">
+                            <img src="../../img/pulpo.webp" alt="Pulpo a la gallega">
+                        </div>
+                        <div class="recipe-details">
+                            <h3 class="recipe-title">Pulpo a la Gallega</h3>
+                            <p class="recipe-description">Pulpo cocido con patatas, pimentón y aceite de oliva virgen extra</p>
+                            <div class="recipe-meta">
+                                <div class="recipe-rating">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">☆</span>
+                                </div>
+                                <div class="recipe-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Receta 6 -->
+                    <a href="detalle-receta.php?id=6" class="recipe-card">
+                        <div class="recipe-image">
+                            <img src="../../img/fabada.jfif" alt="Fabada asturiana">
+                        </div>
+                        <div class="recipe-details">
+                            <h3 class="recipe-title">Fabada Asturiana</h3>
+                            <p class="recipe-description">Guiso tradicional asturiano con fabes, chorizo, morcilla y tocino</p>
+                            <div class="recipe-meta">
+                                <div class="recipe-rating">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">☆</span>
+                                </div>
+                                <div class="recipe-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Receta 7 -->
+                    <a href="detalle-receta.php?id=7" class="recipe-card">
+                        <div class="recipe-image">
+                            <img src="https://via.placeholder.com/300x200" alt="Salmorejo cordobés">
+                        </div>
+                        <div class="recipe-details">
+                            <h3 class="recipe-title">Salmorejo Cordobés</h3>
+                            <p class="recipe-description">Crema fría de tomate con jamón y huevo duro, típica de Córdoba</p>
+                            <div class="recipe-meta">
+                                <div class="recipe-rating">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                </div>
+                                <div class="recipe-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Receta 8 -->
+                    <a href="detalle-receta.php?id=8" class="recipe-card">
+                        <div class="recipe-image">
+                            <img src="https://via.placeholder.com/300x200" alt="Arroz negro">
+                        </div>
+                        <div class="recipe-details">
+                            <h3 class="recipe-title">Arroz Negro</h3>
+                            <p class="recipe-description">Arroz con tinta de calamar, mariscos y alioli, típico de la costa mediterránea</p>
+                            <div class="recipe-meta">
+                                <div class="recipe-rating">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">☆</span>
+                                </div>
+                                <div class="recipe-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Receta 9 -->
+                    <a href="detalle-receta.php?id=9" class="recipe-card">
+                        <div class="recipe-image">
+                            <img src="https://via.placeholder.com/300x200" alt="Croquetas de jamón">
+                        </div>
+                        <div class="recipe-details">
+                            <h3 class="recipe-title">Croquetas de Jamón</h3>
+                            <p class="recipe-description">Cremosas croquetas caseras con jamón ibérico y bechamel</p>
+                            <div class="recipe-meta">
+                                <div class="recipe-rating">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                </div>
+                                <div class="recipe-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Receta 10 -->
+                    <a href="detalle-receta.php?id=10" class="recipe-card">
+                        <div class="recipe-image">
+                            <img src="https://via.placeholder.com/300x200" alt="Churros con chocolate">
+                        </div>
+                        <div class="recipe-details">
+                            <h3 class="recipe-title">Churros con Chocolate</h3>
+                            <p class="recipe-description">Deliciosos churros crujientes con chocolate caliente para mojar</p>
+                            <div class="recipe-meta">
+                                <div class="recipe-rating">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                </div>
+                                <div class="recipe-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Receta 11 -->
+                    <a href="detalle-receta.php?id=11" class="recipe-card">
+                        <div class="recipe-image">
+                            <img src="https://via.placeholder.com/300x200" alt="Pisto manchego">
+                        </div>
+                        <div class="recipe-details">
+                            <h3 class="recipe-title">Pisto Manchego</h3>
+                            <p class="recipe-description">Guiso de verduras típico de La Mancha, perfecto como guarnición o plato principal</p>
+                            <div class="recipe-meta">
+                                <div class="recipe-rating">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">☆</span>
+                                </div>
+                                <div class="recipe-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Receta 12 -->
+                    <a href="detalle-receta.php?id=12" class="recipe-card">
+                        <div class="recipe-image">
+                            <img src="https://via.placeholder.com/300x200" alt="Flan de huevo">
+                        </div>
+                        <div class="recipe-details">
+                            <h3 class="recipe-title">Flan de Huevo</h3>
+                            <p class="recipe-description">Postre tradicional español con caramelo líquido y textura cremosa</p>
+                            <div class="recipe-meta">
+                                <div class="recipe-rating">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                </div>
+                                <div class="recipe-save" onclick="toggleSave(this, event)">♥</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Paginación -->
+                <div class="pagination">
+                    <a href="#" class="arrow">←</a>
+                    <a href="#" class="active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#" class="arrow">→</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Aquí se cargará el footer -->
+    <div id="footer-container"></div>
+    <!-- Script para cargar los componentes PHP -->
+    <script src="../js/cargamenuyfooter.js"></script>
+    <!-- Script de paginacion de recetas -->
+    <script src="../js/recetas.js"></script>
+    
+</body>
+</html>

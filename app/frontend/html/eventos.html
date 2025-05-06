@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/eventos.css">
+    <!-- FAVICON-->
+    <link rel="icon" type="image/png" href="../../img/logo.png  " sizes="16x16">
+    <title>Eventos Gastronómicos</title>
+</head>
+<body>
+    <div id="menu-container"></div>
+    
+    <main>
+        <!-- Sección Hero -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Eventos y Cursos Gastronómicos</h1>
+                    <p>Descubre los mejores eventos, talleres, conferencias y cursos organizados por los mejores chefs y expertos en gastronomía.</p>
+                    <a href="#eventos-destacados" class="btn">Descubre más</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Eventos Destacados -->
+    </section>
+
+    <!-- Sección de Eventos Destacados -->
+    <section id="eventos-destacados" class="events-section">
+        <div class="container">
+            <h2 class="section-title">Eventos destacados</h2>
+            <div class="events-grid">
+                <!-- Evento 1 -->
+                <a href="detalle-evento.php?id=1" class="event-card">
+                    <div class="event-image">
+                        <img src="../../img/tallercocina1.jpg" alt="Taller de cocina mediterránea">
+                    </div>
+                    <div class="event-details">
+                        <div class="event-date">15 de Mayo, 2025</div>
+                        <h3 class="event-title">Taller de Cocina Mediterránea</h3>
+                        <p class="event-description">Aprende a preparar los platos más emblemáticos de la dieta mediterránea con ingredientes frescos y de temporada.</p>
+                        <div class="event-location">
+                            <i>📍</i> Centro Gastronómico Madrid
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Evento 2 -->
+                <a href="detalle-evento.php?id=2" class="event-card">
+                    <div class="event-image">
+                        <img src="../../img/reposteria.jpg" alt="Masterclass de repostería">
+                    </div>
+                    <div class="event-details">
+                        <div class="event-date">22 de Mayo, 2025</div>
+                        <h3 class="event-title">Masterclass de Repostería Creativa</h3>
+                        <p class="event-description">Descubre técnicas avanzadas de repostería y decoración de la mano de pasteleros profesionales.</p>
+                        <div class="event-location">
+                            <i>📍</i> Escuela de Cocina de mi Casa
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Evento 3 -->
+                <a href="detalle-evento.php?id=3" class="event-card">
+                    <div class="event-image">
+                        <img src="../../img/catadevinos.jpg" alt="Cata de vinos">
+                    </div>
+                    <div class="event-details">
+                        <div class="event-date">5 de Junio, 2025</div>
+                        <h3 class="event-title">Cata de Vinos Españoles</h3>
+                        <p class="event-description">Una experiencia sensorial para descubrir los mejores vinos de las denominaciones de origen españolas.</p>
+                        <div class="event-location">
+                            <i>📍</i> Cuenca
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+        <!-- Sección de Calendario de Eventos -->
+        <section class="calendar-section">
+            <div class="container">
+                <h2 class="section-title">Nuestros Eventos</h2>
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <div class="calendar-title" id="calendar-title"></div>
+                        <div class="calendar-nav">
+                            <div class="calendar-nav-btn" id="prev-month-btn">←</div>
+                            <div class="calendar-nav-btn" id="next-month-btn">→</div>
+                        </div>
+                    </div>
+                    <div class="calendar-grid" id="calendar-grid"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Suscripción -->
+        <section class="subscribe-section">
+            <div class="container">
+                <div class="subscribe-container">
+                    <div class="subscribe-text">
+                        <h3>No te pierdas ningún evento</h3>
+                        <p>Suscríbete para recibir notificaciones sobre nuevos eventos, talleres y cursos gastronómicos.</p>
+                    </div>
+                    <div class="subscribe-form">
+                        <input type="email" placeholder="ejemplo@email.com" id="email-subscription">
+                        <button type="button" onclick="suscribirse()">Suscribirse</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Aquí se cargará el footer -->
+    <div id="footer-container"></div>
+    <!-- Script para cargar los componentes PHP -->
+    <script src="../js/cargamenuyfooter.js"></script>
+    <!-- Script para el calendario de la página y funcion de subscribirse -->
+    <script src="../js/eventos.js"></script>
+</body>
+</html>
