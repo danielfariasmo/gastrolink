@@ -109,6 +109,7 @@ $receta = "CREATE TABLE IF NOT EXISTS receta (
     id_receta INT AUTO_INCREMENT PRIMARY KEY,
     id_cocinero INT NOT NULL,
     titulo VARCHAR(100),
+    tipo_receta ENUM('entrante', 'plato_principal', 'postre', 'vegetariano', 'sin_gluten') NOT NULL,
     introduccion TEXT,
     ingredientes TEXT,
     pasos TEXT,
