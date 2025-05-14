@@ -249,36 +249,26 @@
         </div>
     </header>
 
-    <script>
-        // Script para mantener visible el menú al hacer hover
-        document.addEventListener('DOMContentLoaded', () => {
-            const dropdownMenu = document.querySelector('.dropdown-menu');
-            const menuToggle = document.querySelector('.mobile-menu-toggle');
-            let timeoutId;
+   <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const menuToggle = document.querySelector('.mobile-menu-toggle');
+        const dropdownMenu = document.querySelector('.dropdown-menu');
 
-            menuToggle.addEventListener('mouseenter', () => {
-                clearTimeout(timeoutId);
-                dropdownMenu.style.display = 'block';
-            });
-
-            menuToggle.addEventListener('mouseleave', () => {
-                timeoutId = setTimeout(() => {
-                    if (!dropdownMenu.matches(':hover')) {
-                        dropdownMenu.style.display = 'none';
-                    }
-                }, 500);
-            });
-
-            dropdownMenu.addEventListener('mouseenter', () => {
-                clearTimeout(timeoutId);
-            });
-
-            dropdownMenu.addEventListener('mouseleave', () => {
-                timeoutId = setTimeout(() => {
-                    dropdownMenu.style.display = 'none';
-                }, 900);
-            });
+        // Alternar visibilidad con clic
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation(); // Evita que se dispare el evento de cierre al hacer clic en el botón
+            dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
         });
-    </script>
+
+        // Cierra el menú si se hace clic fuera
+        document.addEventListener('click', (e) => {
+            const isClickInsideMenu = dropdownMenu.contains(e.target);
+            const isClickOnToggle = menuToggle.contains(e.target);
+            if (!isClickInsideMenu && !isClickOnToggle) {
+                dropdownMenu.style.display = 'none';
+            }
+        });
+    });
+</script>
 </body>
 </html>
