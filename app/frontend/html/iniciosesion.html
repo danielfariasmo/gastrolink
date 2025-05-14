@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión</title>
+    <!-- FAVICON-->
+    <link rel="icon" type="image/png" href="../../img/logo.png  " sizes="16x16">
+    <!-- Carga de iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/iniciosesion.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Login Form -->
+        <div class="form-container" id="login-container">
+            <div class="form-content">
+                <div class="form-box">
+                    <div class="logo">
+                         <h2><a href="/Proyectogastrolink/gastrolink/app/frontend/html/index.html">GASTRO<span>LINK</span></a></h2>
+                    </div>
+                    <h1>Iniciar Sesión</h1>
+                    <p class="subtitle">Introduce tus datos para conectarte</p>
+                    
+                    <form id="login-form">
+                        <div class="input-group">
+                            <label for="email-login">Email</label>
+                            <input type="email" id="email-login">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="password-login">Contraseña</label>
+                            <input type="password" id="password-login">
+                        </div>
+
+                        <button type="submit" class="btn-primary">Iniciar Sesión</button>
+                    </form>
+                    
+                    <p class="alternative-text">o sign in con otras cuentas</p>
+                    
+                    <div class="social-login">
+                        <a href="#" class="social-icon google"><i class="fab fa-google"></i></a>
+                        <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon linkedin"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    
+                    <p class="switch-form">¿No tienes una cuenta? <a href="../html/registro.html">Crea una aquí</a></p>
+                </div>
+            </div>
+            <div class="form-image">
+                <img src="../../img/catadevinos.jpg" alt="Imagen GASTROLINK" class="side-image">
+                <div class="diagonal-overlay"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../js/iniciosesion.js"></script>
+</body>
+</html>

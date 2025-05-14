@@ -208,7 +208,7 @@
                 <div class="left-section">
                     <div class="logo">
                         <a href="index.html">
-                            <img src="/img/logo.png" alt="Logo" />
+                            <img src="/Proyectogastrolink/gastrolink/app/img/logo.png" alt="Logo" />
                         </a>
                     </div>
                     <div class="mobile-menu-toggle">
@@ -218,11 +218,11 @@
                     </div>
                     <div class="dropdown-menu">
                         <ul>
-                            <li><a href="/frontend/html/recetas.html">Recetas</a></li>
-                            <li><a href="/frontend/html/eventos.html">Eventos</a></li>
-                            <li><a href="/frontend/html/restaurantes.html">Restaurantes</a></li>
-                            <li><a href="/frontend/html/comunidad.html">Comunidad</a></li>
-                            <li><a href="/frontend/html/empleos.html">Empleos</a></li>
+                            <li><a href="/Proyectogastrolink/gastrolink/app/frontend/html/recetas.html">Recetas</a></li>
+                            <li><a href="/Proyectogastrolink/gastrolink/app/frontend/html/eventos.html">Eventos</a></li>
+                            <li><a href="/Proyectogastrolink/gastrolink/app/frontend/html/restaurantes.html">Restaurantes</a></li>
+                            <li><a href="/Proyectogastrolink/gastrolink/app/frontend/html/comunidad.html">Comunidad</a></li>
+                            <li><a href="/Proyectogastrolink/gastrolink/app/frontend/html/empleos.html">Empleos</a></li>
                         </ul>
                     </div>
                 </div>
@@ -242,8 +242,8 @@
 
                 <!-- Sección derecha: Autenticación -->
                 <div class="auth-buttons">
-                    <a href="login.html" class="btn login">Iniciar Sesión</a>
-                    <a href="registro.html" class="btn register">Suscribirse</a>
+                    <a href="/Proyectogastrolink/gastrolink/app/frontend/html/iniciosesion.html" class="btn login">Iniciar Sesión</a>
+                    <a href="/Proyectogastrolink/gastrolink/app/frontend/html/registro.html" class="btn register">Suscribirse</a>
                 </div>
             </nav>
         </div>
@@ -276,7 +276,7 @@
             dropdownMenu.addEventListener('mouseleave', () => {
                 timeoutId = setTimeout(() => {
                     dropdownMenu.style.display = 'none';
-                }, 500);
+                }, 900);
             });
         });
     </script>
