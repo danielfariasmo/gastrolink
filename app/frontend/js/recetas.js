@@ -1,4 +1,4 @@
-const recetasPorPagina = 6;
+const recetasPorPagina = 12;
 const recetas = Array.from(document.querySelectorAll('.recipe-card'));
 const totalPaginas = Math.ceil(recetas.length / recetasPorPagina);
 let paginaActual = 1;

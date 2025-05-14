@@ -1,5 +1,5 @@
  // Lógica de paginación
- const recetasPorPagina = 8;  // Establece el número de restaurantes por página
+ const recetasPorPagina = 12;  // Establece el número de restaurantes por página
  const restaurantes = Array.from(document.querySelectorAll('.restaurant-card'));  // Obtén todas las tarjetas de restaurantes
  const totalPaginas = Math.ceil(restaurantes.length / recetasPorPagina);  // Calcula el número total de páginas
  let paginaActual = 1;  // Página actual
