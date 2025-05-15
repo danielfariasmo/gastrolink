@@ -169,7 +169,7 @@ mysqli_query($connection, $candidatura) or die('ERROR: No se puede crear la tabl
 /*---------------------------------------------------------------
 FAVORITO
 ---------------------------------------------------------------*/
-$favoritos = "CREATE TABLE IF NOT EXISTS favorito (
+$favorito = "CREATE TABLE IF NOT EXISTS favorito (
     id_favorito INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
     id_receta INT DEFAULT NULL,
@@ -180,4 +180,29 @@ $favoritos = "CREATE TABLE IF NOT EXISTS favorito (
     FOREIGN KEY (id_cocinero) REFERENCES cocinero(id_cocinero),
     FOREIGN KEY (id_restaurante) REFERENCES restaurante(id_restaurante)
 );";
-mysqli_query($connection, $favoritos) or die('ERROR: No se puede crear la tabla favorito: ' . mysqli_error($connection));
+mysqli_query($connection, $favorito) or die('ERROR: No se puede crear la tabla favorito: ' . mysqli_error($connection));
+
+
+/* CREATE TABLE favorito_receta (
+    id_favorito INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_receta INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
+    FOREIGN KEY (id_receta) REFERENCES receta(id_receta)
+);
+
+CREATE TABLE favorito_cocinero (
+    id_favorito INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_cocinero INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
+    FOREIGN KEY (id_cocinero) REFERENCES cocinero(id_cocinero)
+);
+
+CREATE TABLE favorito_restaurante (
+    id_favorito INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_restaurante INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
+    FOREIGN KEY (id_restaurante) REFERENCES restaurante(id_restaurante)
+); */
