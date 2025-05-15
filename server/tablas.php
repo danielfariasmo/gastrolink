@@ -78,6 +78,11 @@ $camarero = "CREATE TABLE IF NOT EXISTS camarero (
 );";
 mysqli_query($connection, $camarero) or die('ERROR: No se puede crear la tabla camarero: ' . mysqli_error($connection));
 
+$insertar_camarero = "INSERT INTO camarero (id_camarero, descripcion, experiencia, idiomas) VALUES
+    (1, 'Camarero con 3 años de experiencia en restaurantes de lujo.', '3 años', 'Español, Inglés'),
+    (2, 'Camarera con experiencia en atención al cliente y servicio de mesa.', '2 años', 'Español, Francés'),
+    (3, 'Camarero con habilidades en coctelería y servicio de barra.', '4 años', 'Español, Inglés');";
+
 /*---------------------------------------------------------------
 EVENTO
 ---------------------------------------------------------------*/
