@@ -208,7 +208,7 @@
                 <div class="left-section">
                     <div class="logo">
                         <a href="index.html">
-                            <img src="/Proyectogastrolink/gastrolink/app/img/logo.png" alt="Logo" />
+                            <img src="/gastrolink/app/img/menu/logo.png" alt="Logo" />
                         </a>
                     </div>
                     <div class="mobile-menu-toggle">

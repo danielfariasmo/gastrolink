@@ -9,7 +9,6 @@ $password = "";
 // Petición de para la conexión
 $connection = mysqli_connect($server, $user, $password);
 
-
 /*---------------------------------------------------------------
 BASE DE DATOS
 ---------------------------------------------------------------*/
