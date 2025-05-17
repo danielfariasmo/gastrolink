@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -78,7 +79,7 @@
             z-index: 1001;
         }
 
-        .mobile-menu-toggle:hover + .dropdown-menu,
+        .mobile-menu-toggle:hover+.dropdown-menu,
         .dropdown-menu:hover {
             display: block;
         }
@@ -176,6 +177,82 @@
             border-color: #e63c3c;
         }
 
+        /* ################ PRUEBASSSS #####################*/
+        /* Estilos para el menú de usuario */
+        .auth-section {
+            position: relative;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+
+        .user-greeting {
+            display: flex;
+            flex-direction: column;
+            font-size: 12px;
+            text-align: right;
+        }
+
+        #username-display {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            padding: 10px 0;
+            min-width: 150px;
+            z-index: 1001;
+        }
+
+        .user-dropdown ul {
+            list-style: none;
+        }
+
+        .user-dropdown li {
+            padding: 8px 20px;
+        }
+
+        .user-dropdown a {
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            display: block;
+        }
+
+        .user-dropdown a:hover {
+            color: #ff4d4d;
+        }
+
+        .user-menu:hover .user-dropdown {
+            display: block;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .search-section {
@@ -200,6 +277,7 @@
         }
     </style>
 </head>
+
 <body>
     <header class="header">
         <div class="container">
@@ -241,34 +319,120 @@
                 </div>
 
                 <!-- Sección derecha: Autenticación -->
-                <div class="auth-buttons">
+                <!-- <div class="auth-buttons">
                     <a href="/Proyectogastrolink/gastrolink/app/frontend/html/iniciosesion.html" class="btn login">Iniciar Sesión</a>
                     <a href="/Proyectogastrolink/gastrolink/app/frontend/html/registro.html" class="btn register">Suscribirse</a>
+                </div> -->
+                <!-- Reemplaza la sección de auth-buttons con esto -->
+                <div class="auth-section">
+                    <!-- Estado cuando NO hay sesión -->
+                    <div class="auth-buttons" id="guest-view">
+                        <a href="/Proyectogastrolink/gastrolink/app/frontend/html/iniciosesion.html" class="btn login">Iniciar Sesión</a>
+                        <a href="/Proyectogastrolink/gastrolink/app/frontend/html/registro.html" class="btn register">Suscribirse</a>
+                    </div>
+
+                    <!-- Estado cuando SÍ hay sesión -->
+                    <div class="user-menu" id="user-view" style="display: none;">
+                        <div class="user-greeting">
+                            <span id="welcome-message">Bienvenido/a</span>
+                            <span id="username-display"></span>
+                        </div>
+                        <div class="user-avatar" id="user-avatar">
+                            <img src="/gastrolink/app/img/default-avatar.png" alt="Foto de perfil">
+                        </div>
+                        <div class="user-dropdown">
+                            <ul>
+                                <li><a href="/ajustes">Ajustes</a></li>
+                                <li><a href="/cuenta">Mi Cuenta</a></li>
+                                <li><a href="#" id="logout-btn">Cerrar Sesión</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </nav>
         </div>
     </header>
 
-   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const menuToggle = document.querySelector('.mobile-menu-toggle');
-        const dropdownMenu = document.querySelector('.dropdown-menu');
+    <script>
+        console.log("El script de sesión se está cargando");
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
 
-        // Alternar visibilidad con clic
-        menuToggle.addEventListener('click', (e) => {
-            e.stopPropagation(); // Evita que se dispare el evento de cierre al hacer clic en el botón
-            dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+            // Alternar visibilidad con clic
+            menuToggle.addEventListener('click', (e) => {
+                e.stopPropagation(); // Evita que se dispare el evento de cierre al hacer clic en el botón
+                dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+            });
+
+            // Cierra el menú si se hace clic fuera
+            document.addEventListener('click', (e) => {
+                const isClickInsideMenu = dropdownMenu.contains(e.target);
+                const isClickOnToggle = menuToggle.contains(e.target);
+                if (!isClickInsideMenu && !isClickOnToggle) {
+                    dropdownMenu.style.display = 'none';
+                }
+            });
         });
+    </script>
+    <script>
+        console.log("El script de sesión se está cargando");
+        document.addEventListener('DOMContentLoaded', () => {
+            // Elementos del DOM
+            const guestView = document.getElementById('guest-view');
+            const userView = document.getElementById('user-view');
+            const usernameDisplay = document.getElementById('username-display');
+            const userAvatar = document.getElementById('user-avatar');
+            const logoutBtn = document.getElementById('logout-btn');
 
-        // Cierra el menú si se hace clic fuera
-        document.addEventListener('click', (e) => {
-            const isClickInsideMenu = dropdownMenu.contains(e.target);
-            const isClickOnToggle = menuToggle.contains(e.target);
-            if (!isClickInsideMenu && !isClickOnToggle) {
-                dropdownMenu.style.display = 'none';
+            // Verificar sesión al cargar la página
+            checkSession();
+
+            // Función para verificar el estado de sesión
+            function checkSession() {
+                const userData = sessionStorage.getItem('userData');
+                if (userData) {
+                    const user = JSON.parse(userData);
+                    updateMenuForLoggedInUser(user);
+                }
+            }
+
+            // Función para actualizar el menú cuando el usuario inicia sesión
+            function updateMenuForLoggedInUser(user) {
+                guestView.style.display = 'none';
+                userView.style.display = 'flex';
+                usernameDisplay.textContent = user.nombre || user.correo.split('@')[0];
+                if (user.fotoPerfil) {
+                    userAvatar.querySelector('img').src = user.fotoPerfil;
+                }
+            }
+
+            // Función para cerrar sesión
+            function logout() {
+                sessionStorage.removeItem('userData');
+                window.location.href = '/index.html';
+            }
+
+            // Evento para cerrar sesión
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    logout();
+                });
+            }
+
+            // Verificar si viene de un login exitoso
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('login') && urlParams.get('login') === 'success') {
+                const userData = sessionStorage.getItem('userData');
+                if (userData) {
+                    const user = JSON.parse(userData);
+                    updateMenuForLoggedInUser(user);
+                }
+                window.history.replaceState({}, document.title, window.location.pathname);
             }
         });
-    });
-</script>
+    </script>
 </body>
+
 </html>

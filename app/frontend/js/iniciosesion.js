@@ -57,8 +57,62 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (valido) {
-            console.log('Formulario válido. Puedes enviarlo o continuar...');
-            // Aquí podrías enviar con fetch() o mostrar mensaje de éxito
+            // Si las validaciones del cliente son correctas, validar con el servidor
+            validarUsuarioContra(email.value.trim(), password.value.trim());
         }
     });
+
+    function mostrarMensajeLogin(mensaje, esError) {
+        // Limpiamos errores previos
+        limpiarError(email);
+        limpiarError(password);
+
+        if (esError) {
+            mostrarError(email, mensaje);
+        } else {
+            console.log(mensaje); // o mostrarlo en algún contenedor...
+        }
+    }
+
+    function validarUsuarioContra(usuario, contra) {
+        const formData = new FormData();
+        formData.append("funcion", "validando");
+        formData.append("usuario", usuario);
+        formData.append("contra", contra);
+
+        fetch("../../backend/php/iniciosesion.php", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Error en la solicitud: " + response.statusText);
+                }
+                return response.json();
+            })
+            // En tu función fetch del login
+            .then(data => {
+                if (data.status === "success") {
+                    // Guardar datos del usuario en sessionStorage
+                    const userData = {
+                        id: data.userId,
+                        nombre: data.nombre,
+                        correo: email.value.trim(),
+                        rol: data.role,
+                        fotoPerfil: data.fotoPerfil || '/gastrolink/app/img/default-avatar.png'
+                    };
+                    sessionStorage.setItem('userData', JSON.stringify(userData));
+
+                    // Redirigir a la página principal con parámetro de login exitoso
+                    window.location.href = '../html/index.html?login=success';
+                } else {
+                    mostrarMensajeLogin(data.message, true);
+                }
+            })
+            .catch(error => {
+                console.error("Error en la solicitud:", error);
+                mostrarMensajeLogin("Error en la solicitud. Consulta la consola para más detalles.", true);
+            });
+    }
+
 });
