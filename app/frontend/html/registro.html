@@ -40,20 +40,39 @@
                                 <input type="email" id="email-register">
                             </div>
                             <div class="input-group">
-                                <label for="telefono">Teléfono Móvil</label>
-                                <input type="tel" id="telefono">
-                            </div>
-                        </div>
-                        
-                        <div class="input-row">
-                            <div class="input-group">
                                 <label for="password-register">Contraseña</label>
                                 <input type="password" id="password-register">
                             </div>
+                        </div>
+                        
+                        <!-- <div class="input-row">
                             <div class="input-group">
-                                <label for="confirm-password">Por si necesitamos más datos</label>
+                                <label for="telefono">Foto de perfil</label>
+                                <input type="tel" id="telefono">
+                            </div>
+                            <div class="input-group">
+                                <label for="confirm-password">Tipo de usuario</label>
                                 <input type="password" id="confirm-password">
                             </div>
+                        </div> -->
+
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="profilePhoto">Foto de Perfil:</label>
+                                <input type="file" class="form-control-file" id="profilePhoto" accept="image/*">
+                                <small class="form-text text-muted">Sube una imagen para tu perfil (JPEG, PNG, etc.)</small>
+                              </div>
+                            
+                              <!-- Selector de Tipo de Usuario -->
+                              <div class="input-group">
+                                <label for="userType">Tipo de Usuario:</label>
+                                <select class="form-control" id="userType">
+                                  <!-- <option value="">Selecciona un tipo de usuario</option> -->
+                                  <option value="restaurante">Restaurante</option>
+                                  <option value="cocinero">Cocinero</option>
+                                  <option value="camarero">Camarero</option>
+                                </select>
+                              </div>
                         </div>
                         
                         <div class="checkbox-group">

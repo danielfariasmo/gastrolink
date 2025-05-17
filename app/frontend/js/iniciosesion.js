@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         limpiarError(password);
 
         if (esError) {
-            mostrarError(email, mensaje);
+            mostrarError(password, mensaje);
         } else {
             console.log(mensaje); // o mostrarlo en algún contenedor...
         }
