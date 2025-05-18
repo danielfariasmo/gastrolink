@@ -3,266 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- FAVICON-->
-    <link rel="icon" type="image/png" href="../../img/logo.png  " sizes="16x16">
+    <link rel="icon" type="image/png" href="../../img/menu/logo.png" sizes="16x16">
     <link rel="stylesheet" href="../css/comunidad.css">
     <title>Comunidad</title>
 </head>
+
 <body>
-    <!-- Aquí se cargará el menú -->
+    <!-- Menu component -->
     <div id="menu-container"></div>
-    
+
     <main>
         <!-- Banner -->
         <div class="banner">
-            <img src="../../img/bannercomunidad.jpg" alt="Icono de imagen">
+            <img src="../../img/web/hero_comunidad.webp" alt="Comunidad">
         </div>
 
         <!-- Pestañas -->
         <div class="container">
             <div class="tabs">
-                <div class="tab active" onclick="cambiarTab('recientes')">Cocineros</div>
-                <div class="tab" onclick="cambiarTab('popular')">Camareros</div>
+                <div class="tab active" onclick="fetchMiembros('cocinero')">Cocineros</div>
+                <div class="tab" onclick="fetchMiembros('camarero')">Camareros</div>
             </div>
         </div>
 
         <!-- Sección de Miembros -->
         <section class="members-section">
             <div class="container">
-                <div class="members-grid">
-                    <!-- Miembro 1 -->
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="../../img/cocinera2.avif" alt="Chef María García">
-                        </div>
-                        <div class="member-details">
-                            <h3 class="member-name">María García</h3>
-                            <p class="member-bio">Chef especializada en cocina mediterránea</p>
-                            <div class="member-actions">
-                                <div class="member-social">
-                                    <a href="#" class="social-icon">f</a>
-                                    <a href="#" class="social-icon">t</a>
-                                </div>
-                                <button class="follow-btn" onclick="toggleFollow(this)">Seguir</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Miembro 2 -->
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="../../img/cocinero1.avif" alt="Chef Carlos Rodríguez">
-                        </div>
-                        <div class="member-details">
-                            <h3 class="member-name">Carlos Rodríguez</h3>
-                            <p class="member-bio">Pastelero profesional con 15 años de experiencia</p>
-                            <div class="member-actions">
-                                <div class="member-social">
-                                    <a href="#" class="social-icon">f</a>
-                                    <a href="#" class="social-icon">t</a>
-                                </div>
-                                <button class="follow-btn" onclick="toggleFollow(this)">Seguir</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Miembro 3 -->
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="../../img/cocinera2.avif" alt="Chef Ana Martínez">
-                        </div>
-                        <div class="member-details">
-                            <h3 class="member-name">Ana Martínez</h3>
-                            <p class="member-bio">Especialista en cocina vegana y vegetariana</p>
-                            <div class="member-actions">
-                                <div class="member-social">
-                                    <a href="#" class="social-icon">f</a>
-                                    <a href="#" class="social-icon">t</a>
-                                </div>
-                                <button class="follow-btn" onclick="toggleFollow(this)">Seguir</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Miembro 4 -->
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="../../img/cocinero3.avif" alt="Chef Javier López">
-                        </div>
-                        <div class="member-details">
-                            <h3 class="member-name">Javier López</h3>
-                            <p class="member-bio">Chef ejecutivo especializado en cocina de autor</p>
-                            <div class="member-actions">
-                                <div class="member-social">
-                                    <a href="#" class="social-icon">f</a>
-                                    <a href="#" class="social-icon">t</a>
-                                </div>
-                                <button class="follow-btn" onclick="toggleFollow(this)">Seguir</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Miembro 5 -->
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="../../img/cocinera2.avif" alt="Chef Laura Sánchez">
-                        </div>
-                        <div class="member-details">
-                            <h3 class="member-name">Laura Sánchez</h3>
-                            <p class="member-bio">Experta en cocina tradicional española</p>
-                            <div class="member-actions">
-                                <div class="member-social">
-                                    <a href="#" class="social-icon">f</a>
-                                    <a href="#" class="social-icon">t</a>
-                                </div>
-                                <button class="follow-btn" onclick="toggleFollow(this)">Seguir</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Miembro 6 -->
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="../../img/cocinero3.avif" alt="Chef Miguel Fernández">
-                        </div>
-                        <div class="member-details">
-                            <h3 class="member-name">Miguel Fernández</h3>
-                            <p class="member-bio">Especialista en cocina internacional y fusión</p>
-                            <div class="member-actions">
-                                <div class="member-social">
-                                    <a href="#" class="social-icon">f</a>
-                                    <a href="#" class="social-icon">t</a>
-                                </div>
-                                <button class="follow-btn" onclick="toggleFollow(this)">Seguir</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Miembro 7 -->
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="../../img/cocinera2.avif" alt="Chef Sofía Ruiz">
-                        </div>
-                        <div class="member-details">
-                            <h3 class="member-name">Sofía Ruiz</h3>
-                            <p class="member-bio">Chef especializada en repostería creativa</p>
-                            <div class="member-actions">
-                                <div class="member-social">
-                                    <a href="#" class="social-icon">f</a>
-                                    <a href="#" class="social-icon">t</a>
-                                </div>
-                                <button class="follow-btn" onclick="toggleFollow(this)">Seguir</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Miembro 8 -->
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="../../img/cocinero3.avif" alt="Chef Pablo Moreno">
-                        </div>
-                        <div class="member-details">
-                            <h3 class="member-name">Pablo Moreno</h3>
-                            <p class="member-bio">Experto en cocina molecular y técnicas innovadoras</p>
-                            <div class="member-actions">
-                                <div class="member-social">
-                                    <a href="#" class="social-icon">f</a>
-                                    <a href="#" class="social-icon">t</a>
-                                </div>
-                                <button class="follow-btn" onclick="toggleFollow(this)">Seguir</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Miembro 9 -->
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="../../img/cocinera2.avif" alt="Chef Elena Torres">
-                        </div>
-                        <div class="member-details">
-                            <h3 class="member-name">Elena Torres</h3>
-                            <p class="member-bio">Chef especializada en cocina saludable y nutritiva</p>
-                            <div class="member-actions">
-                                <div class="member-social">
-                                    <a href="#" class="social-icon">f</a>
-                                    <a href="#" class="social-icon">t</a>
-                                </div>
-                                <button class="follow-btn" onclick="toggleFollow(this)">Seguir</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Miembro 10 -->
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="../../img/cocinero1.avif" alt="Chef Daniel Navarro">
-                        </div>
-                        <div class="member-details">
-                            <h3 class="member-name">Daniel Navarro</h3>
-                            <p class="member-bio">Especialista en cocina asiática y técnicas orientales</p>
-                            <div class="member-actions">
-                                <div class="member-social">
-                                    <a href="#" class="social-icon">f</a>
-                                    <a href="#" class="social-icon">t</a>
-                                </div>
-                                <button class="follow-btn" onclick="toggleFollow(this)">Seguir</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Miembro 11 -->
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="../../img/cocinera2.avif" alt="Chef Carmen Vega">
-                        </div>
-                        <div class="member-details">
-                            <h3 class="member-name">Carmen Vega</h3>
-                            <p class="member-bio">Chef especializada en cocina latinoamericana</p>
-                            <div class="member-actions">
-                                <div class="member-social">
-                                    <a href="#" class="social-icon">f</a>
-                                    <a href="#" class="social-icon">t</a>
-                                </div>
-                                <button class="follow-btn" onclick="toggleFollow(this)">Seguir</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Miembro 12 -->
-                    <div class="member-card">
-                        <div class="member-image">
-                            <img src="../../img/cocinero1.avif" alt="Chef Alejandro Díaz">
-                        </div>
-                        <div class="member-details">
-                            <h3 class="member-name">Alejandro Díaz</h3>
-                            <p class="member-bio">Experto en parrilla y cocina a la brasa</p>
-                            <div class="member-actions">
-                                <div class="member-social">
-                                    <a href="#" class="social-icon">f</a>
-                                    <a href="#" class="social-icon">t</a>
-                                </div>
-                                <button class="follow-btn" onclick="toggleFollow(this)">Seguir</button>
-                            </div>
-                        </div>
-                    </div>
-                     <!-- Miembro 13 -->
-                     <div class="member-card">
-                        <div class="member-image">
-                            <img src="../../img/cocinero1.avif" alt="Chef Alejandro Díaz">
-                        </div>
-                        <div class="member-details">
-                            <h3 class="member-name">Alejandro Díaz</h3>
-                            <p class="member-bio">Experto en parrilla y cocina a la brasa</p>
-                            <div class="member-actions">
-                                <div class="member-social">
-                                    <a href="#" class="social-icon">f</a>
-                                    <a href="#" class="social-icon">t</a>
-                                </div>
-                                <button class="follow-btn" onclick="toggleFollow(this)">Seguir</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="members-grid"></div>
 
                 <!-- Paginación -->
                 <div class="pagination">
@@ -277,11 +44,11 @@
         </section>
     </main>
 
-    <!-- Aquí se cargará el footer -->
+    <!-- Footer component -->
     <div id="footer-container"></div>
-    <!-- Script para cargar los componentes PHP -->
+
+    <!-- JavaScript -->
     <script src="../js/cargamenuyfooter.js"></script>
-     <!-- Script de paginacion de comunidad -->
     <script src="../js/comunidad.js"></script>
 </body>
 </html>

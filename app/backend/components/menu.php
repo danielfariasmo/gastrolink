@@ -253,6 +253,33 @@
             display: block;
         }
 
+        /*Search*/
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            max-width: 400px;
+            background-color: #fff;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            display: none;
+            padding: 10px;
+            border-radius: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .result-item {
+            padding: 8px;
+            cursor: pointer;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .result-item:hover {
+            background-color: #f5f5f5;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .search-section {
@@ -296,11 +323,11 @@
                     </div>
                     <div class="dropdown-menu">
                         <ul>
-                            <li><a href="/Proyectogastrolink/gastrolink/app/frontend/html/recetas.html">Recetas</a></li>
-                            <li><a href="/Proyectogastrolink/gastrolink/app/frontend/html/eventos.html">Eventos</a></li>
-                            <li><a href="/Proyectogastrolink/gastrolink/app/frontend/html/restaurantes.html">Restaurantes</a></li>
-                            <li><a href="/Proyectogastrolink/gastrolink/app/frontend/html/comunidad.html">Comunidad</a></li>
-                            <li><a href="/Proyectogastrolink/gastrolink/app/frontend/html/empleos.html">Empleos</a></li>
+                            <li><a href="../../frontend/html/recetas.html">Recetas</a></li>
+                            <li><a href="../../frontend/html/eventos.html">Eventos</a></li>
+                            <li><a href="../../frontend/html/restaurantes.html">Restaurantes</a></li>
+                            <li><a href="./../frontend/html/empleos.html">Comunidad</a></li>
+                            <li><a href="../../frontend/html/empleos.html">Empleos</a></li>
                         </ul>
                     </div>
                 </div>
@@ -308,7 +335,7 @@
                 <!-- Sección central: Búsqueda -->
                 <div class="search-section">
                     <div class="search-container">
-                        <input type="text" placeholder="Buscar..." />
+                        <input type="text" id="global-search" placeholder="Buscar..." />
                         <div class="search-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="11" cy="11" r="8"></circle>
@@ -317,6 +344,7 @@
                         </div>
                     </div>
                 </div>
+                <div id="search-results" class="search-results"></div>
 
                 <!-- Sección derecha: Autenticación -->
                 <!-- <div class="auth-buttons">
@@ -327,8 +355,8 @@
                 <div class="auth-section">
                     <!-- Estado cuando NO hay sesión -->
                     <div class="auth-buttons" id="guest-view">
-                        <a href="/Proyectogastrolink/gastrolink/app/frontend/html/iniciosesion.html" class="btn login">Iniciar Sesión</a>
-                        <a href="/Proyectogastrolink/gastrolink/app/frontend/html/registro.html" class="btn register">Suscribirse</a>
+                        <a href="../../frontend/html/iniciosesion.html" class="btn login">Iniciar Sesión</a>
+                        <a href="../../frontend/html/registro.html" class="btn register">Suscribirse</a>
                     </div>
 
                     <!-- Estado cuando SÍ hay sesión -->

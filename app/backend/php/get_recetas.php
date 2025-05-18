@@ -1,5 +1,5 @@
 <?php
-include '../../server/database.php';
+include '../../../server/database.php';
 header('Content-Type: application/json');
 
 $filtros = [];
@@ -11,7 +11,6 @@ if ($resultFiltros->num_rows > 0) {
         $filtros[] = $row['tipo_receta'];
     }
 }
-
 
 $sql = "SELECT * FROM receta";
 if (isset($_GET['tipo']) && $_GET['tipo'] !== 'todos') {

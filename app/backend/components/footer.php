@@ -24,6 +24,11 @@
             flex: 1;
             padding: 20px;
         }
+
+        a {
+            text-decoration: none;
+            color: #fff;
+        }
         
         /* Estilos para el footer */
         .footer {
@@ -55,19 +60,6 @@
             margin-bottom: 25px;
             color: #fff;
             font-weight: 500;
-        }
-
-        .menu-lines {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .menu-line {
-            height: 2px;
-            background-color: #fff;
-            width: 80%;
-            opacity: 0.7;
         }
 
         .social-icons {
@@ -130,39 +122,28 @@
             <div class="container">
                 <div class="footer-sections">
                     <div class="footer-section">
-                        <h3>(Menu)</h3>
-                        <div class="menu-lines">
-                            <div class="menu-line"></div>
-                            <div class="menu-line"></div>
-                            <div class="menu-line"></div>
-                        </div>
+                        <h3><a href="../../frontend/html/recetas.html">Recetas</a></h3>
+                        <h3><a href="../../frontend/html/eventos.html">Eventos</a></h3>
+                        <h3><a href="../../frontend/html/empleos.html">Empleos</a></h3>
                     </div>
                     
                     <div class="footer-section">
-                        <h3>Preguntas Frecuentes</h3>
-                        <div class="menu-lines">
-                            <div class="menu-line"></div>
-                            <div class="menu-line"></div>
-                            <div class="menu-line"></div>
-                        </div>
+                        <h3><a href="../../frontend/html/restaurantes.html">Restaurantes</a></h3>
+                        <h3><a href="../../frontend/html/comunidad.html">Comunidad</a></h3>
                     </div>
                     
                     <div class="footer-section">
-                        <h3>Contacto</h3>
-                        <div class="menu-lines">
-                            <div class="menu-line"></div>
-                            <div class="menu-line"></div>
-                            <div class="menu-line"></div>
-                        </div>
+                        <h3><a href="../../frontend/html/preguntas_frecuentes.html">Preguntas Frecuentes</a></h3>
+                        <h3><a href="../../frontend/html/contacto.html">Contacto</a></h3>
                     </div>
                     
                     <div class="footer-section">
                         <h3>Conecta</h3>
                         <div class="social-icons">
-                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="https://www.facebook.com/" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://twitter.com/" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.instagram.com/" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.linkedin.com/" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
                 </div>
