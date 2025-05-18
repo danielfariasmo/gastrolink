@@ -544,7 +544,6 @@ a:hover {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #ffeaea 0%, #a98686 40%, #ff9999 100%);
   z-index: 1;
   pointer-events: none;
 }
