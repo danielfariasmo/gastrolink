@@ -201,6 +201,10 @@ a {
     color: var(--color-primary);
 }
 
+.restaurant-description {
+    color: var(--color-text-medium);
+}
+
 /* Estilos para la paginación */
 .pagination {
     display: flex;

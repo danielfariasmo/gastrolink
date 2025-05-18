@@ -21,47 +21,41 @@ $usuario = "CREATE TABLE IF NOT EXISTS usuario (
 mysqli_query($connection, $usuario) or die('ERROR: No se puede crear la tabla usuario: ' . mysqli_error($connection));
 
 $insertar_usuario = "INSERT INTO usuario (id_usuario, nombre, correo, clave, img_usuario, tipo_usuario) VALUES
-    (1, 'Daniel Farias Morales', 'danielf@correo.com', '" . hashPassword('Daniel123.') . "', 'img/usuario.png', 'camarero'),
-    (2, 'Laura García Ruiz', 'laura@correo.com', '" . hashPassword('Laura123.') . "', 'img/usuario.png', 'camarero'),
-    (3, 'Antonio Martínez Torres', 'antonio@correo.com', '" . hashPassword('Antonio123.') . "', 'img/usuario.png', 'camarero'),
-    (4, 'Daniel González Garrote', 'danielg@correo.com', '" . hashPassword('Daniel123.') . "', 'img/usuario.png', 'cocinero'),
-    (5, 'Candela Martínez Sánchez', 'candela@correo.com', '" . hashPassword('Candela123.') . "', 'img/usuario.png', 'cocinero'),
-    (6, 'María Fernández López', 'maria@correo.com', '" . hashPassword('Maria123.') . "', 'img/usuario.png', 'cocinero'),
-    (7, 'Pedro Sánchez Pérez', 'pedro@correo.com', '" . hashPassword('Pedro123.') . "', 'img/usuario.png', 'cocinero'),
-    (8, 'Madrid Gourmet', 'madridgourmet@correo.com', '" . hashPassword('Madrid123.') . "', 'img/usuario.png', 'restaurante'),
-    (9, 'Calle del Hambre', 'calledelhambre@correo.com', '" . hashPassword('Calle123.') . "', 'img/usuario.png', 'restaurante'),
-    (10, 'Tierra Noble', 'tierranobre@correo.com', '" . hashPassword('Tierranoble123.') . "', 'img/usuario.png', 'restaurante'),
-    
-    (11, 'Alejandro Mendoza Ríos', 'alejandromr@correo.com', '" . hashPassword('Alejandro456.') . "', 'img/usuario.png', 'camarero'),
-    (12, 'Isabel Ortega Silva', 'isabelos@correo.com', '" . hashPassword('Isabel789.') . "', 'img/usuario.png', 'camarero'),
-    (13, 'Ricardo Herrera Castro', 'ricardohc@correo.com', '" . hashPassword('Ricardo123.') . "', 'img/usuario.png', 'camarero'),
-    (14, 'Patricia Vega Navarro', 'patriciavn@correo.com', '" . hashPassword('Patricia456.') . "', 'img/usuario.png', 'camarero'),
-    (15, 'Fernando Guzmán Paredes', 'fernandogp@correo.com', '" . hashPassword('Fernando789.') . "', 'img/usuario.png', 'camarero'),
-    
-    (16, 'Beatriz Ríos Mendoza', 'beatrizrm@correo.com', '" . hashPassword('Beatriz123.') . "', 'img/usuario.png', 'cocinero'),
-    (17, 'Hugo Silva Ortega', 'hugoso@correo.com', '" . hashPassword('Hugo456.') . "', 'img/usuario.png', 'cocinero'),
-    (18, 'Adriana Castro Herrera', 'adrianach@correo.com', '" . hashPassword('Adriana789.') . "', 'img/usuario.png', 'cocinero'),
-    (19, 'Raúl Navarro Vega', 'raulnv@correo.com', '" . hashPassword('Raul123.') . "', 'img/usuario.png', 'cocinero'),
-    (20, 'Carmen Paredes Guzmán', 'carmenpg@correo.com', '" . hashPassword('Carmen456.') . "', 'img/usuario.png', 'cocinero'),
-    
-    (21, 'Gustavo Mendoza Ríos', 'gustavomr@correo.com', '" . hashPassword('Gustavo789.') . "', 'img/usuario.png', 'restaurante'),
-    (22, 'Lucía Ortega Silva', 'luciaos@correo.com', '" . hashPassword('Lucia123.') . "', 'img/usuario.png', 'restaurante'),
-    (23, 'Oscar Herrera Castro', 'oscarhc@correo.com', '" . hashPassword('Oscar456.') . "', 'img/usuario.png', 'restaurante'),
-    (24, 'Natalia Vega Navarro', 'nataliavn@correo.com', '" . hashPassword('Natalia789.') . "', 'img/usuario.png', 'restaurante'),
-    (25, 'Roberto Guzmán Paredes', 'robertogp@correo.com', '" . hashPassword('Roberto123.') . "', 'img/usuario.png', 'restaurante'),
-    
-    (26, 'Mónica Ríos Mendoza', 'monicarm@correo.com', '" . hashPassword('Monica456.') . "', 'img/usuario.png', 'camarero'),
-    (27, 'Sergio Silva Ortega', 'sergioso@correo.com', '" . hashPassword('Sergio789.') . "', 'img/usuario.png', 'camarero'),
-    (28, 'Diana Castro Herrera', 'dianach@correo.com', '" . hashPassword('Diana123.') . "', 'img/usuario.png', 'cocinero'),
-    (29, 'Arturo Navarro Vega', 'arturonv@correo.com', '" . hashPassword('Arturo456.') . "', 'img/usuario.png', 'cocinero'),
-    (30, 'Verónica Paredes Guzmán', 'veronicapg@correo.com', '" . hashPassword('Veronica789.') . "', 'img/usuario.png', 'restaurante'),
-    
-    (31, 'Emilio Mendoza Ríos', 'emiliomr@correo.com', '" . hashPassword('Emilio123.') . "', 'img/usuario.png', 'camarero'),
-    (32, 'Rocío Ortega Silva', 'rocioos@correo.com', '" . hashPassword('Rocio456.') . "', 'img/usuario.png', 'cocinero'),
-    (33, 'Felipe Herrera Castro', 'felipehc@correo.com', '" . hashPassword('Felipe789.') . "', 'img/usuario.png', 'cocinero'),
-    (34, 'Aurora Vega Navarro', 'auroravn@correo.com', '" . hashPassword('Aurora123.') . "', 'img/usuario.png', 'restaurante'),
-    (35, 'Gerardo Guzmán Paredes', 'gerardogp@correo.com', '" . hashPassword('Gerardo456.') . "', 'img/usuario.png', 'restaurante')
-;";
+    (1, 'Daniel Farias Morales', 'danielf@correo.com', '" . hashPassword('Daniel123.') . "', '/gastrolink/app/img/usuarios/1.jpg', 'camarero'),
+    (2, 'Laura García Ruiz', 'laura@correo.com', '" . hashPassword('Laura123.') . "', '/gastrolink/app/img/usuarios/2.webp', 'camarero'),
+    (3, 'Antonio Martínez Torres', 'antonio@correo.com', '" . hashPassword('Antonio123.') . "', '/gastrolink/app/img/usuarios/3.jpg', 'camarero'),
+    (4, 'Daniel González Garrote', 'danielg@correo.com', '" . hashPassword('Daniel123.') . "', '/gastrolink/app/img/usuarios/4.jpg', 'cocinero'),
+    (5, 'Candela Martínez Sánchez', 'candela@correo.com', '" . hashPassword('Candela123.') . "', '/gastrolink/app/img/usuarios/5.webp', 'cocinero'),
+    (6, 'María Fernández López', 'maria@correo.com', '" . hashPassword('Maria123.') . "', '/gastrolink/app/img/usuarios/6.png', 'cocinero'),
+    (7, 'Pedro Sánchez Pérez', 'pedro@correo.com', '" . hashPassword('Pedro123.') . "', '/gastrolink/app/img/usuarios/7.jpg', 'cocinero'),
+    (8, 'Madrid Gourmet', 'madridgourmet@correo.com', '" . hashPassword('Madrid123.') . "', '/gastrolink/app/img/usuarios/8.webp', 'restaurante'),
+    (9, 'Calle del Hambre', 'calledelhambre@correo.com', '" . hashPassword('Calle123.') . "', '/gastrolink/app/img/usuarios/9.jpeg', 'restaurante'),
+    (10, 'Tierra Noble', 'tierranobre@correo.com', '" . hashPassword('Tierranoble123.') . "', '/gastrolink/app/img/usuarios/10.png', 'restaurante'),
+    (11, 'Alejandro Mendoza Ríos', 'alejandromr@correo.com', '" . hashPassword('Alejandro456.') . "', '/gastrolink/app/img/usuarios/11.jpeg', 'camarero'),
+    (12, 'Isabel Ortega Silva', 'isabelos@correo.com', '" . hashPassword('Isabel789.') . "', '/gastrolink/app/img/usuarios/12.jpg', 'camarero'),
+    (13, 'Ricardo Herrera Castro', 'ricardohc@correo.com', '" . hashPassword('Ricardo123.') . "', '/gastrolink/app/img/usuarios/13.jpeg', 'camarero'),
+    (14, 'Patricia Vega Navarro', 'patriciavn@correo.com', '" . hashPassword('Patricia456.') . "', '/gastrolink/app/img/usuarios/14.png', 'camarero'),
+    (15, 'Fernando Guzmán Paredes', 'fernandogp@correo.com', '" . hashPassword('Fernando789.') . "', '/gastrolink/app/img/usuarios/15.jpg', 'camarero'),
+    (16, 'Beatriz Ríos Mendoza', 'beatrizrm@correo.com', '" . hashPassword('Beatriz123.') . "', '/gastrolink/app/img/usuarios/16.webp', 'cocinero'),
+    (17, 'Hugo Silva Ortega', 'hugoso@correo.com', '" . hashPassword('Hugo456.') . "', '/gastrolink/app/img/usuarios/17.jpg', 'cocinero'),
+    (18, 'Adriana Castro Herrera', 'adrianach@correo.com', '" . hashPassword('Adriana789.') . "', '/gastrolink/app/img/usuarios/18.avif', 'cocinero'),
+    (19, 'Raúl Navarro Vega', 'raulnv@correo.com', '" . hashPassword('Raul123.') . "', '/gastrolink/app/img/usuarios/19.webp', 'cocinero'),
+    (20, 'Carmen Paredes Guzmán', 'carmenpg@correo.com', '" . hashPassword('Carmen456.') . "', '/gastrolink/app/img/usuarios/20.jpg', 'cocinero'),
+    (21, 'Asador Real', 'asadorreal@correo.com', '" . hashPassword('Asador123.') . "', '/gastrolink/app/img/usuarios/21.jpg', 'restaurante'),
+    (22, 'Sushi Madrid', 'sushimadrid@correo.com', '" . hashPassword('Sushimadrid123.') . "', '/gastrolink/app/img/usuarios/22.jpg', 'restaurante'),
+    (23, 'Trattoria Málaga', 'trattoria@correo.com', '" . hashPassword('Trattoria123.') . "', '/gastrolink/app/img/usuarios/23.png', 'restaurante'),
+    (24, 'La Gaviota', 'marisqueriasantander@correo.com', '" . hashPassword('Marisqueria123.') . "', '/gastrolink/app/img/usuarios/24.jpeg', 'restaurante'),
+    (25, 'Brasserie Barceloca', 'brasserie@correo.com', '" . hashPassword('Brasserie123.') . "', '/gastrolink/app/img/usuarios/25.png', 'restaurante'),
+    (26, 'Mónica Ríos Mendoza', 'monicarm@correo.com', '" . hashPassword('Monica456.') . "', '/gastrolink/app/img/usuarios/26.jpg', 'camarero'),
+    (27, 'Sergio Silva Ortega', 'sergioso@correo.com', '" . hashPassword('Sergio789.') . "', '/gastrolink/app/img/usuarios/27.jpeg', 'camarero'),
+    (28, 'Diana Castro Herrera', 'dianach@correo.com', '" . hashPassword('Diana123.') . "', '/gastrolink/app/img/usuarios/28.webp', 'cocinero'),
+    (29, 'Arturo Navarro Vega', 'arturonv@correo.com', '" . hashPassword('Arturo456.') . "', '/gastrolink/app/img/usuarios/29.jpg', 'cocinero'),
+    (30, 'Café Bilbao', 'cafebilbao@correo.com', '" . hashPassword('Cafebilbao123.') . "', '/gastrolink/app/img/usuarios/30.jpg', 'restaurante'),
+    (31, 'Emilio Mendoza Ríos', 'emiliomr@correo.com', '" . hashPassword('Emilio123.') . "', '/gastrolink/app/img/usuarios/31.avif', 'camarero'),
+    (32, 'Rocío Ortega Silva', 'rocioos@correo.com', '" . hashPassword('Rocio456.') . "', '/gastrolink/app/img/usuarios/32.jpg', 'cocinero'),
+    (33, 'Felipe Herrera Castro', 'felipehc@correo.com', '" . hashPassword('Felipe789.') . "', '/gastrolink/app/img/usuarios/33.jpg', 'cocinero'),
+    (34, 'Restaurante Autor', 'restauranteautor@correo.com', '" . hashPassword('Restauranteautor123.') . "', '/gastrolink/app/img/usuarios/34.jpg', 'restaurante'),
+    (35, 'Taberna Da Galera', 'tabernamoderna@correo.com', '" . hashPassword('Tabernamoderna123.') . "', '/gastrolink/app/img/usuarios/35.png', 'restaurante');";
 mysqli_query($connection, $insertar_usuario) or die('ERROR: No se puede insertar el usuario: ' . mysqli_error($connection));
 
 /*---------------------------------------------------------------
@@ -69,6 +63,7 @@ RESTAURANTE
 ---------------------------------------------------------------*/
 $restaurante = "CREATE TABLE IF NOT EXISTS restaurante (
     id_restaurante INT PRIMARY KEY,
+    tipo_restaurante ENUM('Mediterráneo', 'Carnes', 'Gourmet', 'Vegetariano', 'Asiático', 'Italiano', 'Mariscos', 'Tapas', 'Francés', 'Cafés') NOT NULL,
     descripcion TEXT,
     direccion VARCHAR(255),
     web VARCHAR(100),
@@ -78,22 +73,18 @@ $restaurante = "CREATE TABLE IF NOT EXISTS restaurante (
 );";
 mysqli_query($connection, $restaurante) or die('ERROR: No se puede crear la tabla restaurante: ' . mysqli_error($connection));
 
-$insertar_restaurante = "INSERT INTO restaurante (id_restaurante, descripcion, direccion, web, telefono) VALUES
-    (8, 'Restaurante gourmet especializado en cocina mediterránea moderna.', 'Calle Mayor 15, Madrid', 'www.mediterraneomadrid.com', '+34 911 111 111'),
-    (9, 'Steakhouse premium con carnes maduradas y selección internacional.', 'Avenida Diagonal 123, Barcelona', 'www.steakhousebcn.com', '+34 922 222 222'),
-    (10, 'Restaurante vegano con propuestas innovadoras y sostenibles.', 'Calle Valencia 45, Valencia', 'www.verdevalencia.com', '+34 933 333 333'),
-    
-    (21, 'Asador tradicional con horno de leña y productos locales.', 'Plaza del Sol 8, Sevilla', 'www.asadorsevilla.com', '+34 944 444 444'),
-    (22, 'Restaurante japonés con sushi bar y cocina teppanyaki.', 'Gran Vía 67, Madrid', 'www.sushimadrid.com', '+34 955 555 555'),
-    (23, 'Trattoria auténtica con pasta fresca y vinos italianos.', 'Calle Málaga 12, Málaga', 'www.trattoriamalaga.com', '+34 966 666 666'),
-    (24, 'Restaurante de mariscos con pescado fresco diario.', 'Paseo Marítimo 3, Santander', 'www.marisqueriasantander.com', '+34 977 777 777'),
-    (25, 'Brasserie francesa con ambiente parisino y cocina clásica.', 'Calle Rosellón 89, Barcelona', 'www.brasseriebarcelona.com', '+34 988 888 888'),
-    
-    (30, 'Cafetería-restaurante con horario extendido y cocina internacional.', 'Plaza Central 5, Bilbao', 'www.cafebilbao.com', '+34 999 999 999'),
-    
-    (34, 'Restaurante de autor con menú degustación y cocina creativa.', 'Calle Michelín 1, San Sebastián', 'www.restauranteautor.com', '+34 910 101 010'),
-    (35, 'Taberna moderna con tapas reinventadas y ambiente contemporáneo.', 'Calle Nueva 23, Zaragoza', 'www.tabernamoderna.com', '+34 920 202 020'
-);";
+$insertar_restaurante = "INSERT INTO restaurante (id_restaurante, tipo_restaurante, descripcion, direccion, web, telefono) VALUES
+    (8, 'Mediterráneo', 'Restaurante gourmet especializado en cocina mediterránea moderna.', 'Calle Mayor 15, Madrid', 'www.mediterraneomadrid.com', '+34 911 111 111'),
+    (9, 'Carnes', 'Steakhouse premium con carnes maduradas y selección internacional.', 'Avenida Diagonal 123, Barcelona', 'www.steakhousebcn.com', '+34 922 222 222'),
+    (10, 'Vegetariano', 'Restaurante vegano con propuestas innovadoras y sostenibles.', 'Calle Valencia 45, Valencia', 'www.verdevalencia.com', '+34 933 333 333'),
+    (21, 'Carnes', 'Asador tradicional con horno de leña y productos locales.', 'Plaza del Sol 8, Sevilla', 'www.asadorsevilla.com', '+34 944 444 444'),
+    (22, 'Asiático', 'Restaurante japonés con sushi bar y cocina teppanyaki.', 'Gran Vía 67, Madrid', 'www.sushimadrid.com', '+34 955 555 555'),
+    (23, 'Italiano', 'Trattoria auténtica con pasta fresca y vinos italianos.', 'Calle Málaga 12, Málaga', 'www.trattoriamalaga.com', '+34 966 666 666'),
+    (24, 'Mariscos', 'Restaurante de mariscos con pescado fresco diario.', 'Paseo Marítimo 3, Santander', 'www.marisqueriasantander.com', '+34 977 777 777'),
+    (25, 'Francés', 'Brasserie francesa con ambiente parisino y cocina clásica.', 'Calle Rosellón 89, Barcelona', 'www.brasseriebarcelona.com', '+34 988 888 888'),
+    (30, 'Cafés', 'Cafetería-restaurante con horario extendido y cocina internacional.', 'Plaza Central 5, Bilbao', 'www.cafebilbao.com', '+34 999 999 999'),
+    (34, 'Gourmet', 'Restaurante de autor con menú degustación y cocina creativa.', 'Calle Michelín 1, San Sebastián', 'www.restauranteautor.com', '+34 910 101 010'),
+    (35, 'Tapas', 'Taberna moderna con tapas reinventadas y ambiente contemporáneo.', 'Calle Nueva 23, Zaragoza', 'www.tabernamoderna.com', '+34 920 202 020');";
 mysqli_query($connection, $insertar_restaurante) or die('ERROR: No se pueden insertar los restaurantes: ' . mysqli_error($connection));
 
 /*---------------------------------------------------------------
@@ -113,16 +104,13 @@ $insertar_cocinero = "INSERT INTO cocinero (id_cocinero, descripcion, especialid
     (5, 'Chef especializado en repostería y postres.', 'Repostería', '3 años'),
     (6, 'Cocinero con experiencia en cocina internacional.', 'Internacional', '4 años'),
     (7, 'Chef con especialidad en cocina asiática.', 'Asiática', '6 años'),
-    
     (16, 'Especialista en cocina molecular y técnicas vanguardistas.', 'Cocina molecular', '7 años'),
     (17, 'Experto en cocina vegana y platos saludables.', 'Vegana', '4 años'),
     (18, 'Chef con formación en cocina francesa clásica.', 'Francesa', '8 años'),
     (19, 'Especialista en carnes y parrillas.', 'Parrilla', '5 años'),
     (20, 'Pastelera con experiencia en panadería artesanal.', 'Panadería', '6 años'),
-    
     (28, 'Cocinero especializado en pescados y mariscos.', 'Pescados', '4 años'),
     (29, 'Chef con experiencia en cocina fusión latino-asiática.', 'Fusión', '5 años'),
-    
     (32, 'Especialista en cocina mexicana auténtica.', 'Mexicana', '6 años'),
     (33, 'Chef con experiencia en cocina de autor y presentación gourmet.', 'Cocina de autor', '7 años');";
 mysqli_query($connection, $insertar_cocinero) or die('ERROR: No se pueden insertar los cocineros: ' . mysqli_error($connection));
@@ -143,16 +131,13 @@ $insertar_camarero = "INSERT INTO camarero (id_camarero, descripcion, experienci
     (1, 'Camarero con 3 años de experiencia en restaurantes de lujo.', '3 años', 'Español, Inglés'),
     (2, 'Camarera con experiencia en atención al cliente y servicio de mesa.', '2 años', 'Español, Francés'),
     (3, 'Camarero con habilidades en coctelería y servicio de barra.', '4 años', 'Español, Inglés'),
-    
     (11, 'Camarero con experiencia en eventos corporativos.', '3 años', 'Español, Inglés'),
     (12, 'Camarera especializada en servicio de vinos.', '4 años', 'Español, Francés, Italiano'),
     (13, 'Camarero con experiencia en restaurantes temáticos.', '2 años', 'Español, Inglés'),
     (14, 'Camarera con habilidades en servicio rápido y eficiente.', '5 años', 'Español'),
     (15, 'Camarero especializado en atención a grandes grupos.', '3 años', 'Español, Inglés'),
-    
     (26, 'Camarera con experiencia en hoteles 5 estrellas.', '6 años', 'Español, Inglés, Alemán'),
     (27, 'Camarero con conocimientos de mixología avanzada.', '4 años', 'Español, Inglés'),
-    
     (31, 'Camarero jefe con experiencia en gestión de equipos.', '8 años', 'Español, Inglés, Francés');";
 mysqli_query($connection, $insertar_camarero) or die('ERROR: No se pueden insertar los camareros: ' . mysqli_error($connection));
 

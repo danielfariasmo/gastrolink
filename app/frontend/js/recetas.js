@@ -117,7 +117,7 @@ function cargarFiltros(filtros) {
 
 // Función para cargar las recetas desde el backend
 function cargarRecetas(tipo = 'todos') {
-    const url = tipo === 'todos' ? '../../backend/get_recetas.php' : `../../backend/get_recetas.php?tipo=${tipo}`;
+    const url = tipo === 'todos' ? '../../backend/php/get_recetas.php' : `../../backend/php/get_recetas.php?tipo=${tipo}`;
 
     fetch(url)
         .then(response => response.json())
