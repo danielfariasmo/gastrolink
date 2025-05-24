@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil restaurantes</title>
+    <link rel="stylesheet" href="../css/perfilrestaurante.css">
+    <link rel="icon" type="image/png" href="../../img/menu/logo.png" sizes="16x16" />
+  
+</head>
+<body>
+     <!-- Menú cargado dinámicamente -->
+    <div id="menu-container"></div>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="sidebar-item">Guardados</div>
+            <div class="sidebar-item">Recetas</div>
+            <div class="sidebar-item active">Empresas</div>
+        </aside>
+
+        <main class="content">
+            <div class="profile-section">
+                <div class="profile-header">
+                    <div class="profile-avatar"></div>
+                    <div class="profile-info">
+                        <h2>Persona o Empresa</h2>
+                        <div class="profile-type">Tipo de Cuenta (Camarero/Cocinero/Restaurante)</div>
+                        <div class="profile-details">
+                            Tipo de Receta | Tipo de restaurante<br>
+                            Ubicación: Barcelona<br>
+                            Correo: persona@firma.com<br>
+                            Teléfono: +34 666 123 456
+                        </div>
+                    </div>
+                    <button class="edit-profile-btn">Editar Perfil</button>
+                </div>
+                
+                <div class="progress-bars">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%"></div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60%"></div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 90%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h3 class="section-title">Empresas</h3>
+                <button class="add-company-btn">Añadir empresa</button>
+            </div>
+
+            <div class="companies-list">
+                <div class="company-item">
+                    <div class="company-avatar"></div>
+                    <div class="company-info">
+                        <h4 class="company-name">Empresa</h4>
+                        <div class="company-details">
+                            <div class="company-detail-line"></div>
+                            <div class="company-detail-line"></div>
+                            <div class="company-detail-line"></div>
+                            <div class="company-detail-line"></div>
+                        </div>
+                    </div>
+                    <div class="company-actions">
+                        <button class="icon-btn">
+                            <i class="icon-edit"></i>
+                        </button>
+                        <button class="icon-btn">
+                            <i class="icon-delete"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="company-item">
+                    <div class="company-avatar"></div>
+                    <div class="company-info">
+                        <h4 class="company-name">Empresa</h4>
+                        <div class="company-details">
+                            <div class="company-detail-line"></div>
+                            <div class="company-detail-line"></div>
+                            <div class="company-detail-line"></div>
+                            <div class="company-detail-line"></div>
+                        </div>
+                    </div>
+                    <div class="company-actions">
+                        <button class="icon-btn">
+                            <i class="icon-edit"></i>
+                        </button>
+                        <button class="icon-btn">
+                            <i class="icon-delete"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="company-item">
+                    <div class="company-avatar"></div>
+                    <div class="company-info">
+                        <h4 class="company-name">Empresa</h4>
+                        <div class="company-details">
+                            <div class="company-detail-line"></div>
+                            <div class="company-detail-line"></div>
+                            <div class="company-detail-line"></div>
+                            <div class="company-detail-line"></div>
+                        </div>
+                    </div>
+                    <div class="company-actions">
+                        <button class="icon-btn">
+                            <i class="icon-edit"></i>
+                        </button>
+                        <button class="icon-btn">
+                            <i class="icon-delete"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer component -->
+    <div id="footer-container"></div>
+
+    <!-- JavaScript -->
+    <script src="../js/cargamenuyfooter.js"></script>
+</body>
+</html>
