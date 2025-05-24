@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfil Cocinero</title>
+    <link rel="stylesheet" href="../css/perfilcocinero.css" />
+    <link rel="icon" type="image/png" href="../../img/menu/logo.png" sizes="16x16" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+    <!-- Menu component -->
+    <div id="menu-container"></div>
+
+    <main>
+        <!-- Perfil -->
+        <section class="profile-section">
+            <div class="container profile-header">
+                <div class="profile-avatar"></div>
+                <div class="profile-info">
+                    <h2>Persona o Empresa</h2>
+                    <div class="profile-type">Tipo de Cuenta (Camarero/Cocinero/Restaurante)</div>
+                    <div class="profile-details">
+                        Tipo de Receta | Tipo de restaurante<br>
+                        Ubicación: Barcelona<br>
+                        Correo: persona@firma.com<br>
+                        Teléfono: +34 666 123 456
+                    </div>
+                </div>
+                <button class="edit-profile-btn">Editar Perfil</button>
+            </div>
+
+            <div class="container progress-bars">
+                <div class="progress-bar"><div class="progress-fill" style="width: 75%"></div></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 60%"></div></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 90%"></div></div>
+            </div>
+        </section>
+
+        <!-- Sección lateral y recetas -->
+        <div class="main-container container">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-item">Guardados</div>
+                <div class="sidebar-item active">Recetas</div>
+            </aside>
+
+            <!-- Recetas -->
+            <section class="content">
+                <div class="section-header">
+                    <h3 class="section-title">Recetas</h3>
+                    <button class="add-recipe-btn">Añadir receta</button>
+                </div>
+
+                <div class="recipes-grid">
+                    <!-- Tarjetas de receta repetidas -->
+                    <!-- Para una implementación dinámica, puedes usar JS para inyectar este bloque -->
+                    <div class="recipe-card">
+                        <div class="recipe-image">Imagen del plato</div>
+                        <div class="recipe-content">
+                            <h4 class="recipe-title">Plato</h4>
+                            <div class="recipe-time">Tiempo de receta</div>
+                            <div class="recipe-actions">
+                                <button class="view-recipe-btn">Ver receta</button>
+                                <div class="recipe-icons">
+                                    <button class="icon-btn"><i class="fa-solid fa-pen"></i></button>
+                                    <button class="icon-btn"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Repite o genera dinámicamente más recipe-card aquí -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer component -->
+    <div id="footer-container"></div>
+
+    <!-- JavaScript -->
+    <script src="../js/cargamenuyfooter.js"></script>
+</body>
+</html>
