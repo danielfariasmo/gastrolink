@@ -68,7 +68,6 @@ $restaurante = "CREATE TABLE IF NOT EXISTS restaurante (
     direccion VARCHAR(255),
     web VARCHAR(100),
     telefono VARCHAR(20),
-    
     FOREIGN KEY (id_restaurante) REFERENCES usuario(id_usuario)
 );";
 mysqli_query($connection, $restaurante) or die('ERROR: No se puede crear la tabla restaurante: ' . mysqli_error($connection));
@@ -166,11 +165,34 @@ $oferta = "CREATE TABLE IF NOT EXISTS oferta (
     tipo_puesto ENUM('cocinero', 'camarero') NOT NULL,
     fecha_publicacion DATE,
     estado ENUM('abierta', 'cerrada') DEFAULT 'abierta',
-    id_evento INT DEFAULT NULL,
-    FOREIGN KEY (id_restaurante) REFERENCES restaurante(id_restaurante),
-    FOREIGN KEY (id_evento) REFERENCES evento(id_evento)
+    FOREIGN KEY (id_restaurante) REFERENCES restaurante(id_restaurante)
 );";
 mysqli_query($connection, $oferta) or die('ERROR: No se puede crear la tabla oferta: ' . mysqli_error($connection));
+
+$insertar_ofertas = "INSERT INTO oferta (id_restaurante, titulo, descripcion, tipo_puesto, fecha_publicacion) VALUES
+    (8, 'Chef de cocina mediterránea', 'Buscamos chef creativo con experiencia en cocina mediterránea moderna.', 'cocinero', '2025-05-01'),
+    (8, 'Camarero con inglés', 'Atención al cliente en sala. Imprescindible inglés fluido.', 'camarero', '2025-05-02'),
+    (9, 'Parrillero experto en carnes', 'Responsable de la parrilla, dominio de cortes premium y maduración.', 'cocinero', '2025-05-01'),
+    (9, 'Camarero de barra', 'Servicio ágil y conocimiento de vinos y carnes.', 'camarero', '2025-05-02'),
+    (10, 'Chef vegano', 'Elaboración de platos innovadores y sostenibles sin productos animales.', 'cocinero', '2025-05-01'),
+    (10, 'Camarero con empatía', 'Buen trato con clientes y conocimiento de cocina vegetal.', 'camarero', '2025-05-02'),
+    (21, 'Asador tradicional', 'Cocinero especializado en horno de leña y recetas tradicionales.', 'cocinero', '2025-05-01'),
+    (21, 'Camarero de terraza', 'Atención de mesas exteriores en horario nocturno.', 'camarero', '2025-05-02'),
+    (22, 'Sushiman', 'Preparación de sushi, experiencia mínima 2 años.', 'cocinero', '2025-05-01'),
+    (22, 'Camarero para teppanyaki', 'Atención en barra japonesa y servicio de showcooking.', 'camarero', '2025-05-02'),
+    (23, 'Cocinero de pasta fresca', 'Elaboración artesanal de pasta y platos típicos italianos.', 'cocinero', '2025-05-01'),
+    (23, 'Camarero bilingüe', 'Se requiere italiano básico y experiencia previa.', 'camarero', '2025-05-02'),
+    (24, 'Chef de mariscos', 'Cocina especializada en mariscos y pescados frescos.', 'cocinero', '2025-05-01'),
+    (24, 'Camarero con conocimientos de vinos blancos', 'Servicio en sala y asesoría en maridajes.', 'camarero', '2025-05-02'),
+    (25, 'Cocinero de cocina francesa', 'Platos clásicos como boeuf bourguignon y quiche lorraine.', 'cocinero', '2025-05-01'),
+    (25, 'Camarero elegante', 'Servicio en ambiente clásico, presentación impecable.', 'camarero', '2025-05-02'),
+    (30, 'Cocinero brunch', 'Preparación de desayunos internacionales y platos ligeros.', 'cocinero', '2025-05-01'),
+    (30, 'Camarero con experiencia en cafetería', 'Atención en barra, elaboración de cafés y repostería.', 'camarero', '2025-05-02'),
+    (34, 'Chef creativo', 'Alta cocina con técnicas de vanguardia y menú degustación.', 'cocinero', '2025-05-01'),
+    (34, 'Camarero profesional', 'Experiencia en restaurantes con estrella Michelin.', 'camarero', '2025-05-02'),
+    (35, 'Cocinero de tapas modernas', 'Fusión de sabores tradicionales y técnicas modernas.', 'cocinero', '2025-05-01'),
+    (35, 'Camarero dinámico', 'Ambiente joven, atención en barra y terraza.', 'camarero', '2025-05-02');";
+mysqli_query($connection, $insertar_ofertas) or die('ERROR: No se pueden insertar las ofertas: ' . mysqli_error($connection));
 
 /*---------------------------------------------------------------
 RECETA
