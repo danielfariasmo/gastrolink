@@ -265,23 +265,6 @@
     color: var(--color-text-light);
   }
 
-  .tips-list {
-    list-style: none;
-  }
-
-  .tip-item {
-    position: relative;
-    padding-left: 30px;
-    margin-bottom: 15px;
-  }
-
-  .tip-item:before {
-    content: "💡";
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
-
   .recipe-actions {
     display: flex;
     justify-content: space-between;
