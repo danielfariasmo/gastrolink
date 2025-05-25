@@ -17,6 +17,11 @@ function mostrarPagina(numPagina) {
         const recipeCard = document.createElement('div');
         recipeCard.classList.add('recipe-card');
 
+        // Redirect on click
+        recipeCard.addEventListener('click', function () {
+            window.location.href = `detalle_recetas.html?id=${receta.id_receta}`;
+        });
+
         const recipeImage = document.createElement('div');
         recipeImage.classList.add('recipe-image');
         const img = document.createElement('img');
@@ -40,7 +45,7 @@ function mostrarPagina(numPagina) {
 
         const recipeSave = document.createElement('div');
         recipeSave.classList.add('recipe-save');
-        recipeSave.innerHTML = '<i class="far fa-heart"></i>';
+        recipeSave.innerHTML = '<i class="fa-regular fa-bookmark"></i>';
 
         recipeMeta.appendChild(recipeSave);
         recipeDetails.appendChild(recipeTitle);
