@@ -17,28 +17,50 @@ async function setupMenuAndSearch() {
     const menuLoaded = await loadComponent('../../backend/components/menu.php', 'menu-container');
     if (!menuLoaded) return;
 
+    // 2.1.1 Activar menú hamburguesa después de cargar el HTML
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+    if (menuToggle && dropdownMenu) {
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+        });
+        document.addEventListener('click', (e) => {
+            if (!dropdownMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                dropdownMenu.style.display = 'none';
+            }
+        });
+    }
+
     // 2.2 Gestión de sesión
     const guestView = document.getElementById('guest-view');
     const userView = document.getElementById('user-view');
-    if (guestView && userView) {
+
+    function updateSessionView() {
         const userData = sessionStorage.getItem('userData');
         if (userData) {
             const user = JSON.parse(userData);
             guestView.style.display = 'none';
             userView.style.display = 'flex';
-            document.getElementById('username-display').textContent = user.nombre || user.correo.split('@')[0];
+            document.getElementById('username-display').textContent = user.nombre || user.correo?.split('@')[0];
             if (user.fotoPerfil) {
                 document.getElementById('user-avatar').querySelector('img').src = user.fotoPerfil;
             }
+        } else {
+            guestView.style.display = 'flex';
+            userView.style.display = 'none';
         }
-        const logoutBtn = document.getElementById('logout-btn');
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', e => {
-                e.preventDefault();
-                sessionStorage.removeItem('userData');
-                window.location.href = '/index.html';
-            });
-        }
+    }
+
+    updateSessionView();
+
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', e => {
+            e.preventDefault();
+            sessionStorage.removeItem('userData');
+            location.replace('/gastrolink/app/frontend/html/index.html');
+        });
     }
 
     // 2.3 Inicializar búsqueda global
@@ -89,36 +111,29 @@ async function setupMenuAndSearch() {
         const id = item.dataset.id;
         let url = '';
 
-        // URL según tipo
         switch (tipo) {
             case 'receta':
                 url = `/gastrolink/app/frontend/html/recetas.html`;
-                //url = `/gastrolink/app/frontend/html/recetas.html?id=${id}`;
                 break;
             case 'restaurante':
                 url = `/gastrolink/app/frontend/html/restaurantes.html`;
-                //url = `/gastrolink/app/frontend/html/restaurantes.html?id=${id}`;
                 break;
             case 'camarero':
                 url = `/gastrolink/app/frontend/html/comunidad.html`;
-                //url = `/gastrolink/app/frontend/html/comunidad.html?id=${id}`;
                 break;
             case 'cocinero':
                 url = `/gastrolink/app/frontend/html/comunidad.html`;
-                //url = `/gastrolink/app/frontend/html/comunidad.html?id=${id}`;
                 break;
             default:
                 console.warn(`Tipo desconocido: ${tipo}`);
                 return;
         }
 
-        // Redirigir a la página correspondiente
         window.location.href = url;
     });
 }
 
 // 3. Inicialización
-
 document.addEventListener('DOMContentLoaded', () => {
     setupMenuAndSearch();
     loadComponent('../../backend/components/footer.php', 'footer-container');
