@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../../img/menu/logo.png" sizes="16x16">
+    <link rel="stylesheet" href="../css/detalle_recetas.css">
+    <title></title>
+</head>
+
+<body>
+    <!-- Menu component -->
+    <div id="menu-container"></div>
+
+    <div class="container">
+        <main class="recipe-detail">
+            <div class="recipe-header">
+                <h1 class="recipe-title"></h1>
+                <p class="recipe-subtitle"></p>
+
+                <div class="recipe-meta">
+                    <div class="recipe-meta-item">
+                        <span class="recipe-meta-icon">⏱️</span>
+                        <span>Tiempo de preparación: <span class="prep-time-value">--</span> minutos</span>
+                    </div>
+                    <div class="recipe-meta-item">
+                        <span class="recipe-meta-icon">🍽️</span>
+                        <span>Porciones: <span class="porciones-value">--</span></span>
+                    </div>
+                    <div class="recipe-meta-item">
+                        <span class="recipe-meta-icon">🔥</span>
+                        <span>Dificultad: <span class="dificultad-value">--</span></span>
+                    </div>
+                </div>
+
+                <div class="recipe-rating">
+                    <span class="star filled">NO CARGA ASIN★</span>
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                    <span class="star filled">★</span>
+                    <span class="star">★</span>
+                    <span class="recipe-rating-text">(4.2/5 - 128 valoraciones)</span>
+                </div>
+            </div>
+
+            <div class="recipe-image-container">
+                <img src="" alt="Imagen de la receta" class="recipe-image">
+            </div>
+
+            <div class="recipe-content">
+                <div class="recipe-sidebar">
+                    <div class="recipe-section">
+                        <h2 class="recipe-section-title">Ingredientes</h2>
+                        <ul class="ingredients-list"></ul>
+                    </div>
+
+                    <div class="recipe-section">
+                        <h2 class="recipe-section-title">Información Nutricional</h2>
+                        <div class="nutrition-list">
+                            <div class="nutrition-item">
+                                <span class="nutrition-value calorias-value">--</span>
+                                <span class="nutrition-label">Calorías</span>
+                            </div>
+                            <div class="nutrition-item">
+                                <span class="nutrition-value proteinas-value">--</span>
+                                <span class="nutrition-label">Proteínas</span>
+                            </div>
+                            <div class="nutrition-item">
+                                <span class="nutrition-value carbohidratos-value">--</span>
+                                <span class="nutrition-label">Carbohidratos</span>
+                            </div>
+                            <div class="nutrition-item">
+                                <span class="nutrition-value grasas-value">--</span>
+                                <span class="nutrition-label">Grasas</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recipe-main">
+                    <div class="recipe-section">
+                        <h2 class="recipe-section-title">Elaboración</h2>
+                        <ol class="steps-list"></ol>
+                    </div>
+
+                    <div class="chef-info">
+                        <div class="chef-image">
+                            <img src="../../img/miguel.avif" alt="Chef Miguel Rossi">
+                        </div>
+                        <div class="chef-details">
+                            <h3 class="chef-name">Chef Miguel Rossi</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recipe-actions">
+                <button class="action-button imprimir-btn">
+                    <span class="action-icon">🖨️</span>
+                    Imprimir receta
+                </button>
+                <button class="action-button guardar-btn">
+                    <span class="action-icon">💾</span>
+                    Guardar receta
+                </button>
+                <button class="action-button compartir-btn primary">
+                    <span class="action-icon">📤</span>
+                    Compartir
+                </button>
+            </div>
+
+            <div class="related-recipes">
+                <h2 class="related-title">Recetas relacionadas</h2>
+                <div class="related-grid"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer component -->
+    <div id="footer-container"></div>
+
+    <!-- JavaScript -->
+    <script src="../js/cargamenuyfooter.js"></script>
+    <script src="../js/detalle_recetas.js"></script>
+</body>
+
+</html>

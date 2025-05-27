@@ -1,70 +1,102 @@
- // Lógica de paginación
- const recetasPorPagina = 12;  // Establece el número de restaurantes por página
- const restaurantes = Array.from(document.querySelectorAll('.restaurant-card'));  // Obtén todas las tarjetas de restaurantes
- const totalPaginas = Math.ceil(restaurantes.length / recetasPorPagina);  // Calcula el número total de páginas
- let paginaActual = 1;  // Página actual
+// Variables de configuración
+const restaurantesPorPagina = 12;
+const restaurantsContainer = document.querySelector('.restaurants-grid');
+const paginationContainer = document.querySelector('.pagination');
+let currentPage = 1;
+let currentFilter = 'todos';
+let restaurantesData = [];
 
- function mostrarPagina(numPagina) {
-     paginaActual = numPagina;
+// Fetch restaurantes
+async function fetchRestaurantes(filtro) {
+    try {
+        const response = await fetch(`../../backend/php/get_restaurantes.php?filtro=${filtro}`);
+        const data = await response.json();
+        if (response.ok) {
+            restaurantesData = data;
+            currentFilter = filtro;
+            currentPage = 1;
+            renderRestaurantes();
+        } else {
+            console.error('Error al obtener los restaurantes:', data);
+        }
+    } catch (error) {
+        console.error('Error en la petición:', error);
+    }
+}
 
-     // Ocultar todas las tarjetas de restaurantes
-     restaurantes.forEach((restaurante, index) => {
-         restaurante.style.display = 'none';
-     });
+// Renderizar restaurantes
+function renderRestaurantes() {
+    restaurantsContainer.innerHTML = '';
+    const start = (currentPage - 1) * restaurantesPorPagina;
+    const end = start + restaurantesPorPagina;
+    const pageData = restaurantesData.slice(start, end);
 
-     // Mostrar solo las tarjetas de la página actual
-     const inicio = (numPagina - 1) * recetasPorPagina;
-     const fin = inicio + recetasPorPagina;
-     for (let i = inicio; i < fin && i < restaurantes.length; i++) {
-         restaurantes[i].style.display = 'block';
-     }
+    pageData.forEach(restaurante => {
+        const restaurantCard = document.createElement('a');
+        restaurantCard.className = 'restaurant-card';
+        restaurantCard.href = `detalle-restaurante.php?id=${restaurante.id_usuario}`;
+        restaurantCard.innerHTML = `
+            <div class="restaurant-image">
+                <img src="${restaurante.img_usuario}" alt="${restaurante.nombre}">
+            </div>
+            <div class="restaurant-details">
+                <h3 class="restaurant-name">${restaurante.nombre}</h3>
+                <p class="restaurant-type">${restaurante.tipo_restaurante}</p>
+                <p class="restaurant-description">${restaurante.descripcion}</p>
+            </div>
+        `;
+        restaurantsContainer.appendChild(restaurantCard);
+    });
 
-     actualizarPaginacion();
- }
+    renderPagination();
+}
 
- function actualizarPaginacion() {
-     const paginacion = document.querySelector('.pagination');
-     paginacion.innerHTML = '';
+// Renderizar paginación
+function renderPagination() {
+    paginationContainer.innerHTML = '';
+    const totalPages = Math.ceil(restaurantesData.length / restaurantesPorPagina);
 
-     // Botón ←
-     const prev = document.createElement('a');
-     prev.href = '#';
-     prev.classList.add('arrow');
-     prev.textContent = '←';
-     prev.onclick = (e) => {
-         e.preventDefault();
-         if (paginaActual > 1) {
-             mostrarPagina(paginaActual - 1);
-         }
-     };
-     paginacion.appendChild(prev);
+    const prevLink = document.createElement('a');
+    prevLink.href = '#';
+    prevLink.className = 'arrow';
+    prevLink.textContent = '←';
+    prevLink.addEventListener('click', () => changePage(currentPage - 1));
+    paginationContainer.appendChild(prevLink);
 
-     // Números de página
-     for (let i = 1; i <= totalPaginas; i++) {
-         const pageLink = document.createElement('a');
-         pageLink.href = '#';
-         pageLink.textContent = i;
-         if (i === paginaActual) pageLink.classList.add('active');
-         pageLink.onclick = (e) => {
-             e.preventDefault();
-             mostrarPagina(i);
-         };
-         paginacion.appendChild(pageLink);
-     }
+    for (let i = 1; i <= totalPages; i++) {
+        const pageLink = document.createElement('a');
+        pageLink.href = '#';
+        pageLink.textContent = i;
+        if (i === currentPage) pageLink.classList.add('active');
+        pageLink.addEventListener('click', () => changePage(i));
+        paginationContainer.appendChild(pageLink);
+    }
 
-     // Botón →
-     const next = document.createElement('a');
-     next.href = '#';
-     next.classList.add('arrow');
-     next.textContent = '→';
-     next.onclick = (e) => {
-         e.preventDefault();
-         if (paginaActual < totalPaginas) {
-             mostrarPagina(paginaActual + 1);
-         }
-     };
-     paginacion.appendChild(next);
- }
+    const nextLink = document.createElement('a');
+    nextLink.href = '#';
+    nextLink.className = 'arrow';
+    nextLink.textContent = '→';
+    nextLink.addEventListener('click', () => changePage(currentPage + 1));
+    paginationContainer.appendChild(nextLink);
+}
 
- // Mostrar la primera página al cargar
- mostrarPagina(1);
+// Cambiar página
+function changePage(newPage) {
+    const totalPages = Math.ceil(restaurantesData.length / restaurantesPorPagina);
+    if (newPage < 1 || newPage > totalPages) return;
+    currentPage = newPage;
+    renderRestaurantes();
+}
+
+// Filtros
+document.querySelector('.filters').addEventListener('click', (e) => {
+    if (e.target.classList.contains('filter-btn')) {
+        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        e.target.classList.add('active');
+        const filtro = e.target.getAttribute('data-tipo');
+        fetchRestaurantes(filtro);
+    }
+});
+
+// Cargar restaurantes por defecto
+fetchRestaurantes('todos');

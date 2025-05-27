@@ -212,13 +212,9 @@ a {
     transition: all 0.3s;
 }
 
-.pagination a.active {
-    background-color: #222;
-    color: white;
-    border-color: #222;
-}
 
-.pagination a:hover:not(.active) {
+
+.pagination a:hover {
     background-color: #f0f0f0;
 }
 

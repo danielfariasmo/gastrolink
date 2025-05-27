@@ -201,6 +201,10 @@ a {
     color: var(--color-primary);
 }
 
+.restaurant-description {
+    color: var(--color-text-medium);
+}
+
 /* Estilos para la paginación */
 .pagination {
     display: flex;
@@ -262,7 +266,7 @@ a {
     transition: all var(--transition-normal);
 }
 
-.filter-btn:hover, .filter-btn.active {
+.filter-btn:hover{
     background-color: var(--color-primary);
     color: var(--color-white);
 }
