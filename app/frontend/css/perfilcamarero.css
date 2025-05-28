@@ -25,7 +25,7 @@ body {
     background: var(--white);
     padding: 12px 20px;
     border-bottom: 1px solid var(--border-gray);
-    display: flex;
+    /* display: flex; */
     align-items: center;
     justify-content: space-between;
 }

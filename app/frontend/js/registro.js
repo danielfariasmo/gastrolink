@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const password = document.getElementById('password-register');
     const rol = document.getElementById('userType');
     const terms = document.getElementById('terms');
-
     const campos = [nombre, apellidos, email, password];
 
     // Función para mostrar o quitar errores
@@ -43,40 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'email-register':
                 if (!/^\S+@\S+\.\S+$/.test(valor)) mostrarError(input, 'Email no válido.');
                 break;
-            // case 'telefono':
-            //     if (!/^[0-9]{9,15}$/.test(valor)) mostrarError(input, 'Teléfono inválido.');
-            //     break;
             case 'password-register':
                 if (valor.length < 6) mostrarError(input, 'Mínimo 6 caracteres.');
                 break;
-            // case 'confirm-password':
-            //     if (valor !== password.value) mostrarError(input, 'Las contraseñas no coinciden.');
-            //     break;
         }
     }
-
-    // form.addEventListener('submit', (e) => {
-    //     e.preventDefault(); // Evita el envío del formulario
-
-    //     let valido = true;
-
-    //     campos.forEach(input => {
-    //         validarCampo(input);
-    //         if (input.parentNode.querySelector('.error-message')) valido = false;
-    //     });
-
-    //     if (!terms.checked) {
-    //         mostrarError(terms, 'Debes aceptar los términos.');
-    //         valido = false;
-    //     } else {
-    //         limpiarError(terms);
-    //     }
-
-    //     if (valido) {
-    //         console.log('Formulario válido. Puedes enviarlo o continuar...');
-    //         // Aquí podrías enviar con fetch() o mostrar mensaje de éxito
-    //     }
-    // });
 
     async function registrarUsuario(datosUsuario) {
         try {
@@ -88,10 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!response.ok) {
                 throw new Error('Error en la respuesta del servidor');
             }
-
-            const data = await response.json();
-            return data;
-            
+            return await response.json();
         } catch (error) {
             console.error('Error en el registro:', error);
             return {
@@ -101,28 +68,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Función para manejar el éxito del registro
-    function manejarRegistroExitoso(data, email) {
-        // Guardar datos del usuario en sessionStorage
-        sessionStorage.setItem('userData', JSON.stringify({
-            id: data.userId,
-            nombre: data.nombre,
-            correo: email,
-            rol: data.role,
-            fotoPerfil: data.fotoPerfil || '/ruta/a/imagen/default.png'
-        }));
-
-        // Redirigir según el rol
-        const rutas = {
-            restaurante: 'restaurante/dashboard.html',
-            cocinero: 'cocinero/dashboard.html',
-            camarero: 'camarero/dashboard.html'
+    function manejarRegistroExitoso(data) {
+        // Guardar datos del usuario en sessionStorage con la nueva estructura
+        const userData = {
+            id_usuario: data.userData.id_usuario,
+            nombre: data.userData.nombre,
+            correo: data.userData.correo,
+            tipo_usuario: data.userData.tipo_usuario,
+            img_usuario: data.userData.img_usuario
         };
+        sessionStorage.setItem('userData', JSON.stringify(userData));
 
-        window.location.href = rutas[data.role] || '../html/index.html';
+        // Redirigir a la página principal con parámetro de login exitoso
+        window.location.href = '../html/index.html?login=success';
     }
 
-    // Función para preparar los datos del formulario
     function prepararDatosFormulario() {
         const formData = new FormData();
         formData.append('funcion', 'registrar');
@@ -139,19 +99,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return formData;
     }
 
-    // Event listener del formulario
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-
         let valido = true;
 
-        // Validación de campos
         campos.forEach(input => {
             validarCampo(input);
             if (input.parentNode.querySelector('.error-message')) valido = false;
         });
 
-        // Validar términos
         if (!terms.checked) {
             mostrarError(terms, 'Debes aceptar los términos.');
             valido = false;
@@ -159,13 +115,12 @@ document.addEventListener('DOMContentLoaded', () => {
             limpiarError(terms);
         }
 
-        // Si todo es válido, proceder con el registro
         if (valido) {
             const datosFormulario = prepararDatosFormulario();
             const resultado = await registrarUsuario(datosFormulario);
 
             if (resultado.status === 'success') {
-                manejarRegistroExitoso(resultado, email.value.trim());
+                manejarRegistroExitoso(resultado);
             } else {
                 mostrarMensaje(resultado.message, true);
             }
@@ -173,14 +128,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function mostrarMensaje(mensaje, esError) {
-        // Limpiamos errores previos
         limpiarError(email);
         limpiarError(password);
-
         if (esError) {
             mostrarError(terms, mensaje);
-        } else {
-            console.log(mensaje); // o mostrarlo en algún contenedor...
         }
     }
 });

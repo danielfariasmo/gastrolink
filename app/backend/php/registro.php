@@ -4,19 +4,6 @@ header("Content-Type: application/json");
 
 include "../../../server/database.php";
 
-// Configuración de la base de datos
-$servidor = "localhost";
-$usuarioBD = "root";
-$password = "";
-$db = "gastrolink";
-
-// Conexión a la base de datos
-$conexion = mysqli_connect($servidor, $usuarioBD, $password, $db);
-if (!$conexion) {
-    echo json_encode(['status' => 'error', 'message' => 'Error en el sistema']);
-    exit;
-}
-
 // Verificar datos recibidos
 if (!isset($_POST['funcion']) || $_POST['funcion'] !== 'registrar') {
     echo json_encode(['status' => 'error', 'message' => 'Acción no válida']);
@@ -33,20 +20,19 @@ foreach ($camposRequeridos as $campo) {
 }
 
 // Sanitizar y validar datos
-$nombre = mysqli_real_escape_string($conexion, $_POST['nombre']);
-$apellidos = mysqli_real_escape_string($conexion, $_POST['apellidos']);
+$nombre = mysqli_real_escape_string($connection, $_POST['nombre']);
+$apellidos = mysqli_real_escape_string($connection, $_POST['apellidos']);
 $nombreCompleto = $nombre . ' ' . $apellidos;
-$email = mysqli_real_escape_string($conexion, $_POST['email']);
+$email = mysqli_real_escape_string($connection, $_POST['email']);
 $password = $_POST['password'];
-$rol = mysqli_real_escape_string($conexion, $_POST['rol']);
+$rol = mysqli_real_escape_string($connection, $_POST['rol']);
 
-// Validar formato de email
+// Validaciones
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     echo json_encode(['status' => 'error', 'message' => 'Email no válido']);
     exit;
 }
 
-// Validar rol
 $rolesPermitidos = ['restaurante', 'cocinero', 'camarero'];
 if (!in_array($rol, $rolesPermitidos)) {
     echo json_encode(['status' => 'error', 'message' => 'Rol no válido']);
@@ -55,7 +41,7 @@ if (!in_array($rol, $rolesPermitidos)) {
 
 // Verificar si el email ya existe
 $query = "SELECT id_usuario FROM usuario WHERE correo = '$email'";
-$result = mysqli_query($conexion, $query);
+$result = mysqli_query($connection, $query);
 
 if (mysqli_num_rows($result) > 0) {
     echo json_encode(['status' => 'error', 'message' => 'El email ya está registrado']);
@@ -85,27 +71,32 @@ $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
 // Insertar nuevo usuario
 $query = "INSERT INTO usuario (nombre, correo, clave, tipo_usuario, img_usuario) 
-          VALUES ('$nombre', '$email', '$passwordHash', '$rol', " . ($nombreImagen ? "'$nombreImagen'" : "NULL") . ")";//NOW())";
+          VALUES ('$nombreCompleto', '$email', '$passwordHash', '$rol', " . ($nombreImagen ? "'$nombreImagen'" : "NULL") . ")";
 
-if (mysqli_query($conexion, $query)) {
-    $userId = mysqli_insert_id($conexion);
+if (mysqli_query($connection, $query)) {
+    $userId = mysqli_insert_id($connection);
     
-    // Iniciar sesión automáticamente
+    // Configurar datos de sesión
     $_SESSION['id_usuario'] = $userId;
     $_SESSION['correo'] = $email;
     $_SESSION['rol'] = $rol;
-    
+    $_SESSION['nombre'] = $nombreCompleto;
+    $_SESSION['img_usuario'] = $nombreImagen;
+
     echo json_encode([
         'status' => 'success',
         'message' => 'Registro exitoso',
-        'userId' => $userId,
-        'nombre' => $nombre,
-        'role' => $rol,
-        'fotoPerfil' => $nombreImagen ? "/uploads/perfiles/$nombreImagen" : null
+        'userData' => [
+            'id_usuario' => $userId,
+            'nombre' => $nombreCompleto,
+            'correo' => $email,
+            'tipo_usuario' => $rol,
+            'img_usuario' => $nombreImagen ? '/gastrolink/app/img/usuarios/' . $nombreImagen : '/gastrolink/app/img/default-avatar.jpg'
+        ]
     ]);
 } else {
-    echo json_encode(['status' => 'error', 'message' => 'Error en el registro: ' . mysqli_error($conexion)]);
+    echo json_encode(['status' => 'error', 'message' => 'Error en el registro: ' . mysqli_error($connection)]);
 }
 
-mysqli_close($conexion);
+mysqli_close($connection);
 ?>

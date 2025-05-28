@@ -366,12 +366,12 @@
                             <span id="username-display"></span>
                         </div>
                         <div class="user-avatar" id="user-avatar">
-                            <img src="/gastrolink/app/img/default-avatar.png" alt="Foto de perfil">
+                            <img src="/gastrolink/app/img/default-avatar.jpg" alt="Foto de perfil">
                         </div>
                         <div class="user-dropdown">
                             <ul>
                                 <li><a href="/ajustes">Ajustes</a></li>
-                                <li><a href="/cuenta">Mi Cuenta</a></li>
+                                <li><a href="#" id="profile-link">Mi Cuenta</a></li>
                                 <li><a href="#" id="logout-btn">Cerrar Sesión</a></li>
                             </ul>
                         </div>
@@ -404,60 +404,65 @@
         });
     </script>
     <script>
-        console.log("El script de sesión se está cargando");
-        document.addEventListener('DOMContentLoaded', () => {
-            // Elementos del DOM
-            const guestView = document.getElementById('guest-view');
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("Script de menú cargado - Versión final");
+
+            // 1. Obtener elementos del DOM
+            const profileLink = document.getElementById('profile-link');
             const userView = document.getElementById('user-view');
-            const usernameDisplay = document.getElementById('username-display');
-            const userAvatar = document.getElementById('user-avatar');
-            const logoutBtn = document.getElementById('logout-btn');
+            const guestView = document.getElementById('guest-view');
 
-            // Verificar sesión al cargar la página
-            checkSession();
-
-            // Función para verificar el estado de sesión
-            function checkSession() {
-                const userData = sessionStorage.getItem('userData');
-                if (userData) {
-                    const user = JSON.parse(userData);
-                    updateMenuForLoggedInUser(user);
-                }
+            // Verificar que los elementos existen
+            if (!profileLink || !userView || !guestView) {
+                console.error("Elementos esenciales no encontrados");
+                return;
             }
 
-            // Función para actualizar el menú cuando el usuario inicia sesión
-            function updateMenuForLoggedInUser(user) {
+            // 2. Obtener datos de usuario
+            const userData = sessionStorage.getItem('userData');
+            if (!userData) {
+                console.log("No hay usuario logueado - Mostrando vista invitado");
+                guestView.style.display = 'flex';
+                userView.style.display = 'none';
+                return;
+            }
+
+            try {
+                const user = JSON.parse(userData);
+                console.log("Usuario logueado:", user);
+
+                // 3. Configurar enlace de perfil dinámico
+                const profileRoutes = {
+                    'cocinero': "../../frontend/html/perfilcamarero.html",
+                    'camarero': '../../frontend/html/perfilcamarero.html',
+                    'restaurante': '../../frontend/html/perfilrestaurante.html'
+                };
+
+                if (user.tipo_usuario && profileRoutes[user.tipo_usuario]) {
+                    // Configurar href y texto
+                    profileLink.href = profileRoutes[user.tipo_usuario];
+                    profileLink.textContent = user.tipo_usuario === 'restaurante' ? 'Mi Restaurante' : 'Mi Perfil';
+
+                    // Manejador de clic seguro
+                    profileLink.onclick = function(e) {
+                        console.log("Intentando navegar a:", this.href);
+                        if (!this.href.includes('#')) {
+                            window.location.href = this.href;
+                        }
+                        e.preventDefault(); // Siempre prevenir el comportamiento por defecto
+                    };
+
+                    console.log("Enlace de perfil configurado correctamente para:", user.tipo_usuario);
+                }
+
+                // 4. Actualizar vista de usuario
                 guestView.style.display = 'none';
                 userView.style.display = 'flex';
-                usernameDisplay.textContent = user.nombre || user.correo.split('@')[0];
-                if (user.fotoPerfil) {
-                    userAvatar.querySelector('img').src = user.fotoPerfil;
-                }
-            }
 
-            // Función para cerrar sesión
-            function logout() {
-                sessionStorage.removeItem('userData');
-                window.location.href = '/index.html';
-            }
-
-            // Evento para cerrar sesión
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    logout();
-                });
-            }
-
-            // Verificar si viene de un login exitoso
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('login') && urlParams.get('login') === 'success') {
-                const userData = sessionStorage.getItem('userData');
-                if (userData) {
-                    const user = JSON.parse(userData);
-                    updateMenuForLoggedInUser(user);
-                }
-                window.history.replaceState({}, document.title, window.location.pathname);
+            } catch (e) {
+                console.error("Error procesando datos de usuario:", e);
+                guestView.style.display = 'flex';
+                userView.style.display = 'none';
             }
         });
     </script>
