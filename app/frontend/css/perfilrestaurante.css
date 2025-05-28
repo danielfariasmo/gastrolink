@@ -57,7 +57,7 @@ body {
     background: var(--white);
     padding: 12px 20px;
     border-bottom: 1px solid var(--border-gray);
-    display: flex;
+    /* display: flex; */
     align-items: center;
     justify-content: space-between;
 }
@@ -251,7 +251,7 @@ body {
     font-weight: 600;
 }
 
-.add-company-btn {
+.add-oferta-btn {
     background: var(--text-dark);
     color: white;
     border: none;
@@ -261,14 +261,14 @@ body {
     cursor: pointer;
 }
 
-.companies-list {
+.ofertas-list {
     background: var(--white);
     border-radius: 8px;
     box-shadow: var(--shadow);
     overflow: hidden;
 }
 
-.company-item {
+.oferta-item {
     display: flex;
     align-items: center;
     padding: 20px;
@@ -276,15 +276,15 @@ body {
     transition: background-color 0.2s;
 }
 
-.company-item:last-child {
+.oferta-item:last-child {
     border-bottom: none;
 }
 
-.company-item:hover {
+.oferta-item:hover {
     background: var(--background-gray);
 }
 
-.company-avatar {
+.oferta-avatar {
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -293,45 +293,45 @@ body {
     margin-right: 16px;
 }
 
-.company-info {
+.oferta-info {
     flex: 1;
 }
 
-.company-name {
+.oferta-name {
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 8px;
 }
 
-.company-details {
+.oferta-details {
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
 
-.company-detail-line {
+.oferta-detail-line {
     height: 8px;
     background: var(--border-gray);
     border-radius: 4px;
 }
 
-.company-detail-line:nth-child(1) {
+.oferta-detail-line:nth-child(1) {
     width: 80%;
 }
 
-.company-detail-line:nth-child(2) {
+.oferta-detail-line:nth-child(2) {
     width: 60%;
 }
 
-.company-detail-line:nth-child(3) {
+.oferta-detail-line:nth-child(3) {
     width: 70%;
 }
 
-.company-detail-line:nth-child(4) {
+.oferta-detail-line:nth-child(4) {
     width: 50%;
 }
 
-.company-actions {
+.oferta-actions {
     display: flex;
     gap: 12px;
 }
@@ -375,6 +375,94 @@ body {
 .icon-search::before {
     content: "🔍"; /* Reemplaza esto con tu clase de icono */
 }
+/* POPUP  */
+/* Estilos para el popup */
+.popup-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.close-popup {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+.close-popup:hover {
+    color: #000;
+}
+
+.popup-content h2 {
+    margin-top: 0;
+    color: #333;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.submit-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background-color: #45a049;
+}
+/* fIN POPUP */
 
 @media (max-width: 768px) {
     .main-container {
@@ -388,13 +476,13 @@ body {
         border-bottom: 1px solid var(--border-gray);
     }
     
-    .company-item {
+    .oferta-item {
         flex-direction: column;
         text-align: center;
         gap: 16px;
     }
     
-    .company-avatar {
+    .oferta-avatar {
         margin-right: 0;
     }
 }

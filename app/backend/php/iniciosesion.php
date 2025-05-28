@@ -16,8 +16,8 @@ if (
 $usuario = mysqli_real_escape_string($connection, $_POST['usuario']);
 $clave = $_POST['contra'];
 
-// Consulta
-$query = "SELECT id_usuario, nombre, img_usuario, tipo_usuario, clave FROM usuario WHERE correo = '$usuario'";
+// Consulta mejorada para obtener todos los datos necesarios
+$query = "SELECT id_usuario, nombre, correo, img_usuario, tipo_usuario, clave FROM usuario WHERE correo = '$usuario'";
 $result = mysqli_query($connection, $query);
 
 if ($result && mysqli_num_rows($result) > 0) {
@@ -25,16 +25,21 @@ if ($result && mysqli_num_rows($result) > 0) {
 
     if (password_verify($clave, $row['clave'])) {
         $_SESSION['id_usuario'] = $row['id_usuario'];
-        $_SESSION['correo'] = $usuario;
+        $_SESSION['correo'] = $row['correo'];
         $_SESSION['rol'] = $row['tipo_usuario'];
+        $_SESSION['nombre'] = $row['nombre'];
+        $_SESSION['img_usuario'] = $row['img_usuario'];
 
         echo json_encode([
             'status' => 'success',
             'message' => 'Login exitoso',
-            'role' => $row['tipo_usuario'],
-            'userId' => $row['id_usuario'],
-            'nombre' => $row['nombre'],
-            'fotoPerfil' => $row['img_usuario'] ?? null
+            'userData' => [
+                'id_usuario' => $row['id_usuario'],
+                'nombre' => $row['nombre'],
+                'correo' => $row['correo'],
+                'tipo_usuario' => $row['tipo_usuario'],
+                'img_usuario' => $row['img_usuario'] ? '/gastrolink/app/img/usuarios/' . $row['img_usuario'] : '/gastrolink/app/img/default-avatar.jpg'
+            ]
         ]);
     } else {
         echo json_encode(['status' => 'error', 'message' => 'Correo o contraseña incorrectos']);
@@ -45,3 +50,4 @@ if ($result && mysqli_num_rows($result) > 0) {
 
 mysqli_free_result($result);
 mysqli_close($connection);
+?>

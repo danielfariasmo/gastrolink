@@ -267,27 +267,108 @@ $favorito = "CREATE TABLE IF NOT EXISTS favorito (
 );";
 mysqli_query($connection, $favorito) or die('ERROR: No se puede crear la tabla favorito: ' . mysqli_error($connection));
 
-
-/* CREATE TABLE favorito_receta (
+$favorito_receta = "CREATE TABLE favorito_receta (
     id_favorito INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
     id_receta INT NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
     FOREIGN KEY (id_receta) REFERENCES receta(id_receta)
-);
+);";
+mysqli_query($connection, $favorito_receta) or die('ERROR: No se puede crear la tabla favorito: ' . mysqli_error($connection));
 
-CREATE TABLE favorito_cocinero (
+$insertar_fav_receta = "INSERT INTO favorito_receta (id_usuario, id_receta) VALUES
+    (1, 3),  -- Daniel Farias favorito Brownie
+    (2, 5),  -- Laura García favorito Pizza Margarita
+    (3, 7),  -- Antonio Martínez favorito Gazpacho
+    (4, 2),  -- Daniel González favorito Paella
+    (5, 6),  -- Candela Martínez favorito Tarta de Queso
+    (6, 8),  -- María Fernández favorito Risotto
+    (7, 10), -- Pedro Sánchez favorito Croquetas
+    (11, 1), -- Alejandro Mendoza favorito Ensalada
+    (12, 4), -- Isabel Ortega favorito Sopa
+    (13, 9), -- Ricardo Herrera favorito Bacalao
+    (14, 12),-- Patricia Vega favorito Hamburguesa Vegana
+    (15, 14),-- Fernando Guzmán favorito Mousse
+    (16, 11),-- Beatriz Ríos favorito Flan
+    (17, 13),-- Hugo Silva favorito Arroz con Pollo
+    (18, 15),-- Adriana Castro favorito Ensalada Quinoa
+    (19, 16),-- Raúl Navarro favorito Empanadas
+    (20, 3), -- Carmen Paredes favorito Brownie
+    (26, 5), -- Mónica Ríos favorito Pizza
+    (27, 7), -- Sergio Silva favorito Gazpacho
+    (28, 2), -- Diana Castro favorito Paella
+    (29, 6), -- Arturo Navarro favorito Tarta
+    (31, 8), -- Emilio Mendoza favorito Risotto
+    (32, 10),-- Rocío Ortega favorito Croquetas
+    (33, 1); -- Felipe Herrera favorito Ensalada";
+mysqli_query($connection, $insertar_fav_receta) or die('ERROR: No se pueden insertar las recetas: ' . mysqli_error($connection));
+
+
+$favorito_cocinero = "CREATE TABLE favorito_cocinero (
     id_favorito INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
     id_cocinero INT NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
     FOREIGN KEY (id_cocinero) REFERENCES cocinero(id_cocinero)
-);
+);";
+mysqli_query($connection, $favorito_cocinero) or die('ERROR: No se puede crear la tabla favorito: ' . mysqli_error($connection));
 
-CREATE TABLE favorito_restaurante (
+$insertar_fav_cocinero = "INSERT INTO favorito_cocinero (id_usuario, id_cocinero) VALUES
+    (1, 4),   -- Daniel Farias sigue a Daniel González
+    (2, 5),   -- Laura García sigue a Candela Martínez
+    (3, 6),   -- Antonio Martínez sigue a María Fernández
+    (11, 7),  -- Alejandro Mendoza sigue a Pedro Sánchez
+    (12, 16), -- Isabel Ortega sigue a Beatriz Ríos
+    (13, 17), -- Ricardo Herrera sigue a Hugo Silva
+    (14, 18), -- Patricia Vega sigue a Adriana Castro
+    (15, 19), -- Fernando Guzmán sigue a Raúl Navarro
+    (26, 20), -- Mónica Ríos sigue a Carmen Paredes
+    (27, 28), -- Sergio Silva sigue a Diana Castro
+    (31, 29), -- Emilio Mendoza sigue a Arturo Navarro
+    (4, 32),  -- Daniel González sigue a Rocío Ortega
+    (5, 33),  -- Candela Martínez sigue a Felipe Herrera
+    (6, 4),   -- María Fernández sigue a Daniel González
+    (7, 5),   -- Pedro Sánchez sigue a Candela Martínez
+    (16, 6),  -- Beatriz Ríos sigue a María Fernández
+    (17, 7),  -- Hugo Silva sigue a Pedro Sánchez
+    (18, 16), -- Adriana Castro sigue a Beatriz Ríos
+    (19, 17), -- Raúl Navarro sigue a Hugo Silva
+    (20, 18); -- Carmen Paredes sigue a Adriana Castro";
+mysqli_query($connection, $insertar_fav_cocinero) or die('ERROR: No se pueden insertar las recetas: ' . mysqli_error($connection));
+
+$favorito_restaurante = "CREATE TABLE favorito_restaurante (
     id_favorito INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
     id_restaurante INT NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
     FOREIGN KEY (id_restaurante) REFERENCES restaurante(id_restaurante)
-); */
+);";
+mysqli_query($connection, $favorito_restaurante) or die('ERROR: No se puede crear la tabla favorito: ' . mysqli_error($connection));
+
+
+$insertar_fav_restaurante = "INSERT INTO favorito_restaurante (id_usuario, id_restaurante) VALUES
+    (1, 8),   -- Daniel Farias favorito Madrid Gourmet
+    (2, 9),   -- Laura García favorito Calle del Hambre
+    (3, 10),  -- Antonio Martínez favorito Tierra Noble
+    (4, 21),  -- Daniel González favorito Asador Real
+    (5, 22),  -- Candela Martínez favorito Sushi Madrid
+    (6, 23),  -- María Fernández favorito Trattoria Málaga
+    (7, 24),  -- Pedro Sánchez favorito La Gaviota
+    (11, 25), -- Alejandro Mendoza favorito Brasserie Barceloca
+    (12, 30), -- Isabel Ortega favorito Café Bilbao
+    (13, 34), -- Ricardo Herrera favorito Restaurante Autor
+    (14, 35), -- Patricia Vega favorito Taberna Da Galera
+    (15, 8),  -- Fernando Guzmán favorito Madrid Gourmet
+    (16, 9),  -- Beatriz Ríos favorito Calle del Hambre
+    (17, 10), -- Hugo Silva favorito Tierra Noble
+    (18, 21), -- Adriana Castro favorito Asador Real
+    (19, 22), -- Raúl Navarro favorito Sushi Madrid
+    (20, 23), -- Carmen Paredes favorito Trattoria Málaga
+    (26, 24), -- Mónica Ríos favorito La Gaviota
+    (27, 25), -- Sergio Silva favorito Brasserie Barceloca
+    (28, 30), -- Diana Castro favorito Café Bilbao
+    (29, 34), -- Arturo Navarro favorito Restaurante Autor
+    (31, 35), -- Emilio Mendoza favorito Taberna Da Galera
+    (32, 8),  -- Rocío Ortega favorito Madrid Gourmet
+    (33, 9);  -- Felipe Herrera favorito Calle del Hambre";
+mysqli_query($connection, $insertar_fav_restaurante) or die('ERROR: No se pueden insertar las recetas: ' . mysqli_error($connection));

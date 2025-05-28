@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -32,9 +33,15 @@
             </div>
 
             <div class="container progress-bars">
-                <div class="progress-bar"><div class="progress-fill" style="width: 75%"></div></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 60%"></div></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 90%"></div></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%"></div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 60%"></div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 90%"></div>
+                </div>
             </div>
         </section>
 
@@ -74,6 +81,72 @@
                 </div>
             </section>
         </div>
+
+        <!-- Popup para añadir receta -->
+        <div id="add-recipe-popup" class="popup-container">
+            <div class="popup-content">
+                <span class="close-popup">&times;</span>
+                <h2>Añadir Nueva Receta</h2>
+                <form id="recipe-form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="recipe-title">Título:</label>
+                        <input type="text" id="recipe-title" name="title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipe-type">Tipo de receta:</label>
+                        <select id="recipe-type" name="type" required>
+                            <option value="Entrante">Entrante</option>
+                            <option value="Plato Principal">Plato Principal</option>
+                            <option value="Postre">Postre</option>
+                            <option value="Vegetariano">Vegetariano</option>
+                            <option value="Sin Gluten">Sin Gluten</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipe-description">Descripción:</label>
+                        <textarea id="recipe-description" name="description" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipe-ingredients">Ingredientes (separados por comas):</label>
+                        <textarea id="recipe-ingredients" name="ingredients" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipe-steps">Pasos (separados por saltos de línea):</label>
+                        <textarea id="recipe-steps" name="steps" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipe-time">Tiempo de preparación (minutos):</label>
+                        <input type="number" id="recipe-time" name="time" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipe-portions">Porciones:</label>
+                        <input type="number" id="recipe-portions" name="portions" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipe-difficulty">Dificultad:</label>
+                        <select id="recipe-difficulty" name="difficulty" required>
+                            <option value="Fácil">Fácil</option>
+                            <option value="Media">Media</option>
+                            <option value="Difícil">Difícil</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recipe-image">Imagen de la receta:</label>
+                        <input type="file" id="recipe-image" name="image" accept="image/*">
+                    </div>
+
+                    <button type="submit" class="submit-btn">Guardar Receta</button>
+                </form>
+            </div>
+        </div>
     </main>
 
     <!-- Footer component -->
@@ -81,5 +154,10 @@
 
     <!-- JavaScript -->
     <script src="../js/cargamenuyfooter.js"></script>
+    <!-- <script src="../js/crear_receta.js"></script> -->
+    <script src="../js/perfilcocinero.js"></script>
+    <!-- <script src="../js/perfilcamarero.js"></script> -->
+    <!-- <script src="../js/perfilrestaurante.js"></script> -->
 </body>
+
 </html>

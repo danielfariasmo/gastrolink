@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('login-form');
     const email = document.getElementById('email-login');
     const password = document.getElementById('password-login');
-
     const campos = [email, password];
 
     // Función para mostrar o quitar errores
@@ -47,8 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     form.addEventListener('submit', (e) => {
-        e.preventDefault(); // Evita el envío del formulario
-
+        e.preventDefault();
         let valido = true;
 
         campos.forEach(input => {
@@ -57,20 +55,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (valido) {
-            // Si las validaciones del cliente son correctas, validar con el servidor
             validarUsuarioContra(email.value.trim(), password.value.trim());
         }
     });
 
     function mostrarMensajeLogin(mensaje, esError) {
-        // Limpiamos errores previos
         limpiarError(email);
         limpiarError(password);
-
         if (esError) {
             mostrarError(password, mensaje);
-        } else {
-            console.log(mensaje); // o mostrarlo en algún contenedor...
         }
     }
 
@@ -84,35 +77,33 @@ document.addEventListener('DOMContentLoaded', () => {
             method: "POST",
             body: formData
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Error en la solicitud: " + response.statusText);
-                }
-                return response.json();
-            })
-            // En tu función fetch del login
-            .then(data => {
-                if (data.status === "success") {
-                    // Guardar datos del usuario en sessionStorage
-                    const userData = {
-                        id: data.userId,
-                        nombre: data.nombre,
-                        correo: email.value.trim(),
-                        rol: data.role,
-                        fotoPerfil: data.fotoPerfil || '/gastrolink/app/img/default-avatar.png'
-                    };
-                    sessionStorage.setItem('userData', JSON.stringify(userData));
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error en la solicitud: " + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === "success") {
+                // Guardar datos del usuario en sessionStorage con la nueva estructura
+                const userData = {
+                    id_usuario: data.userData.id_usuario,
+                    nombre: data.userData.nombre,
+                    correo: data.userData.correo,
+                    tipo_usuario: data.userData.tipo_usuario,
+                    img_usuario: data.userData.img_usuario
+                };
+                sessionStorage.setItem('userData', JSON.stringify(userData));
 
-                    // Redirigir a la página principal con parámetro de login exitoso
-                    window.location.href = '../html/index.html?login=success';
-                } else {
-                    mostrarMensajeLogin(data.message, true);
-                }
-            })
-            .catch(error => {
-                console.error("Error en la solicitud:", error);
-                mostrarMensajeLogin("Error en la solicitud. Consulta la consola para más detalles.", true);
-            });
+                // Redirigir a la página principal con parámetro de login exitoso
+                window.location.href = '../html/index.html?login=success';
+            } else {
+                mostrarMensajeLogin(data.message, true);
+            }
+        })
+        .catch(error => {
+            console.error("Error en la solicitud:", error);
+            mostrarMensajeLogin("Error en la conexión. Inténtalo de nuevo.", true);
+        });
     }
-
 });
