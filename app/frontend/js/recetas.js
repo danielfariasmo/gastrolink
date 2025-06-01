@@ -43,11 +43,6 @@ function mostrarPagina(numPagina) {
         const recipeMeta = document.createElement('div');
         recipeMeta.classList.add('recipe-meta');
 
-        const recipeSave = document.createElement('div');
-        recipeSave.classList.add('recipe-save');
-        recipeSave.innerHTML = '<i class="fa-regular fa-bookmark"></i>';
-
-        recipeMeta.appendChild(recipeSave);
         recipeDetails.appendChild(recipeTitle);
         recipeDetails.appendChild(recipeDescription);
         recipeDetails.appendChild(recipeMeta);
