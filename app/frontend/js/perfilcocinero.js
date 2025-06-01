@@ -157,7 +157,7 @@ function guardarReceta(e) {
     formData.append('action', 'create_recipe');
     formData.append('id_cocinero', userData.id_usuario);
     
-    fetch('../../backend/php/get_p_restaurante.php', {
+    fetch('../../backend/php/crear_receta.php', {
         method: 'POST',
         body: formData
     })
