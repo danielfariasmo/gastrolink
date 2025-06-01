@@ -266,6 +266,10 @@ a:hover {
 }
 
 /* Connections Section */
+.card-feature a:hover {
+  color: var(--color-primary);
+} 
+
 .connections {
   background-color: var(--color-white);
 }
@@ -383,6 +387,7 @@ a:hover {
 .community {
   background-color: var(--color-white);
   padding: 0;
+  padding-top: 30px;
 }
 
 .community-content-wrapper {
