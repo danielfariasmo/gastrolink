@@ -34,7 +34,7 @@ function renderRestaurantes() {
     pageData.forEach(restaurante => {
         const restaurantCard = document.createElement('a');
         restaurantCard.className = 'restaurant-card';
-        restaurantCard.href = `detalle-restaurante.php?id=${restaurante.id_usuario}`;
+        restaurantCard.href = `detalles_restaurantes.html?id=${restaurante.id_usuario}`;
         restaurantCard.innerHTML = `
             <div class="restaurant-image">
                 <img src="${restaurante.img_usuario}" alt="${restaurante.nombre}">

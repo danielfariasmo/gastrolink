@@ -2,10 +2,6 @@
 header('Content-Type: application/json');
 require_once '../../../server/database.php';
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 $filtro = isset($_GET['filtro']) ? $_GET['filtro'] : 'todos';
 
 try {
@@ -37,4 +33,3 @@ try {
     http_response_code(500);
     echo json_encode(['error' => $e->getMessage()]);
 }
-?>

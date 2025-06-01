@@ -1,16 +1,3 @@
-// Función para seguir/dejar de seguir a un miembro
-function toggleFollow(button) {
-    button.classList.toggle('following');
-    
-    if (button.classList.contains('following')) {
-        button.textContent = 'Siguiendo';
-        alert('Ahora estás siguiendo a este miembro');
-    } else {
-        button.textContent = 'Seguir';
-        alert('Has dejado de seguir a este miembro');
-    }
-}
-
 const miembrosPorPagina = 8;
 const membersContainer = document.querySelector('.members-grid');
 const paginationContainer = document.querySelector('.pagination');
@@ -53,7 +40,6 @@ function renderMiembros() {
                 <p class="member-bio">${miembro.descripcion}</p>
                 ${miembro.especialidad ? `<p class="member-specialty">Especialidad: ${miembro.especialidad}</p>` : ''}
                 ${miembro.idiomas ? `<p class="member-languages">Idiomas: ${miembro.idiomas}</p>` : ''}
-                <button class="follow-btn" onclick="toggleFollow(this)">Seguir</button>
             </div>
         `;
         membersContainer.appendChild(memberCard);
