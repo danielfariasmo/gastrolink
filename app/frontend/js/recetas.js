@@ -132,7 +132,21 @@ function cargarRecetas(tipo = 'todos') {
         })
         .catch(error => console.error('Error fetching recetas:', error));
 }
+// FUnción para los botones del filtro
+document.addEventListener('DOMContentLoaded', () => {
+    const filterButtons = document.querySelectorAll('.filter-btn');
 
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+
+            button.classList.add('active');
+
+            const tipoSeleccionado = button.dataset.tipo;
+            console.log('Filtrar por tipo:', tipoSeleccionado);
+        });
+    });
+});
 // Inicializar la carga de recetas y filtros
 document.addEventListener('DOMContentLoaded', () => {
     cargarRecetas();

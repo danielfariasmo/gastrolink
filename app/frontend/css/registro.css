@@ -52,6 +52,19 @@ body {
     align-items: center;
     padding: var(--spacing-md);
 }
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../img/catadevinos.jpg'); /* Cambia por la ruta correcta */
+    background-size: cover;
+    background-position: center;
+    filter: blur(0.25rem);
+    z-index: -1;
+}
 
 .container {
     width: 100%;
@@ -65,7 +78,7 @@ body {
     width: 100%;
     background-color: var(--white);
     border-radius: var(--border-radius-lg);
-    box-shadow: 0 5px 15px var(--shadow-color);
+    box-shadow: 0 5px 15px var( --primary-color);
     overflow: hidden;
     display: flex;
 }
@@ -188,6 +201,24 @@ input[type="tel"]:focus {
     outline: none;
     border-color: var(--primary-color);
 }
+input[type="file"],
+select {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    font-size: var(15px);
+    transition: border-color var(--transition-fast);
+    background-color: var(--white);
+    color: var(--text-color);
+}
+
+input[type="file"]:focus,
+select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
 
 .checkbox-group {
     display: flex;
