@@ -244,6 +244,11 @@ a {
     background-color: var(--color-primary);
     color: var(--color-white);
 }
+.filter-btn.active {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
 
 /* Estilos responsivos */
 @media (min-width: 1600px) {
