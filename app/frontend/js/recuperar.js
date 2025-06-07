@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Referencias a elementos del DOM
     const form = document.getElementById('recuperarForm');
     const emailInput = document.getElementById('email');
     const emailError = document.getElementById('emailError');
@@ -8,16 +7,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const emailConfirmation = document.getElementById('emailConfirmation');
     const resetButton = document.getElementById('resetButton');
 
-    // Variable para almacenar el email
     let emailValue = '';
 
-    // Función para validar email
     function validateEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     }
 
-    // Función para mostrar u ocultar error
     function validateEmailInput() {
         if (emailValue.trim() === '') {
             emailError.textContent = 'El email es obligatorio';
@@ -34,29 +30,42 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Validación en tiempo real
     emailInput.addEventListener('input', function(e) {
         emailValue = e.target.value;
         validateEmailInput();
     });
 
-    // Envío del formulario
     form.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        if (!validateEmailInput()) {
-            return;
-        }
+        if (!validateEmailInput()) return;
 
-        // Mostrar confirmación
-        emailConfirmation.textContent = emailValue;
-        formContainer.classList.add('hidden');
-        confirmationContainer.classList.remove('hidden');
-
-        // Aquí iría la lógica para enviar el email de recuperación
+        // Enviar la solicitud al backend
+        fetch('../../backend/php/recuperar_clave.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({ email: emailValue })
+        })
+        .then(response => response.text())
+        .then(data => {
+            if (data.includes('Correo enviado con éxito')) {
+                emailConfirmation.textContent = emailValue;
+                formContainer.classList.add('hidden');
+                confirmationContainer.classList.remove('hidden');
+            } else {
+                emailError.textContent = data || 'Error al enviar el correo.';
+                emailInput.classList.add('error');
+            }
+        })
+        .catch(error => {
+            console.error('Error en la solicitud:', error);
+            emailError.textContent = 'Ocurrió un error inesperado.';
+            emailInput.classList.add('error');
+        });
     });
 
-    // Reseteo del formulario
     resetButton.addEventListener('click', function() {
         emailInput.value = '';
         emailValue = '';

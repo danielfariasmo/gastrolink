@@ -16,12 +16,13 @@ $usuario = "CREATE TABLE IF NOT EXISTS usuario (
     correo VARCHAR(100) NOT NULL UNIQUE,
     clave VARCHAR(255) NOT NULL,
     img_usuario VARCHAR(255),
+    token VARCHAR(255),
     tipo_usuario ENUM('restaurante', 'cocinero', 'camarero') NOT NULL
 );";
 mysqli_query($connection, $usuario) or die('ERROR: No se puede crear la tabla usuario: ' . mysqli_error($connection));
 
 $insertar_usuario = "INSERT INTO usuario (id_usuario, nombre, correo, clave, img_usuario, tipo_usuario) VALUES
-    (1, 'Daniel Farias Morales', 'danielf@correo.com', '" . hashPassword('Daniel123.') . "', '/gastrolink/app/img/usuarios/1.jpg', 'camarero'),
+    (1, 'Daniel Farias Morales', 'fariasd99@gmail.com', '" . hashPassword('Daniel123.') . "', '/gastrolink/app/img/usuarios/1.jpg', 'camarero'),
     (2, 'Laura García Ruiz', 'laura@correo.com', '" . hashPassword('Laura123.') . "', '/gastrolink/app/img/usuarios/2.webp', 'camarero'),
     (3, 'Antonio Martínez Torres', 'antonio@correo.com', '" . hashPassword('Antonio123.') . "', '/gastrolink/app/img/usuarios/3.jpg', 'camarero'),
     (4, 'Daniel González Garrote', 'danielg@correo.com', '" . hashPassword('Daniel123.') . "', '/gastrolink/app/img/usuarios/4.jpg', 'cocinero'),
