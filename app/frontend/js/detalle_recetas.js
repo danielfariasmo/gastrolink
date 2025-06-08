@@ -84,34 +84,36 @@ function configurarPopupEdicion(receta) {
 }
 
 function guardarCambiosReceta(idReceta) {
-    // Obtener los valores del formulario
-    const datosActualizados = {
-        titulo: document.getElementById('edit-title').value,
-        introduccion: document.getElementById('edit-intro').value,
-        ingredientes: document.getElementById('edit-ingredients').value,
-        pasos: document.getElementById('edit-steps').value,
-        tiempo_preparacion: document.getElementById('edit-time').value,
-        porciones: document.getElementById('edit-portions').value,
-        dificultad: document.getElementById('edit-difficulty').value
-    };
+    // Crear FormData para enviar también archivos si es necesario
+    const formData = new FormData();
+    const usuario = JSON.parse(userData);
+    formData.append('action', 'update_recipe');
+    formData.append('id_receta', idReceta);
+    formData.append('id_usuario', usuario.id_usuario);
+    formData.append('title', document.getElementById('edit-title').value);
+    formData.append('description', document.getElementById('edit-intro').value);
+    formData.append('ingredients', document.getElementById('edit-ingredients').value);
+    formData.append('steps', document.getElementById('edit-steps').value);
+    formData.append('time', document.getElementById('edit-time').value);
+    formData.append('portions', document.getElementById('edit-portions').value);
+    formData.append('difficulty', document.getElementById('edit-difficulty').value);
+    
+    // Añadir la imagen si se seleccionó una nueva
+    const imageInput = document.getElementById('edit-image');
+    if (imageInput && imageInput.files[0]) {
+        formData.append('image', imageInput.files[0]);
+    }
 
-    // Aquí iría la llamada a tu API para actualizar la receta
-    console.log('Guardando cambios para receta:', idReceta, datosActualizados);
-
-    // Ejemplo de llamada fetch (ajusta según tu API)
-    fetch(`../../backend/php/actualizar_receta.php?id=${idReceta}`, {
+    // Enviar los datos
+    fetch('../../backend/php/actualizar_receta.php', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(datosActualizados)
+        body: formData // No establezcas Content-Type, FormData lo maneja automáticamente
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
             alert('Receta actualizada correctamente');
             document.getElementById('edit-popup').style.display = 'none';
-            // Recargar la receta para ver los cambios
             location.reload();
         } else {
             alert('Error al actualizar: ' + (data.message || 'Error desconocido'));
