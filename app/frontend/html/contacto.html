@@ -3,60 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- FAVICON-->
-    <link rel="icon" type="image/png" href="../../img/menu/logo.png" sizes="16x16">
-    <title>Formulario de Contacto</title>
+    <title>Contacto y Preguntas Frecuentes</title>
     <link rel="stylesheet" href="../css/contacto.css">
+    <link rel="icon" type="image/png" href="../../img/menu/logo.png" sizes="16x16">
 </head>
 <body>
-    <div class="container">
-        <div class="form-container">
-            <h1>Contacto</h1>
+    <!-- Aquí se cargará el menú -->
+    <div id="menu-container"></div>
 
-            <div id="formContainer">
-                <form id="contactoForm">
-                    <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre">
-                        <p class="error-message" id="nombreError"></p>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Correo electrónico</label>
-                        <input type="email" id="email" name="email" placeholder="tu@email.com">
-                        <p class="error-message" id="emailError"></p>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="asunto">Asunto</label>
-                        <input type="text" id="asunto" name="asunto" placeholder="Asunto del mensaje">
-                        <p class="error-message" id="asuntoError"></p>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="mensaje">Mensaje</label>
-                        <textarea id="mensaje" name="mensaje" rows="4" placeholder="Escribe tu mensaje aquí..."></textarea>
-                        <p class="error-message" id="mensajeError"></p>
-                    </div>
-
-                    <button type="submit">Enviar mensaje</button>
-                </form>
+    <main>
+        <section class="header-section">
+            <div class="container">
+                <header class="header1">
+                    <h1>Contáctanos</h1>
+                    <p>Estamos aquí para ayudarte. Envíanos un mensaje o consulta nuestras preguntas frecuentes.</p>
+                </header>
             </div>
+        </section>
 
-            <div id="confirmationContainer" class="hidden">
-                <div class="confirmation">
-                    <div class="check-icon">✓</div>
-                    <p>¡Gracias por contactarnos! Hemos recibido tu mensaje y te responderemos pronto.</p>
-                    <button id="resetButton" class="text-button">Enviar otro mensaje</button>
+        <section class="contact-section">
+            <div class="container">
+                <div class="form-container">
+                    <h2>Envíanos un mensaje</h2>
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Nombre completo</label>
+                                <input type="text" id="name" name="name" required>
+                                <div class="error-message" id="nameError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Correo electrónico</label>
+                                <input type="email" id="email" name="email" required>
+                                <div class="error-message" id="emailError"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Teléfono</label>
+                                <input type="tel" id="phone" name="phone">
+                                <div class="error-message" id="phoneError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Asunto</label>
+                                <select id="subject" name="subject" required>
+                                    <option value="">Selecciona un asunto</option>
+                                    <option value="general">Consulta general</option>
+                                    <option value="support">Soporte técnico</option>
+                                    <option value="sales">Ventas</option>
+                                    <option value="partnership">Alianzas</option>
+                                    <option value="other">Otro</option>
+                                </select>
+                                <div class="error-message" id="subjectError"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Mensaje</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Describe tu consulta o proyecto..." required></textarea>
+                            <div class="error-message" id="messageError"></div>
+                        </div>
+
+                        <button type="submit">
+                            <span class="button-icon">✉</span>
+                            Enviar mensaje
+                        </button>
+                    </form>
+
+                    <div id="successMessage" class="confirmation hidden">
+                        <div class="check-icon">✓</div>
+                        <h3>¡Mensaje enviado exitosamente!</h3>
+                        <p>Te responderemos pronto.</p>
+                        <button type="button" class="text-button" onclick="resetForm()">Enviar otro mensaje</button>
+                    </div>
+                </div>
+
+                <div class="contact-info">
+                    <h3>Información de contacto</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">✉</div>
+                        <div class="contact-details">
+                            <strong>Email</strong>
+                            <span>contacto@empresa.com</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-details">
+                            <strong>Teléfono</strong>
+                            <span>+1 (555) 123-4567</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <strong>Dirección</strong>
+                            <span>123 Calle Principal<br>Ciudad, País 12345</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">🕒</div>
+                        <div class="contact-details">
+                            <strong>Horario</strong>
+                            <span>Lun - Vie: 9:00 - 18:00<br>Sáb: 10:00 - 14:00</span>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="links">
-                <a href="index.html">Volver al inicio</a>
+        <section class="faq-section">
+            <div class="container">
+                <div class="faq-container">
+                    <h2>Preguntas Frecuentes</h2>
+                    <p class="faq-subtitle">Encuentra respuestas a las preguntas más comunes</p>
+
+                    <div class="faq-list">
+                        <!-- FAQ Items -->
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFaq(0)">
+                                <span>¿Cuál es el tiempo de respuesta promedio?</span>
+                                <span class="faq-icon">+</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Nuestro tiempo de respuesta promedio es de 24-48 horas durante días laborables. Para consultas urgentes, puedes contactarnos directamente por teléfono.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFaq(1)">
+                                <span>¿Ofrecen soporte técnico 24/7?</span>
+                                <span class="faq-icon">+</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Ofrecemos soporte técnico de lunes a viernes de 9:00 AM a 6:00 PM. Para emergencias fuera de horario, contamos con un servicio de guardia disponible.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFaq(2)">
+                                <span>¿Cómo puedo solicitar una cotización?</span>
+                                <span class="faq-icon">+</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Puedes solicitar una cotización completando el formulario de contacto con los detalles de tu proyecto, o enviándonos un email directamente con tus requerimientos específicos.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFaq(3)">
+                                <span>¿Realizan trabajos a distancia?</span>
+                                <span class="faq-icon">+</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Sí, trabajamos con clientes de todo el mundo. Utilizamos herramientas de colaboración en línea para mantener una comunicación fluida durante todo el proyecto.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFaq(4)">
+                                <span>¿Cuáles son sus métodos de pago?</span>
+                                <span class="faq-icon">+</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Aceptamos transferencias bancarias, tarjetas de crédito/débito, PayPal y otros métodos de pago digitales. Los términos de pago se establecen al inicio de cada proyecto.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" onclick="toggleFaq(5)">
+                                <span>¿Ofrecen garantía en sus servicios?</span>
+                                <span class="faq-icon">+</span>
+                            </button>
+                            <div class="faq-answer">
+                                <p>Sí, todos nuestros servicios incluyen una garantía de satisfacción. Los detalles específicos de la garantía varían según el tipo de proyecto y se especifican en el contrato.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
+    <!-- Footer component -->
+    <div id="footer-container"></div>
+
+    <!-- JavaScript -->
+    <script src="../js/cargamenuyfooter.js"></script>
     <script src="../js/contacto.js"></script>
 </body>
 </html>

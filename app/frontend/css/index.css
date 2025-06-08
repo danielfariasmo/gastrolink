@@ -41,7 +41,7 @@
   --spacing-4xl: 80px;
   
   /* Fuentes */
-  --font-family: 'Poppins', sans-serif;
+  --font-family: 'Port Lligat Sans';
   --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
@@ -67,7 +67,12 @@
   /* Contenedor */
   --container-width: 1200px;
 }
-
+/* @font-face {
+  font-family: 'Port Lligat Sans';
+  src: url('../fonts/PortLligatSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+} */
 /* Reset y estilos generales */
 * {
   margin: 0;
