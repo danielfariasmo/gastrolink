@@ -1,22 +1,101 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Obtener datos del usuario desde sessionStorage
+let editandoOfertaId = null;
+
+function limpiarErrores() {
+    document.querySelectorAll('.error-message').forEach(error => error.remove());
+}
+
+document.addEventListener('DOMContentLoaded', function () {
     const userData = JSON.parse(sessionStorage.getItem('userData'));
-    
-    // Verificar que el usuario es un restaurante
+
     if (!userData || userData.tipo_usuario !== 'restaurante') {
         window.location.href = '../html/index.html';
         return;
     }
 
-    // Cargar datos del restaurante
     cargarDatosRestaurante(userData.id_usuario);
-    
-    // Configurar eventos
+
     document.querySelector('.edit-profile-btn').addEventListener('click', editarPerfil);
-    document.querySelector('.add-company-btn').addEventListener('click', mostrarPopupEmpresa);
     document.querySelectorAll('.sidebar-item').forEach(item => {
         item.addEventListener('click', cambiarSeccion);
     });
+
+    const addOfertaBtn = document.querySelector('.add-oferta-btn');
+    const ofertaPopup = document.getElementById('add-oferta-popup');
+    const closePopup = document.querySelector('.close-popup');
+    const ofertaForm = document.getElementById('oferta-form');
+
+    addOfertaBtn.addEventListener('click', () => {
+        editandoOfertaId = null;
+        ofertaForm.reset();
+        limpiarErrores();
+        document.getElementById('oferta-fecha').value = new Date().toISOString().split('T')[0];
+        ofertaPopup.style.display = 'flex';
+    });
+
+    closePopup.addEventListener('click', () => ofertaPopup.style.display = 'none');
+    ofertaPopup.addEventListener('click', e => {
+        if (e.target === ofertaPopup) ofertaPopup.style.display = 'none';
+    });
+
+    ofertaForm.querySelectorAll('input, textarea, select').forEach(input => {
+        input.addEventListener('blur', () => {
+            if (!input.value.trim()) {
+                mostrarErrorInput(input, 'Este campo es obligatorio.');
+            } else {
+                limpiarErrorInput(input);
+            }
+        });
+    });
+
+    ofertaForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        let valido = true;
+
+        ofertaForm.querySelectorAll('input, textarea, select').forEach(input => {
+            if (!input.value.trim()) {
+                mostrarErrorInput(input, 'Este campo es obligatorio.');
+                valido = false;
+            } else {
+                limpiarErrorInput(input);
+            }
+        });
+
+        if (!valido) return;
+
+        const formData = new FormData(ofertaForm);
+        formData.append('id_restaurante', userData.id_usuario);
+
+        const url = editandoOfertaId
+            ? '../../backend/php/editar_oferta.php'
+            : '../../backend/php/crear_oferta.php';
+
+        if (editandoOfertaId) {
+            formData.append('id_oferta', editandoOfertaId);
+        }
+
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(editandoOfertaId ? 'Oferta actualizada' : 'Oferta creada con éxito');
+                    ofertaPopup.style.display = 'none';
+                    ofertaForm.reset();
+                    cargarDatosRestaurante(userData.id_usuario);
+                    editandoOfertaId = null;
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al enviar el formulario');
+            });
+    });
+
+    document.getElementById('oferta-fecha').value = new Date().toISOString().split('T')[0];
 });
 
 function cargarDatosRestaurante(id) {
@@ -36,77 +115,69 @@ function cargarDatosRestaurante(id) {
 }
 
 function actualizarUI(restaurante, ofertas, eventos) {
-    // Actualizar información del perfil
     const avatar = document.querySelector('.profile-avatar');
-    if (restaurante.imagen) {
-        avatar.style.backgroundImage = `url('${restaurante.imagen}')`;
-    } else {
-        avatar.style.backgroundImage = "url('../../img/default-avatar.jpg')";
-    }
-    
+    avatar.style.backgroundImage = `url('${restaurante.imagen || '../../img/default-avatar.jpg'}')`;
+
     document.querySelector('.profile-info h2').textContent = restaurante.nombre;
     document.querySelector('.profile-type').textContent = `Restaurante (${restaurante.tipo_restaurante})`;
+
+    let webUrl = restaurante.web.startsWith('http') ? restaurante.web : 'https://' + restaurante.web;
     document.querySelector('.profile-details').innerHTML = `
         ${restaurante.descripcion}<br>
         Dirección: ${restaurante.direccion}<br>
         Teléfono: ${restaurante.telefono}<br>
-        Web: <a href="${restaurante.web}" target="_blank">${restaurante.web}</a>
+        Web: <a href="${webUrl}" target="_blank">${webUrl}</a>
     `;
-    
-    // Actualizar ofertas de empleo
-    actualizarOfertasEmpleo(ofertas);
-    
-    // Actualizar eventos (si existen)
+
+    actualizarOfertasEmpleo(ofertas, restaurante.imagen);
+
     if (eventos && eventos.length > 0) {
         actualizarEventos(eventos);
     }
 }
 
-function actualizarOfertasEmpleo(ofertas) {
-    const companiesList = document.querySelector('.companies-list');
+function actualizarOfertasEmpleo(ofertas, imagen) {
+    const companiesList = document.querySelector('.ofertas-list');
     companiesList.innerHTML = '';
-    
+
     if (ofertas.length === 0) {
         companiesList.innerHTML = '<p>No hay ofertas de empleo publicadas.</p>';
         return;
     }
-    
+
+    const imageUrl = imagen || '../../img/default-avatar.jpg';
+
     ofertas.forEach(oferta => {
         const companyItem = document.createElement('div');
-        companyItem.className = 'company-item';
+        companyItem.className = 'oferta-item';
         companyItem.innerHTML = `
-            <div class="company-avatar" style="background-image: url('${restaurante.imagen || '../../img/default-avatar.jpg'}')"></div>
-            <div class="company-info">
-                <h4 class="company-name">${oferta.titulo}</h4>
-                <div class="company-details">
-                    <div class="company-detail-line">Tipo: ${oferta.tipo_puesto}</div>
-                    <div class="company-detail-line">Publicado: ${new Date(oferta.fecha_publicacion).toLocaleDateString()}</div>
-                    <div class="company-detail-line">Estado: ${oferta.estado}</div>
-                    <div class="company-detail-line">${oferta.descripcion.substring(0, 60)}...</div>
+            <div class="oferta-avatar" style="background-image: url('${imageUrl}')"></div>
+            <div class="oferta-info">
+                <h4 class="oferta-name">${oferta.titulo}</h4>
+                <div class="oferta-details">
+                    <div>Tipo: ${oferta.tipo_puesto}</div>
+                    <div>Publicado: ${new Date(oferta.fecha_publicacion).toLocaleDateString()}</div>
+                    <div>Estado: ${oferta.estado}</div>
+                    <div>${oferta.descripcion}</div>
                 </div>
             </div>
-            <div class="company-actions">
-                <button class="icon-btn edit-btn" data-id="${oferta.id_oferta}">
-                    <i class="icon-edit">✏️</i>
-                </button>
-                <button class="icon-btn delete-btn" data-id="${oferta.id_oferta}">
-                    <i class="icon-delete">🗑️</i>
-                </button>
+            <div class="oferta-actions">
+                <button class="icon-btn edit-btn" data-id='${JSON.stringify(oferta)}'>✏️</button>
+                <button class="icon-btn delete-btn" data-id="${oferta.id_oferta}">🗑️</button>
             </div>
         `;
         companiesList.appendChild(companyItem);
     });
-    
-    // Agregar eventos a los botones
+
     document.querySelectorAll('.edit-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const idOferta = this.getAttribute('data-id');
-            editarOferta(idOferta);
+        btn.addEventListener('click', function () {
+            const oferta = JSON.parse(this.getAttribute('data-id'));
+            abrirEditarOferta(oferta);
         });
     });
-    
+
     document.querySelectorAll('.delete-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const idOferta = this.getAttribute('data-id');
             eliminarOferta(idOferta);
         });
@@ -114,18 +185,73 @@ function actualizarOfertasEmpleo(ofertas) {
 }
 
 function actualizarEventos(eventos) {
-    // Implementar lógica para mostrar eventos si es necesario
-    console.log('Eventos del restaurante:', eventos);
+    console.log('Eventos:', eventos);
 }
 
 function cambiarSeccion(e) {
-    document.querySelectorAll('.sidebar-item').forEach(item => {
-        item.classList.remove('active');
-    });
+    document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
     e.target.classList.add('active');
-    
-    // Aquí puedes implementar la lógica para cambiar entre secciones
-    console.log('Cambiando a sección:', e.target.textContent);
+
+    const empleos = document.querySelector('.contenido-empleos');
+    const guardados = document.querySelector('.contenido-guardados');
+
+    if (!empleos || !guardados) return;
+
+    if (e.target.textContent.trim().toLowerCase() === 'guardados') {
+        empleos.style.display = 'none';
+        guardados.style.display = 'block';
+        cargarFavoritos();
+    } else {
+        empleos.style.display = 'block';
+        guardados.style.display = 'none';
+    }
+}
+
+document.getElementById('filtro-tipo').addEventListener('change', cargarFavoritos);
+function cargarFavoritos() {
+    const userData = JSON.parse(sessionStorage.getItem('userData'));
+    const filtro = document.getElementById('filtro-tipo').value;
+
+    fetch(`../../backend/php/get_favoritos.php?id_usuario=${userData.id_usuario}`)
+        .then(res => res.json())
+        .then(data => {
+            const contenedor = document.querySelector('.favoritos-list');
+            contenedor.innerHTML = '';
+
+            if (!data.success || (!data.restaurantes.length && !data.recetas.length)) {
+                contenedor.innerHTML = '<p>No tienes elementos guardados.</p>';
+                return;
+            }
+
+            if (filtro === 'todos' || filtro === 'restaurantes') {
+                data.restaurantes.forEach(fav => {
+                    contenedor.innerHTML += `
+                        <div class="favorito-item">
+                            <div class="favorito-avatar" style="background-image: url('${fav.img_usuario || '../../img/default-avatar.jpg'}')"></div>
+                            <div class="favorito-info">
+                                <h4>${fav.nombre}</h4>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            if (filtro === 'todos' || filtro === 'recetas') {
+                data.recetas.forEach(receta => {
+                    contenedor.innerHTML += `
+                        <div class="favorito-item">
+                            <div class="favorito-avatar" style="background-image: url('${receta.imagen || '../../img/default-avatar.jpg'}')"></div>
+                            <div class="favorito-info">
+                                <h4>${receta.nombre}</h4>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+        })
+        .catch(err => {
+            console.error('Error al cargar favoritos', err);
+        });
 }
 
 function mostrarError(mensaje) {
@@ -134,42 +260,52 @@ function mostrarError(mensaje) {
     errorDiv.className = 'error-message';
     errorDiv.textContent = mensaje;
     main.prepend(errorDiv);
-    
-    setTimeout(() => {
-        errorDiv.remove();
-    }, 5000);
+    setTimeout(() => errorDiv.remove(), 5000);
 }
 
 function editarPerfil() {
-    // Implementar lógica para editar perfil
-    console.log('Editar perfil');
-    window.location.href = 'editar_perfil.html';
+    const userData = JSON.parse(sessionStorage.getItem('userData'));
+    if (userData?.id_usuario) {
+        window.location.href = `edit_restaurante.html?id=${userData.id_usuario}`;
+    } else {
+        alert("No se pudo identificar el usuario.");
+    }
 }
 
-function mostrarPopupEmpresa() {
-    // Implementar lógica para mostrar popup de nueva oferta
-    console.log('Mostrar popup para añadir empresa/oferta');
-    // Aquí puedes mostrar un modal o redirigir a otra página
-    window.location.href = 'nueva_oferta.html';
-}
-
-function editarOferta(idOferta) {
-    // Implementar lógica para editar oferta
-    console.log('Editar oferta con ID:', idOferta);
-    window.location.href = `editar_oferta.html?id=${idOferta}`;
-}
+let ofertaAEliminar = null;
 
 function eliminarOferta(idOferta) {
-    if (confirm('¿Estás seguro de que quieres eliminar esta oferta?')) {
-        const userData = JSON.parse(sessionStorage.getItem('userData'));
-        
-        fetch(`../../backend/php/eliminar_oferta.php?id_oferta=${idOferta}&id_restaurante=${userData.id_usuario}`, {
-            method: 'DELETE'
+    ofertaAEliminar = idOferta;
+    document.getElementById('confirm-delete-popup').style.display = 'flex';
+}
+
+document.getElementById('cancel-delete').addEventListener('click', () => {
+    document.getElementById('confirm-delete-popup').style.display = 'none';
+    ofertaAEliminar = null;
+});
+
+document.getElementById('close-delete-popup').addEventListener('click', () => {
+    document.getElementById('confirm-delete-popup').style.display = 'none';
+    ofertaAEliminar = null;
+});
+
+document.getElementById('confirm-delete').addEventListener('click', () => {
+    if (!ofertaAEliminar) return;
+
+    const userData = JSON.parse(sessionStorage.getItem('userData'));
+
+    fetch('../../backend/php/eliminar_oferta.php', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id_oferta: ofertaAEliminar,
+            id_restaurante: userData.id_usuario
         })
+    })
         .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error HTTP: ${response.status}`);
-            }
+            if (!response.ok) throw new Error(`HTTP error ${response.status}`);
             return response.json();
         })
         .then(data => {
@@ -177,72 +313,48 @@ function eliminarOferta(idOferta) {
                 alert('Oferta eliminada con éxito');
                 cargarDatosRestaurante(userData.id_usuario);
             } else {
-                throw new Error(data.message || 'Error desconocido al eliminar');
+                throw new Error(data.message || 'Error desconocido');
             }
         })
         .catch(error => {
             console.error('Error al eliminar oferta:', error);
             alert(`Error al eliminar la oferta: ${error.message}`);
+        })
+        .finally(() => {
+            document.getElementById('confirm-delete-popup').style.display = 'none';
+            ofertaAEliminar = null;
         });
-    }
+});
+
+function abrirEditarOferta(oferta) {
+    const form = document.getElementById('oferta-form');
+    form.reset();
+    limpiarErrores();
+
+    document.getElementById('oferta-titulo').value = oferta.titulo;
+    document.getElementById('oferta-descripcion').value = oferta.descripcion;
+    document.getElementById('oferta-tipo').value = oferta.tipo_puesto;
+    document.getElementById('oferta-fecha').value = oferta.fecha_publicacion;
+    document.getElementById('oferta-estado').value = oferta.estado;
+
+    editandoOfertaId = oferta.id_oferta;
+    document.getElementById('add-oferta-popup').style.display = 'flex';
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Elementos del popup
-    const addOfertaBtn = document.querySelector('.add-oferta-btn');
-    const ofertaPopup = document.getElementById('add-oferta-popup');
-    const closePopup = document.querySelector('.close-popup');
-    const ofertaForm = document.getElementById('oferta-form');
-    
-    // Mostrar popup al hacer clic en "Añadir oferta"
-    addOfertaBtn.addEventListener('click', function() {
-        ofertaPopup.style.display = 'flex';
-    });
-    
-    // Cerrar popup
-    closePopup.addEventListener('click', function() {
-        ofertaPopup.style.display = 'none';
-    });
-    
-    // Cerrar popup al hacer clic fuera del contenido
-    ofertaPopup.addEventListener('click', function(e) {
-        if (e.target === ofertaPopup) {
-            ofertaPopup.style.display = 'none';
-        }
-    });
-    
-    // Manejar envío del formulario
-    ofertaForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Aquí iría el código para enviar los datos al servidor
-        // Puedes usar fetch() para enviar los datos
-        
-        // Ejemplo:
-        const formData = new FormData(ofertaForm);
-        
-        fetch('../../backend/php/get_p_restaurante.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Oferta creada con éxito');
-                ofertaPopup.style.display = 'none';
-                ofertaForm.reset();
-                // Aquí podrías recargar la lista de ofertas
-            } else {
-                alert('Error al crear la oferta: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error al enviar el formulario');
-        });
-    });
-    
-    // Establecer fecha actual como predeterminada
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('oferta-fecha').value = today;
-});
+function mostrarErrorInput(input, mensaje) {
+    let error = input.parentElement.querySelector('.error-message');
+    if (!error) {
+        error = document.createElement('div');
+        error.className = 'error-message';
+        error.style.color = 'red';
+        error.style.fontSize = '13px';
+        error.style.marginTop = '4px';
+        input.parentElement.appendChild(error);
+    }
+    error.textContent = mensaje;
+}
+
+function limpiarErrorInput(input) {
+    const error = input.parentElement.querySelector('.error-message');
+    if (error) error.remove();
+}

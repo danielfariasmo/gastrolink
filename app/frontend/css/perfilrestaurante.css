@@ -210,6 +210,16 @@ body {
     line-height: 1.4;
 }
 
+.profile-details a {
+    color: var(--primary-red);
+    text-decoration: underline;
+}
+
+.profile-details a:hover {
+    color: var(--text-dark);
+}
+
+
 .edit-profile-btn {
     background: var(--text-dark);
     color: white;
@@ -363,18 +373,6 @@ body {
     color: var(--text-gray);
 }
 
-/* Placeholder para cuando añadas tus iconos */
-.icon-edit::before {
-    content: "✏️"; /* Reemplaza esto con tu clase de icono */
-}
-
-.icon-delete::before {
-    content: "🗑️"; /* Reemplaza esto con tu clase de icono */
-}
-
-.icon-search::before {
-    content: "🔍"; /* Reemplaza esto con tu clase de icono */
-}
 /* POPUP  */
 /* Estilos para el popup */
 .popup-container {
@@ -462,6 +460,73 @@ body {
 .submit-btn:hover {
     background-color: #45a049;
 }
+
+/* -------------------------
+   Modal Confirmar Eliminación
+-------------------------- */
+.popup-container {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content.confirm-delete {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 24px;
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.popup-content.confirm-delete h2 {
+    margin-bottom: 10px;
+    color: var(--text-dark);
+}
+
+.popup-content.confirm-delete p {
+    color: var(--text-gray);
+    font-size: 14px;
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.submit-btn.cancel-btn {
+    background-color: grey;
+}
+
+.submit-btn.delete-btn {
+    background-color: var(--primary-red);
+}
+
+.close-popup {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 22px;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.close-popup:hover {
+    color: #000;
+}
+
+
 /* fIN POPUP */
 
 @media (max-width: 768px) {

@@ -340,38 +340,15 @@ textarea {
   color: var(--primary-color);
 }
 
-.btn-outline:hover {
-  background-color: var(--primary-color);
-  color: var(--white);
-}
-
-.success-message {
-  background-color: #d4edda;
-  color: #155724;
-  padding: var(--spacing-md);
-  border-radius: var(--border-radius-md);
-  margin-bottom: var(--spacing-md);
-  display: none;
-  border: 1px solid #c3e6cb;
-  font-weight: 500;
-}
-
-.error-message {
-  background-color: #f8d7da;
-  color: #721c24;
-  padding: var(--spacing-md);
-  border-radius: var(--border-radius-md);
-  margin-bottom: var(--spacing-md);
-  display: none;
-  border: 1px solid #f5c6cb;
-  font-weight: 500;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .container {
-    padding: var(--spacing-md);
+  .btn-outline:hover {
+      background-color: #667eea;
+      color: white;
   }
+
+  @media (max-width: 768px) {
+      .container {
+          padding: 10px;
+      }
 
   .header1 h1 {
     font-size: var(--font-size-large);

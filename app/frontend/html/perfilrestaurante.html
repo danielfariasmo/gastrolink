@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Perfil restaurantes</title>
-    <link rel="stylesheet" href="../css/perfilrestaurante.css">
+    <link rel="stylesheet" href="../css/perfilrestaurante.css" />
     <link rel="icon" type="image/png" href="../../img/menu/logo.png" sizes="16x16" />
-
 </head>
-
 <body>
-    <!-- Menú cargado dinámicamente -->
+    <!-- Menu Component -->
     <div id="menu-container"></div>
 
     <div class="main-container">
         <aside class="sidebar">
             <div class="sidebar-item">Guardados</div>
-            <div class="sidebar-item">Recetas</div>
-            <div class="sidebar-item active">Empresas</div>
+            <div class="sidebar-item active">Empleos</div>
         </aside>
 
         <main class="content">
@@ -27,169 +23,96 @@
                     <div class="profile-avatar"></div>
                     <div class="profile-info">
                         <h2>Persona o Empresa</h2>
-                        <div class="profile-type">Tipo de Cuenta (Camarero/Cocinero/Restaurante)</div>
-                        <div class="profile-details">
-                            Tipo de Receta | Tipo de restaurante<br>
-                            Ubicación: Barcelona<br>
-                            Correo: persona@firma.com<br>
-                            Teléfono: +34 666 123 456
-                        </div>
+                        <div class="profile-type"></div>
+                        <div class="profile-details"></div>
                     </div>
                     <button class="edit-profile-btn">Editar Perfil</button>
                 </div>
-
-                <div class="progress-bars">
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 75%"></div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 60%"></div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 90%"></div>
-                    </div>
-                </div>
             </div>
 
-            <div class="section-header">
-                <h3 class="section-title">Ofertas</h3>
-                <button class="add-oferta-btn">Añadir oferta</button>
-            </div>
-
-            <div class="ofertas-list">
-                <div class="oferta-item">
-                    <div class="oferta-avatar"></div>
-                    <div class="oferta-info">
-                        <h4 class="oferta-name">Oferta</h4>
-                        <div class="oferta-details">
-                            <div class="oferta-detail-line"></div>
-                            <div class="oferta-detail-line"></div>
-                            <div class="oferta-detail-line"></div>
-                            <div class="oferta-detail-line"></div>
-                        </div>
-                    </div>
-                    <div class="oferta-actions">
-                        <button class="icon-btn">
-                            <i class="icon-edit"></i>
-                        </button>
-                        <button class="icon-btn">
-                            <i class="icon-delete"></i>
-                        </button>
-                    </div>
+            <!-- Lista dinámica -->
+            <section class="contenido-empleos">
+                <div class="section-header">
+                    <h3 class="section-title">Ofertas</h3>
+                    <button class="add-oferta-btn">Añadir oferta</button>
                 </div>
+                <div class="ofertas-list"></div>
+            </section>
 
-                <div class="oferta-item">
-                    <div class="oferta-avatar"></div>
-                    <div class="oferta-info">
-                        <h4 class="oferta-name">Empresa</h4>
-                        <div class="oferta-details">
-                            <div class="oferta-detail-line"></div>
-                            <div class="oferta-detail-line"></div>
-                            <div class="oferta-detail-line"></div>
-                            <div class="oferta-detail-line"></div>
-                        </div>
-                    </div>
-                    <div class="oferta-actions">
-                        <button class="icon-btn">
-                            <i class="icon-edit"></i>
-                        </button>
-                        <button class="icon-btn">
-                            <i class="icon-delete"></i>
-                        </button>
-                    </div>
+            <section class="contenido-guardados" style="display: none;">
+                <div class="filtro-favoritos" style="margin-bottom: 1rem;">
+                    <label for="filtro-tipo">Filtrar por: </label>
+                    <select id="filtro-tipo">
+                        <option value="todos">Todos</option>
+                        <option value="restaurantes">Restaurantes</option>
+                        <option value="recetas">Recetas</option>
+                    </select>
                 </div>
-
-                <div class="oferta-item">
-                    <div class="oferta-avatar"></div>
-                    <div class="oferta-info">
-                        <h4 class="oferta-name">Empresa</h4>
-                        <div class="oferta-details">
-                            <div class="oferta-detail-line"></div>
-                            <div class="oferta-detail-line"></div>
-                            <div class="oferta-detail-line"></div>
-                            <div class="oferta-detail-line"></div>
-                        </div>
-                    </div>
-                    <div class="oferta-actions">
-                        <button class="icon-btn">
-                            <i class="icon-edit"></i>
-                        </button>
-                        <button class="icon-btn">
-                            <i class="icon-delete"></i>
-                        </button>
-
-                        <!-- Popup para añadir oferta -->
-                        <div id="add-oferta-popup" class="popup-container">
-                            <div class="popup-content">
-                                <span class="close-popup">&times;</span>
-                                <h2>Añadir Nueva Oferta</h2>
-                                <form id="oferta-form" enctype="multipart/form-data">
-                                    <div class="form-group">
-                                        <label for="oferta-titulo">Título de la oferta:</label>
-                                        <input type="text" id="oferta-titulo" name="titulo" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="oferta-tipo">Tipo de puesto:</label>
-                                        <select id="oferta-tipo" name="tipo_puesto" required>
-                                            <option value="cocinero">Cocinero</option>
-                                            <option value="camarero">Camarero</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="oferta-descripcion">Descripción:</label>
-                                        <textarea id="oferta-descripcion" name="descripcion" required></textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="oferta-requisitos">Requisitos:</label>
-                                        <textarea id="oferta-requisitos" name="requisitos" required></textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="oferta-horario">Horario:</label>
-                                        <input type="text" id="oferta-horario" name="horario" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="oferta-salario">Salario (opcional):</label>
-                                        <input type="text" id="oferta-salario" name="salario">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="oferta-beneficios">Beneficios (opcional):</label>
-                                        <textarea id="oferta-beneficios" name="beneficios"></textarea>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="oferta-fecha">Fecha de publicación:</label>
-                                        <input type="date" id="oferta-fecha" name="fecha_publicacion" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="oferta-estado">Estado:</label>
-                                        <select id="oferta-estado" name="estado" required>
-                                            <option value="abierta">Abierta</option>
-                                            <option value="cerrada">Cerrada</option>
-                                        </select>
-                                    </div>
-
-                                    <button type="submit" class="submit-btn">Publicar Oferta</button>
-                                </form>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+                <div class="favoritos-list"></div>
+            </section>
         </main>
     </div>
 
-    <!-- Footer component -->
+    <!-- Add new ofert -->
+    <div id="add-oferta-popup" class="popup-container" style="display: none;">
+        <div class="popup-content">
+            <span class="close-popup">&times;</span>
+            <h2>Oferta de Empleo</h2>
+            <form id="oferta-form">
+                <div class="form-group">
+                    <label for="oferta-titulo">Título de la oferta:</label>
+                    <input type="text" id="oferta-titulo" name="titulo" />
+                </div>
+
+                <div class="form-group">
+                    <label for="oferta-tipo">Tipo de puesto:</label>
+                    <select id="oferta-tipo" name="tipo_puesto" required>
+                        <option value="cocinero">Cocinero</option>
+                        <option value="camarero">Camarero</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="oferta-descripcion">Descripción:</label>
+                    <textarea id="oferta-descripcion" name="descripcion"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="oferta-fecha">Fecha de publicación:</label>
+                    <input type="date" id="oferta-fecha" name="fecha_publicacion" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="oferta-estado">Estado:</label>
+                    <select id="oferta-estado" name="estado" required>
+                        <option value="abierta">Abierta</option>
+                        <option value="cerrada">Cerrada</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-btn">Publicar Oferta</button>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Modal de confirmación para eliminar -->
+    <div id="confirm-delete-popup" class="popup-container" style="display: none;">
+        <div class="popup-content confirm-delete">
+            <span class="close-popup" id="close-delete-popup">&times;</span>
+            <h2>¿Eliminar oferta?</h2>
+            <p>¿Estás seguro de que deseas eliminar esta oferta?</p>
+            <div class="popup-buttons">
+                <button id="cancel-delete" class="submit-btn cancel-btn">Cancelar</button>
+                <button id="confirm-delete" class="submit-btn delete-btn">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Component -->
     <div id="footer-container"></div>
 
-    <!-- JavaScript -->
+    <!-- JS -->
     <script src="../js/cargamenuyfooter.js"></script>
     <script src="../js/perfilrestaurante.js"></script>
 </body>

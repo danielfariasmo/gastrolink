@@ -16,12 +16,13 @@ $usuario = "CREATE TABLE IF NOT EXISTS usuario (
     correo VARCHAR(100) NOT NULL UNIQUE,
     clave VARCHAR(255) NOT NULL,
     img_usuario VARCHAR(255),
+    token VARCHAR(255),
     tipo_usuario ENUM('restaurante', 'cocinero', 'camarero') NOT NULL
 );";
 mysqli_query($connection, $usuario) or die('ERROR: No se puede crear la tabla usuario: ' . mysqli_error($connection));
 
 $insertar_usuario = "INSERT INTO usuario (id_usuario, nombre, correo, clave, img_usuario, tipo_usuario) VALUES
-    (1, 'Daniel Farias Morales', 'danielf@correo.com', '" . hashPassword('Daniel123.') . "', '/gastrolink/app/img/usuarios/1.jpg', 'camarero'),
+    (1, 'Daniel Farias Morales', 'fariasd99@gmail.com', '" . hashPassword('Daniel123.') . "', '/gastrolink/app/img/usuarios/1.jpg', 'camarero'),
     (2, 'Laura García Ruiz', 'laura@correo.com', '" . hashPassword('Laura123.') . "', '/gastrolink/app/img/usuarios/2.webp', 'camarero'),
     (3, 'Antonio Martínez Torres', 'antonio@correo.com', '" . hashPassword('Antonio123.') . "', '/gastrolink/app/img/usuarios/3.jpg', 'camarero'),
     (4, 'Daniel González Garrote', 'danielg@correo.com', '" . hashPassword('Daniel123.') . "', '/gastrolink/app/img/usuarios/4.jpg', 'cocinero'),
@@ -294,20 +295,6 @@ $insertar_camarero = "INSERT INTO camarero (id_camarero, descripcion, experienci
 mysqli_query($connection, $insertar_camarero) or die('ERROR: No se pueden insertar los camareros: ' . mysqli_error($connection));
 
 /*---------------------------------------------------------------
-EVENTO
----------------------------------------------------------------*/
-$evento = "CREATE TABLE IF NOT EXISTS evento (
-    id_evento INT AUTO_INCREMENT PRIMARY KEY,
-    id_restaurante INT NOT NULL,
-    nombre_evento VARCHAR(100),
-    fecha_inicio DATE,
-    fecha_fin DATE,
-    descripcion TEXT,
-    FOREIGN KEY (id_restaurante) REFERENCES restaurante(id_restaurante)
-);";
-mysqli_query($connection, $evento) or die('ERROR: No se puede crear la tabla evento: ' . mysqli_error($connection));
-
-/*---------------------------------------------------------------
 OFERTA
 ---------------------------------------------------------------*/
 $oferta = "CREATE TABLE IF NOT EXISTS oferta (
@@ -391,35 +378,8 @@ $insertar_receta = "INSERT INTO receta (id_cocinero, titulo, tipo_receta, introd
 mysqli_query($connection, $insertar_receta) or die('ERROR: No se pueden insertar las recetas: ' . mysqli_error($connection));
 
 /*---------------------------------------------------------------
-CANDIDATURA
----------------------------------------------------------------*/
-$candidatura = "CREATE TABLE IF NOT EXISTS candidatura (
-    id_candidatura INT AUTO_INCREMENT PRIMARY KEY,
-    id_oferta INT NOT NULL,
-    id_usuario INT NOT NULL,
-    mensaje TEXT,
-    fecha_envio DATE,
-    FOREIGN KEY (id_oferta) REFERENCES oferta(id_oferta),
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
-);";
-mysqli_query($connection, $candidatura) or die('ERROR: No se puede crear la tabla candidatura: ' . mysqli_error($connection));
-
-/*---------------------------------------------------------------
 FAVORITO
 ---------------------------------------------------------------*/
-$favorito = "CREATE TABLE IF NOT EXISTS favorito (
-    id_favorito INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT NOT NULL,
-    id_receta INT DEFAULT NULL,
-    id_cocinero INT DEFAULT NULL,
-    id_restaurante INT DEFAULT NULL,
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (id_receta) REFERENCES receta(id_receta),
-    FOREIGN KEY (id_cocinero) REFERENCES cocinero(id_cocinero),
-    FOREIGN KEY (id_restaurante) REFERENCES restaurante(id_restaurante)
-);";
-mysqli_query($connection, $favorito) or die('ERROR: No se puede crear la tabla favorito: ' . mysqli_error($connection));
-
 $favorito_receta = "CREATE TABLE favorito_receta (
     id_favorito INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
@@ -456,39 +416,6 @@ $insertar_fav_receta = "INSERT INTO favorito_receta (id_usuario, id_receta) VALU
     (33, 1); -- Felipe Herrera favorito Ensalada";
 mysqli_query($connection, $insertar_fav_receta) or die('ERROR: No se pueden insertar las recetas: ' . mysqli_error($connection));
 
-
-$favorito_cocinero = "CREATE TABLE favorito_cocinero (
-    id_favorito INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT NOT NULL,
-    id_cocinero INT NOT NULL,
-    FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (id_cocinero) REFERENCES cocinero(id_cocinero)
-);";
-mysqli_query($connection, $favorito_cocinero) or die('ERROR: No se puede crear la tabla favorito: ' . mysqli_error($connection));
-
-$insertar_fav_cocinero = "INSERT INTO favorito_cocinero (id_usuario, id_cocinero) VALUES
-    (1, 4),   -- Daniel Farias sigue a Daniel González
-    (2, 5),   -- Laura García sigue a Candela Martínez
-    (3, 6),   -- Antonio Martínez sigue a María Fernández
-    (11, 7),  -- Alejandro Mendoza sigue a Pedro Sánchez
-    (12, 16), -- Isabel Ortega sigue a Beatriz Ríos
-    (13, 17), -- Ricardo Herrera sigue a Hugo Silva
-    (14, 18), -- Patricia Vega sigue a Adriana Castro
-    (15, 19), -- Fernando Guzmán sigue a Raúl Navarro
-    (26, 20), -- Mónica Ríos sigue a Carmen Paredes
-    (27, 28), -- Sergio Silva sigue a Diana Castro
-    (31, 29), -- Emilio Mendoza sigue a Arturo Navarro
-    (4, 32),  -- Daniel González sigue a Rocío Ortega
-    (5, 33),  -- Candela Martínez sigue a Felipe Herrera
-    (6, 4),   -- María Fernández sigue a Daniel González
-    (7, 5),   -- Pedro Sánchez sigue a Candela Martínez
-    (16, 6),  -- Beatriz Ríos sigue a María Fernández
-    (17, 7),  -- Hugo Silva sigue a Pedro Sánchez
-    (18, 16), -- Adriana Castro sigue a Beatriz Ríos
-    (19, 17), -- Raúl Navarro sigue a Hugo Silva
-    (20, 18); -- Carmen Paredes sigue a Adriana Castro";
-mysqli_query($connection, $insertar_fav_cocinero) or die('ERROR: No se pueden insertar las recetas: ' . mysqli_error($connection));
-
 $favorito_restaurante = "CREATE TABLE favorito_restaurante (
     id_favorito INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
@@ -497,7 +424,6 @@ $favorito_restaurante = "CREATE TABLE favorito_restaurante (
     FOREIGN KEY (id_restaurante) REFERENCES restaurante(id_restaurante)
 );";
 mysqli_query($connection, $favorito_restaurante) or die('ERROR: No se puede crear la tabla favorito: ' . mysqli_error($connection));
-
 
 $insertar_fav_restaurante = "INSERT INTO favorito_restaurante (id_usuario, id_restaurante) VALUES
     (1, 8),   -- Daniel Farias favorito Madrid Gourmet
