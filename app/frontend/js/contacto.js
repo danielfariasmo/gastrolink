@@ -1,150 +1,128 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Referencias a elementos del DOM
-    const form = document.getElementById('contactoForm');
-    const nombreInput = document.getElementById('nombre');
-    const emailInput = document.getElementById('email');
-    const asuntoInput = document.getElementById('asunto');
-    const mensajeInput = document.getElementById('mensaje');
+// Form handling
+document.getElementById("contactForm").addEventListener("submit", function (e) {
+  e.preventDefault()
 
-    const nombreError = document.getElementById('nombreError');
-    const emailError = document.getElementById('emailError');
-    const asuntoError = document.getElementById('asuntoError');
-    const mensajeError = document.getElementById('mensajeError');
+  // Get form data
+  const formData = new FormData(this)
+  const data = Object.fromEntries(formData)
 
-    const formContainer = document.getElementById('formContainer');
-    const confirmationContainer = document.getElementById('confirmationContainer');
-    const resetButton = document.getElementById('resetButton');
+  // Basic validation
+  if (validateForm(data)) {
+    // Simulate form submission
+    setTimeout(() => {
+      showSuccessMessage()
+    }, 1000)
+  }
+})
 
-    // Objeto para almacenar el estado del formulario
-    const formData = {
-        nombre: '',
-        email: '',
-        asunto: '',
-        mensaje: ''
-    };
+function validateForm(data) {
+  let isValid = true
 
-    // Función para validar el formulario
-    function validateForm() {
-        let isValid = true;
-        let errors = {
-            nombre: '',
-            email: '',
-            asunto: '',
-            mensaje: ''
-        };
+  // Clear previous errors
+  clearErrors()
 
-        // Validar nombre
-        if (formData.nombre.trim().length < 2) {
-            errors.nombre = 'El nombre es requerido';
-            nombreInput.classList.add('error');
-            isValid = false;
-        } else {
-            errors.nombre = '';
-            nombreInput.classList.remove('error');
-        }
+  // Name validation
+  if (!data.name.trim()) {
+    showError("nameError", "El nombre es requerido")
+    isValid = false
+  }
 
-        // Validar email
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(formData.email)) {
-            errors.email = 'Ingresa un email válido';
-            emailInput.classList.add('error');
-            isValid = false;
-        } else {
-            errors.email = '';
-            emailInput.classList.remove('error');
-        }
+  // Email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  if (!data.email.trim()) {
+    showError("emailError", "El email es requerido")
+    isValid = false
+  } else if (!emailRegex.test(data.email)) {
+    showError("emailError", "El email no es válido")
+    isValid = false
+  }
 
-        // Validar asunto
-        if (formData.asunto.trim().length < 3) {
-            errors.asunto = 'El asunto es requerido';
-            asuntoInput.classList.add('error');
-            isValid = false;
-        } else {
-            errors.asunto = '';
-            asuntoInput.classList.remove('error');
-        }
+  // Subject validation
+  if (!data.subject) {
+    showError("subjectError", "Selecciona un asunto")
+    isValid = false
+  }
 
-        // Validar mensaje
-        if (formData.mensaje.trim().length < 10) {
-            errors.mensaje = 'El mensaje debe tener al menos 10 caracteres';
-            mensajeInput.classList.add('error');
-            isValid = false;
-        } else {
-            errors.mensaje = '';
-            mensajeInput.classList.remove('error');
-        }
+  // Message validation
+  if (!data.message.trim()) {
+    showError("messageError", "El mensaje es requerido")
+    isValid = false
+  } else if (data.message.trim().length < 10) {
+    showError("messageError", "El mensaje debe tener al menos 10 caracteres")
+    isValid = false
+  }
 
-        // Actualizar mensajes de error
-        nombreError.textContent = errors.nombre;
-        emailError.textContent = errors.email;
-        asuntoError.textContent = errors.asunto;
-        mensajeError.textContent = errors.mensaje;
+  return isValid
+}
 
-        return isValid;
+function showError(elementId, message) {
+  const errorElement = document.getElementById(elementId)
+  errorElement.textContent = message
+
+  // Add error class to input
+  const input = errorElement.previousElementSibling
+  input.classList.add("error")
+}
+
+function clearErrors() {
+  const errorMessages = document.querySelectorAll(".error-message")
+  errorMessages.forEach((error) => {
+    error.textContent = ""
+  })
+
+  const errorInputs = document.querySelectorAll(".error")
+  errorInputs.forEach((input) => {
+    input.classList.remove("error")
+  })
+}
+
+function showSuccessMessage() {
+  document.getElementById("contactForm").classList.add("hidden")
+  document.getElementById("successMessage").classList.remove("hidden")
+}
+
+function resetForm() {
+  document.getElementById("contactForm").classList.remove("hidden")
+  document.getElementById("successMessage").classList.add("hidden")
+  document.getElementById("contactForm").reset()
+  clearErrors()
+}
+
+// FAQ functionality
+function toggleFaq(index) {
+  const faqItems = document.querySelectorAll(".faq-item")
+  const currentItem = faqItems[index]
+
+  // Close all other FAQ items
+  faqItems.forEach((item, i) => {
+    if (i !== index) {
+      item.classList.remove("active")
     }
+  })
 
-    // Validaciones en tiempo real
-    nombreInput.addEventListener('input', function (e) {
-        formData.nombre = e.target.value;
-        validateForm();
-    });
+  // Toggle current item
+  currentItem.classList.toggle("active")
+}
 
-    emailInput.addEventListener('input', function (e) {
-        formData.email = e.target.value;
-        validateForm();
-    });
+// Add smooth scrolling for better UX
+document.addEventListener("DOMContentLoaded", () => {
+  // Add loading animation
+  document.body.style.opacity = "0"
+  setTimeout(() => {
+    document.body.style.transition = "opacity 0.5s ease"
+    document.body.style.opacity = "1"
+  }, 100)
+})
 
-    asuntoInput.addEventListener('input', function (e) {
-        formData.asunto = e.target.value;
-        validateForm();
-    });
+// Form input animations
+document.querySelectorAll("input, select, textarea").forEach((input) => {
+  input.addEventListener("focus", function () {
+    this.parentElement.classList.add("focused")
+  })
 
-    mensajeInput.addEventListener('input', function (e) {
-        formData.mensaje = e.target.value;
-        validateForm();
-    });
-
-    // Envío del formulario
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        if (validateForm()) {
-            // Mostrar confirmación
-            formContainer.classList.add('hidden');
-            confirmationContainer.classList.remove('hidden');
-
-            // Aquí iría la lógica para enviar el formulario
-        }
-    });
-
-    // Resetear el formulario
-    resetButton.addEventListener('click', function () {
-        // Limpiar campos
-        nombreInput.value = '';
-        emailInput.value = '';
-        asuntoInput.value = '';
-        mensajeInput.value = '';
-
-        // Limpiar errores
-        nombreError.textContent = '';
-        emailError.textContent = '';
-        asuntoError.textContent = '';
-        mensajeError.textContent = '';
-
-        // Quitar clases de error
-        nombreInput.classList.remove('error');
-        emailInput.classList.remove('error');
-        asuntoInput.classList.remove('error');
-        mensajeInput.classList.remove('error');
-
-        // Resetear objeto de datos
-        formData.nombre = '';
-        formData.email = '';
-        formData.asunto = '';
-        formData.mensaje = '';
-
-        // Mostrar formulario
-        formContainer.classList.remove('hidden');
-        confirmationContainer.classList.add('hidden');
-    });
-});
+  input.addEventListener("blur", function () {
+    if (!this.value) {
+      this.parentElement.classList.remove("focused")
+    }
+  })
+})
