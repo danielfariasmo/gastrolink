@@ -38,18 +38,6 @@ while ($row = mysqli_fetch_assoc($result_ofertas)) {
     $ofertas[] = $row;
 }
 
-// Obtener eventos del restaurante
-$query_eventos = "SELECT id_evento, nombre_evento, fecha_inicio, fecha_fin, descripcion
-                 FROM evento
-                 WHERE id_restaurante = $id_restaurante
-                 ORDER BY fecha_inicio DESC";
-
-$result_eventos = mysqli_query($connection, $query_eventos);
-$eventos = [];
-while ($row = mysqli_fetch_assoc($result_eventos)) {
-    $eventos[] = $row;
-}
-
 // Preparar la respuesta
 $response = [
     'success' => true,
@@ -65,8 +53,7 @@ $response = [
         'web' => $restaurante['web'],
         'telefono' => $restaurante['telefono']
     ],
-    'ofertas' => $ofertas,
-    'eventos' => $eventos
+    'ofertas' => $ofertas
 ];
 
 echo json_encode($response);

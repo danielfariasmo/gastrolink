@@ -246,6 +246,16 @@
       color: white;
   }
 
+  .input-error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 4px;
+}
+
+.input-invalid {
+    border: 1px solid red;
+}
+
   @media (max-width: 768px) {
       .container {
           padding: 10px;

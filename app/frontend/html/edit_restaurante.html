@@ -6,7 +6,6 @@
     <title>Editar Perfil del Restaurante</title>
     <link rel="stylesheet" href="../css/editarperfilrestaurantes.css">
     <link rel="icon" type="image/png" href="../../img/menu/logo.png" sizes="16x16">
-   
 </head>
 <body>
     <div class="container">
@@ -30,11 +29,11 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="restaurant-name">🍽️ Nombre del Restaurante</label>
-                        <input type="text" id="restaurant-name" name="restaurant-name" required>
+                        <input type="text" id="restaurant-name" name="restaurant-name">
                     </div>
                     <div class="form-group">
                         <label for="cuisine-type">🍳 Tipo de Cocina</label>
-                        <select id="cuisine-type" name="cuisine-type" required>
+                        <select id="cuisine-type" name="cuisine-type">
                             <option value="">Selecciona un tipo</option>
                             <option value="italiana">Italiana</option>
                             <option value="española">Española</option>
@@ -61,7 +60,7 @@
                 <div class="form-grid">
                     <div class="form-group full-width">
                         <label for="address">🏠 Dirección Completa</label>
-                        <input type="text" id="address" name="address" required>
+                        <input type="text" id="address" name="address">
                     </div>
                     <div class="form-group">
                         <label for="phone">📞 Teléfono</label>
@@ -78,81 +77,48 @@
                 </div>
             </div>
 
-            <!-- Precios -->
+            <!-- Rango de Precios -->
             <div class="form-section">
                 <h2 class="section-title">💰 Rango de Precios</h2>
                 <div class="price-range">
-                    <div class="price-option">
-                        <input type="radio" id="price-low" name="price-range" value="€">
-                        <label for="price-low">€ (Económico)</label>
-                    </div>
-                    <div class="price-option">
-                        <input type="radio" id="price-medium" name="price-range" value="€€">
-                        <label for="price-medium">€€ (Moderado)</label>
-                    </div>
-                    <div class="price-option">
-                        <input type="radio" id="price-high" name="price-range" value="€€€">
-                        <label for="price-high">€€€ (Alto)</label>
-                    </div>
-                    <div class="price-option">
-                        <input type="radio" id="price-luxury" name="price-range" value="€€€€">
-                        <label for="price-luxury">€€€€ (Lujo)</label>
-                    </div>
+                    <label><input type="radio" name="price-range" value="€"> € (Económico)</label>
+                    <label><input type="radio" name="price-range" value="€€"> €€ (Moderado)</label>
+                    <label><input type="radio" name="price-range" value="€€€"> €€€ (Alto)</label>
+                    <label><input type="radio" name="price-range" value="€€€€"> €€€€ (Lujo)</label>
                 </div>
             </div>
 
             <!-- Imágenes -->
             <div class="form-section">
                 <h2 class="section-title">📸 Imágenes</h2>
-                <div class="image-upload-section">
-                    <div class="form-group">
-                        <label>🖼️ Imagen Principal</label>
-                        <div class="image-upload" onclick="document.getElementById('cover-image').click()">
-                            <span class="upload-icon">📷</span>
-                            <div class="upload-text">
-                                <strong>Subir imagen de portada</strong><br>
-                                Arrastra una imagen o haz clic para seleccionar
-                            </div>
-                            <input type="file" id="cover-image" name="cover-image" accept="image/*">
+                <div class="form-group">
+                    <label>🖼️ Imagen Principal</label>
+                    <div class="image-upload" onclick="document.getElementById('cover-image').click()">
+                        <span class="upload-icon">📷</span>
+                        <div class="upload-text">
+                            <strong>Subir imagen de portada</strong><br>
+                            Arrastra una imagen o haz clic para seleccionar
                         </div>
+                        <input type="file" id="cover-image" name="cover-image" accept="image/*">
                     </div>
                 </div>
-                
+
                 <div class="form-group full-width">
                     <label>🎨 Galería de Imágenes</label>
-                    <div class="gallery-manager">
-                        <div class="gallery-item" onclick="document.getElementById('gallery-1').click()">
-                            <span>➕</span>
-                            <input type="file" id="gallery-1" name="gallery[]" accept="image/*">
-                        </div>
-                        <div class="gallery-item" onclick="document.getElementById('gallery-2').click()">
-                            <span>➕</span>
-                            <input type="file" id="gallery-2" name="gallery[]" accept="image/*">
-                        </div>
-                        <div class="gallery-item" onclick="document.getElementById('gallery-3').click()">
-                            <span>➕</span>
-                            <input type="file" id="gallery-3" name="gallery[]" accept="image/*">
-                        </div>
-                        <div class="gallery-item" onclick="document.getElementById('gallery-4').click()">
-                            <span>➕</span>
-                            <input type="file" id="gallery-4" name="gallery[]" accept="image/*">
-                        </div>
+                    <div class="gallery-manager" id="gallery-container">
+                        <!-- Las imágenes existentes y nuevos campos se insertan con JS -->
                     </div>
                 </div>
             </div>
 
             <!-- Acciones -->
             <div class="actions">
-                <button type="button" class="btn btn-outline" onclick="resetForm()">
-                    🔄 Restablecer
-                </button>
-                <button type="submit" class="btn btn-primary">
-                    💾 Guardar Cambios
-                </button>
+                <button type="button" class="btn btn-secondary" onclick="volverAlPerfil()">← Volver</button>
+                <button type="submit" class="btn btn-primary">💾 Guardar Cambios</button>
             </div>
         </form>
     </div>
 
-   
+    <script src="../js/edit_restaurante.js"></script>
 </body>
 </html>
