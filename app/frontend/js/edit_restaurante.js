@@ -206,7 +206,6 @@ function convertirPrecioASimbolo(precio) {
     return '€€€€';
 }
 
-// Las funciones mostrarGaleria, agregarCampoGaleria y mostrarHorarioEditable permanecen sin cambios.
 
 
 function mostrarGaleria(imagenes) {
