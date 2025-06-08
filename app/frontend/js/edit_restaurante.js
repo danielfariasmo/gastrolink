@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const id_restaurante = params.get('id');
 
+    console.log("ID capturado:", id_restaurante);
+
+
     if (!id_restaurante) {
         console.error("ID del restaurante no especificado");
         return;

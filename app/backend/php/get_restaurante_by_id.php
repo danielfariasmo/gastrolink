@@ -10,7 +10,6 @@ if (!$id_restaurante) {
 }
 
 try {
-    // 🟢 Obtener información principal del restaurante
     $stmt = $connection->prepare("
     SELECT 
         r.tipo_restaurante,
@@ -37,10 +36,8 @@ try {
         echo json_encode(['success' => false, 'message' => 'Restaurante no encontrado']);
         exit;
     }
-
     $restaurante = $row;
 
-    // 🟡 Obtener horarios del restaurante
     $stmt = $connection->prepare("
         SELECT dia_semana, hora_apertura, hora_cierre
         FROM horario_restaurante
@@ -57,7 +54,6 @@ try {
     }
     $restaurante['horarios'] = $horarios;
 
-    // 🔵 Obtener imágenes del restaurante
     $stmt = $connection->prepare("
         SELECT url_imagen, alt
         FROM imagen_restaurante
