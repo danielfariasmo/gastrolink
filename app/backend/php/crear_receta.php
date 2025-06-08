@@ -40,7 +40,7 @@ if ($_POST['action'] === 'create_recipe') {
         $destination = $uploadDir . $filename;
         
         if (move_uploaded_file($_FILES['image']['tmp_name'], $destination)) {
-            $imagePath = '/gastrolink/app/uploads/recetas/' . $filename;
+            $imagePath = '/gastrolink/app/img/recetas/' . $filename;
         }
     }
 
@@ -54,6 +54,10 @@ if ($_POST['action'] === 'create_recipe') {
     $time = mysqli_real_escape_string($connection, $_POST['time']);
     $portions = mysqli_real_escape_string($connection, $_POST['portions']);
     $difficulty = mysqli_real_escape_string($connection, $_POST['difficulty']);
+    $calories = mysqli_real_escape_string($connection, $_POST['calories']);
+    $proteins = mysqli_real_escape_string($connection, $_POST['proteins']);
+    $carbohydrates = mysqli_real_escape_string($connection, $_POST['carbohydrates']);
+    $fats = mysqli_real_escape_string($connection, $_POST['fats']);
     $imagePath = $imagePath ? "'" . mysqli_real_escape_string($connection, $imagePath) . "'" : "NULL";
 
     $query = "INSERT INTO receta (
@@ -66,6 +70,10 @@ if ($_POST['action'] === 'create_recipe') {
         tiempo_preparacion, 
         porciones, 
         dificultad, 
+        calorias,
+        proteinas,
+        carbohidratos,
+        grasas,
         img_receta,
         fecha_publicacion
     ) VALUES (
@@ -78,6 +86,10 @@ if ($_POST['action'] === 'create_recipe') {
         '$time',
         '$portions',
         '$difficulty',
+        '$calories',
+        '$proteins',
+        '$carbohydrates',
+        '$fats',
         $imagePath,
         NOW()
     )";

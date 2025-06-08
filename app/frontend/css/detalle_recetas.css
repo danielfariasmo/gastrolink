@@ -365,6 +365,69 @@
     color: var(--color-text-light);
   }
 
+  /* CODIGO AÑADIDO PARA QUE ME FUNCIONE EL POPUP PERO SE PUEDE EDITAR PARA MAS BONITO */
+
+  /* Estilos para el popup de edición */
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .popup-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .form-row .form-group {
+    flex: 1;
+  }
+
+  .popup-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .popup-actions button {
+    padding: 0.5rem 1rem;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
   @media (max-width: 992px) {
     .recipe-content {
       grid-template-columns: 1fr;

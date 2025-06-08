@@ -38,7 +38,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                 'nombre' => $row['nombre'],
                 'correo' => $row['correo'],
                 'tipo_usuario' => $row['tipo_usuario'],
-                'img_usuario' => $row['img_usuario'] ? '/gastrolink/app/img/usuarios/' . $row['img_usuario'] : '/gastrolink/app/img/default-avatar.jpg'
+                'img_usuario' => $row['img_usuario'] ? $row['img_usuario'] : '/gastrolink/app/img/default-avatar.jpg'
             ]
         ]);
     } else {

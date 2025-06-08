@@ -37,11 +37,7 @@ function cargarDatosCocinero(id) {
 function actualizarUI(cocinero, recetas, restaurantesFavoritos) {
     // Actualizar información del perfil
     const avatar = document.querySelector('.profile-avatar');
-    if (cocinero.imagen) {
         avatar.style.backgroundImage = `url('${cocinero.imagen}')`;
-    } else {
-        avatar.style.backgroundImage = "url('../../img/default-avatar.jpg')";
-    }
     
     document.querySelector('.profile-info h2').textContent = cocinero.nombre;
     document.querySelector('.profile-type').textContent = `Cocinero (${cocinero.especialidad})`;
@@ -114,7 +110,7 @@ function actualizarUI(cocinero, recetas, restaurantesFavoritos) {
             <div class="favorites-list">
                 ${restaurantesFavoritos.map(rest => `
                     <div class="favorite-item">
-                        <div class="favorite-avatar" style="background-image: url('${rest.img_usuario || '../../img/default-avatar.jpg'}')"></div>
+                        <div class="favorite-avatar" style="background-image: url('${rest.img_usuario }')"></div>
                         <span>${rest.nombre}</span>
                     </div>
                 `).join('')}
@@ -186,7 +182,6 @@ function eliminarReceta(idReceta) {
     if (confirm('¿Estás seguro de que quieres eliminar esta receta?')) {
         const userData = JSON.parse(sessionStorage.getItem('userData'));
         
-        // Asegúrate de que esta ruta sea correcta para tu estructura de archivos
         fetch(`../../backend/php/eliminar_receta.php?id_receta=${idReceta}&id_cocinero=${userData.id_usuario}`, {
             method: 'DELETE'
         })

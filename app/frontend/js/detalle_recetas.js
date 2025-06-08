@@ -24,14 +24,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Botones funcionales
     document.querySelector('.imprimir-btn').addEventListener('click', () => window.print());
 
-    document.querySelector('.guardar-btn').addEventListener('click', function () {
+    document.querySelector('.guardar-btn').addEventListener('click', function() {
         this.innerHTML = '<span class="action-icon">✓</span> Receta guardada';
         setTimeout(() => {
             this.innerHTML = '<span class="action-icon">💾</span> Guardar receta';
         }, 2000);
     });
 
-    document.querySelector('.compartir-btn').addEventListener('click', function () {
+    document.querySelector('.compartir-btn').addEventListener('click', function() {
         const titulo = document.querySelector('.recipe-title')?.textContent || 'Receta de GastroLink';
         if (navigator.share) {
             navigator.share({
@@ -44,6 +44,84 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+function configurarPopupEdicion(receta) {
+    const popup = document.getElementById('edit-popup');
+    const cancelBtn = document.querySelector('.cancel-btn');
+    const editForm = document.getElementById('edit-recipe-form');
+
+    // Rellenar el formulario con los datos actuales
+    document.getElementById('edit-title').value = receta.titulo;
+    document.getElementById('edit-intro').value = receta.introduccion;
+    document.getElementById('edit-ingredients').value = receta.ingredientes;
+    document.getElementById('edit-steps').value = receta.pasos;
+    document.getElementById('edit-time').value = receta.tiempo_preparacion;
+    document.getElementById('edit-portions').value = receta.porciones;
+    document.getElementById('edit-difficulty').value = receta.dificultad;
+
+    // Mostrar popup al hacer clic en editar
+    document.querySelector('.editar-btn').addEventListener('click', () => {
+        popup.style.display = 'flex';
+    });
+
+    // Ocultar popup al hacer clic en cancelar
+    cancelBtn.addEventListener('click', () => {
+        popup.style.display = 'none';
+    });
+
+    // Ocultar popup al hacer clic fuera del contenido
+    popup.addEventListener('click', (e) => {
+        if (e.target === popup) {
+            popup.style.display = 'none';
+        }
+    });
+
+    // Manejar el envío del formulario
+    editForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        guardarCambiosReceta(receta.id_receta);
+    });
+}
+
+function guardarCambiosReceta(idReceta) {
+    // Obtener los valores del formulario
+    const datosActualizados = {
+        titulo: document.getElementById('edit-title').value,
+        introduccion: document.getElementById('edit-intro').value,
+        ingredientes: document.getElementById('edit-ingredients').value,
+        pasos: document.getElementById('edit-steps').value,
+        tiempo_preparacion: document.getElementById('edit-time').value,
+        porciones: document.getElementById('edit-portions').value,
+        dificultad: document.getElementById('edit-difficulty').value
+    };
+
+    // Aquí iría la llamada a tu API para actualizar la receta
+    console.log('Guardando cambios para receta:', idReceta, datosActualizados);
+
+    // Ejemplo de llamada fetch (ajusta según tu API)
+    fetch(`../../backend/php/actualizar_receta.php?id=${idReceta}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(datosActualizados)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Receta actualizada correctamente');
+            document.getElementById('edit-popup').style.display = 'none';
+            // Recargar la receta para ver los cambios
+            location.reload();
+        } else {
+            alert('Error al actualizar: ' + (data.message || 'Error desconocido'));
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error al conectar con el servidor');
+    });
+}
 
 function cargarReceta(receta) {
     document.title = `${receta.titulo}`;
@@ -83,7 +161,7 @@ function cargarReceta(receta) {
     const listaPasos = document.querySelector('.steps-list');
     listaPasos.innerHTML = '';
 
-    const pasos = receta.pasos.split(/(?:\d+\.\s)/).filter(Boolean);
+    const pasos = receta.pasos.split(/\n/).filter(Boolean);
 
     pasos.forEach(paso => {
         const li = document.createElement('li');
@@ -91,6 +169,33 @@ function cargarReceta(receta) {
         li.textContent = paso.trim();
         listaPasos.appendChild(li);
     });
+
+    console.log("Datos de la receta:", receta);
+    console.log("Datos del usuario:", JSON.parse(sessionStorage.getItem('userData')));
+
+    // Verificar si el usuario logueado es el creador
+    const editarBtn = document.querySelector('.editar-btn');
+    const guardarBtn = document.querySelector('.guardar-btn');
+
+    if (editarBtn && guardarBtn) {
+        const userData = sessionStorage.getItem('userData');
+
+        if (userData) {
+            try {
+                const usuario = JSON.parse(userData);
+                if (usuario.id_usuario && receta.id_cocinero && usuario.id_usuario == receta.id_cocinero) {
+                    // Mostrar botón editar y ocultar guardar
+                    editarBtn.style.display = 'inline-block';
+                    guardarBtn.style.display = 'none';
+
+                    // Configurar el popup de edición
+                    configurarPopupEdicion(receta);
+                }
+            } catch (e) {
+                console.error("Error al parsear userData:", e);
+            }
+        }
+    }
 
     // Cocinero
     const chefImg = document.querySelector('.chef-image img');
@@ -131,5 +236,4 @@ function cargarReceta(receta) {
     } else {
         relatedGrid.innerHTML = '<p>No hay recetas relacionadas.</p>';
     }
-
 }
