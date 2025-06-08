@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('register-form');
     const nombre = document.getElementById('nombre');
-    const apellidos = document.getElementById('apellidos');
+    // const apellidos = document.getElementById('apellidos');
     const email = document.getElementById('email-register');
     const fotoPerfil = document.getElementById('profilePhoto');
     const password = document.getElementById('password-register');
     const rol = document.getElementById('userType');
     const terms = document.getElementById('terms');
-    const campos = [nombre, apellidos, email, password];
+    const campos = [nombre, email, password];
 
     // Función para mostrar o quitar errores
     function mostrarError(input, mensaje) {
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         switch (input.id) {
             case 'nombre':
-            case 'apellidos':
+            // case 'apellidos':
                 if (valor === '') mostrarError(input, 'Este campo es obligatorio.');
                 break;
             case 'email-register':
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData();
         formData.append('funcion', 'registrar');
         formData.append('nombre', nombre.value.trim());
-        formData.append('apellidos', apellidos.value.trim());
+        // formData.append('apellidos', apellidos.value.trim());
         formData.append('email', email.value.trim());
         formData.append('password', password.value);
         formData.append('rol', rol.value);

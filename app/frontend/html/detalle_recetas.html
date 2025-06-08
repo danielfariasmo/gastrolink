@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="../css/detalle_recetas.css">
     <title></title>
 </head>
+
 <body>
     <!-- Menu component -->
     <div id="menu-container"></div>
@@ -93,6 +95,10 @@
                     <span class="action-icon">💾</span>
                     Guardar receta
                 </button>
+                <button class="action-button editar-btn" style="display: none;">
+                    <span class="action-icon">✏️</span>
+                    Editar receta
+                </button>
                 <button class="action-button compartir-btn primary">
                     <span class="action-icon">📤</span>
                     Compartir
@@ -104,6 +110,65 @@
                 <div class="related-grid"></div>
             </div>
         </main>
+    </div>
+
+    <!-- Popup de edición (oculto por defecto) -->
+    <div id="edit-popup" class="popup-overlay" style="display: none;">
+        <div class="popup-content">
+            <h2>Editar Receta</h2>
+            <form id="edit-recipe-form" class="edit-form">
+                <div class="form-group">
+                    <label for="edit-title">Título</label>
+                    <input type="text" id="edit-title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-intro">Introducción</label>
+                    <textarea id="edit-intro" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-ingredients">Ingredientes (separados por comas)</label>
+                    <textarea id="edit-ingredients" rows="5" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-steps">Pasos (uno por línea)</label>
+                    <textarea id="edit-steps" rows="8" required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="edit-time">Tiempo (min)</label>
+                        <input type="number" id="edit-time" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-portions">Porciones</label>
+                        <input type="number" id="edit-portions" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-difficulty">Dificultad</label>
+                        <select id="edit-difficulty" required>
+                            <option value="Fácil">Fácil</option>
+                            <option value="Media">Media</option>
+                            <option value="Difícil">Difícil</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-image">Cambiar imagen (opcional)</label>
+                        <input type="file" id="edit-image" accept="image/*">
+                    </div>
+                </div>
+
+                <div class="popup-actions">
+                    <button type="button" class="action-button cancel-btn">Cancelar</button>
+                    <button type="submit" class="action-button primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <!-- Footer component -->

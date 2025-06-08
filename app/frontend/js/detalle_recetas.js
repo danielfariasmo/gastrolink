@@ -24,14 +24,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Botones funcionales
     document.querySelector('.imprimir-btn').addEventListener('click', () => window.print());
 
-    document.querySelector('.guardar-btn').addEventListener('click', function () {
+    document.querySelector('.guardar-btn').addEventListener('click', function() {
         this.innerHTML = '<span class="action-icon">✓</span> Receta guardada';
         setTimeout(() => {
             this.innerHTML = '<span class="action-icon">💾</span> Guardar receta';
         }, 2000);
     });
 
-    document.querySelector('.compartir-btn').addEventListener('click', function () {
+    document.querySelector('.compartir-btn').addEventListener('click', function() {
         const titulo = document.querySelector('.recipe-title')?.textContent || 'Receta de GastroLink';
         if (navigator.share) {
             navigator.share({
@@ -44,6 +44,86 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+function configurarPopupEdicion(receta) {
+    const popup = document.getElementById('edit-popup');
+    const cancelBtn = document.querySelector('.cancel-btn');
+    const editForm = document.getElementById('edit-recipe-form');
+
+    // Rellenar el formulario con los datos actuales
+    document.getElementById('edit-title').value = receta.titulo;
+    document.getElementById('edit-intro').value = receta.introduccion;
+    document.getElementById('edit-ingredients').value = receta.ingredientes;
+    document.getElementById('edit-steps').value = receta.pasos;
+    document.getElementById('edit-time').value = receta.tiempo_preparacion;
+    document.getElementById('edit-portions').value = receta.porciones;
+    document.getElementById('edit-difficulty').value = receta.dificultad;
+
+    // Mostrar popup al hacer clic en editar
+    document.querySelector('.editar-btn').addEventListener('click', () => {
+        popup.style.display = 'flex';
+    });
+
+    // Ocultar popup al hacer clic en cancelar
+    cancelBtn.addEventListener('click', () => {
+        popup.style.display = 'none';
+    });
+
+    // Ocultar popup al hacer clic fuera del contenido
+    popup.addEventListener('click', (e) => {
+        if (e.target === popup) {
+            popup.style.display = 'none';
+        }
+    });
+
+    // Manejar el envío del formulario
+    editForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        guardarCambiosReceta(receta.id_receta);
+    });
+}
+
+function guardarCambiosReceta(idReceta) {
+    // Crear FormData para enviar también archivos si es necesario
+    const formData = new FormData();
+    const usuario = JSON.parse(userData);
+    formData.append('action', 'update_recipe');
+    formData.append('id_receta', idReceta);
+    formData.append('id_usuario', usuario.id_usuario);
+    formData.append('title', document.getElementById('edit-title').value);
+    formData.append('description', document.getElementById('edit-intro').value);
+    formData.append('ingredients', document.getElementById('edit-ingredients').value);
+    formData.append('steps', document.getElementById('edit-steps').value);
+    formData.append('time', document.getElementById('edit-time').value);
+    formData.append('portions', document.getElementById('edit-portions').value);
+    formData.append('difficulty', document.getElementById('edit-difficulty').value);
+    
+    // Añadir la imagen si se seleccionó una nueva
+    const imageInput = document.getElementById('edit-image');
+    if (imageInput && imageInput.files[0]) {
+        formData.append('image', imageInput.files[0]);
+    }
+
+    // Enviar los datos
+    fetch('../../backend/php/actualizar_receta.php', {
+        method: 'POST',
+        body: formData // No establezcas Content-Type, FormData lo maneja automáticamente
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Receta actualizada correctamente');
+            document.getElementById('edit-popup').style.display = 'none';
+            location.reload();
+        } else {
+            alert('Error al actualizar: ' + (data.message || 'Error desconocido'));
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error al conectar con el servidor');
+    });
+}
 
 function cargarReceta(receta) {
     document.title = `${receta.titulo}`;
@@ -83,7 +163,7 @@ function cargarReceta(receta) {
     const listaPasos = document.querySelector('.steps-list');
     listaPasos.innerHTML = '';
 
-    const pasos = receta.pasos.split(/(?:\d+\.\s)/).filter(Boolean);
+    const pasos = receta.pasos.split(/\n/).filter(Boolean);
 
     pasos.forEach(paso => {
         const li = document.createElement('li');
@@ -91,6 +171,33 @@ function cargarReceta(receta) {
         li.textContent = paso.trim();
         listaPasos.appendChild(li);
     });
+
+    console.log("Datos de la receta:", receta);
+    console.log("Datos del usuario:", JSON.parse(sessionStorage.getItem('userData')));
+
+    // Verificar si el usuario logueado es el creador
+    const editarBtn = document.querySelector('.editar-btn');
+    const guardarBtn = document.querySelector('.guardar-btn');
+
+    if (editarBtn && guardarBtn) {
+        const userData = sessionStorage.getItem('userData');
+
+        if (userData) {
+            try {
+                const usuario = JSON.parse(userData);
+                if (usuario.id_usuario && receta.id_cocinero && usuario.id_usuario == receta.id_cocinero) {
+                    // Mostrar botón editar y ocultar guardar
+                    editarBtn.style.display = 'inline-block';
+                    guardarBtn.style.display = 'none';
+
+                    // Configurar el popup de edición
+                    configurarPopupEdicion(receta);
+                }
+            } catch (e) {
+                console.error("Error al parsear userData:", e);
+            }
+        }
+    }
 
     // Cocinero
     const chefImg = document.querySelector('.chef-image img');
@@ -131,5 +238,4 @@ function cargarReceta(receta) {
     } else {
         relatedGrid.innerHTML = '<p>No hay recetas relacionadas.</p>';
     }
-
 }
