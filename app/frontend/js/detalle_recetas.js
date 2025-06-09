@@ -84,9 +84,21 @@ function configurarPopupEdicion(receta) {
 }
 
 function guardarCambiosReceta(idReceta) {
-    // Crear FormData para enviar también archivos si es necesario
-    const formData = new FormData();
+    const userData = sessionStorage.getItem('userData');
+    if (!userData) {
+        alert('Usuario no autenticado');
+        return;
+    }
+
     const usuario = JSON.parse(userData);
+    
+    const formData = new FormData();
+    // formData.append('action', 'update_recipe');
+    // formData.append('id_receta', idReceta);
+    // No necesitas enviar id_usuario ya que el servidor lo obtiene de la sesión
+    // formData.append('title', document.getElementById('edit-title').value);
+    // const formData = new FormData();
+    // const usuario = JSON.parse(userData);
     formData.append('action', 'update_recipe');
     formData.append('id_receta', idReceta);
     formData.append('id_usuario', usuario.id_usuario);
