@@ -331,7 +331,7 @@ function agregarCampoGaleria() {
 
     const input = document.createElement('input');
     input.type = 'file';
-    input.name = 'gallery[]'; // Muy importante
+    input.name = 'gallery[]'; 
     input.accept = 'image/*';
     input.style.display = 'none';
 
