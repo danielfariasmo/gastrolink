@@ -64,9 +64,12 @@ body::before {
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
+  flex: 1 0 auto;
+  max-width: 100%;
+  width: 100%;
   padding: var(--spacing-lg);
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .header1 {
