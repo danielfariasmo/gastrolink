@@ -207,9 +207,9 @@ a {
 }
 
 .pagination a.active {
-    background-color: var(--color-text-dark);
+    background-color: var(--color-primary);
     color: var(--color-white);
-    border-color: var(--color-text-dark);
+    border-color: var(--color-primary);
 }
 
 .pagination a:hover:not(.active) {

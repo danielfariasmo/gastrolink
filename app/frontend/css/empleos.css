@@ -194,6 +194,12 @@ body {
     margin-top: 30px;
 }
 
+.pagination a.active {
+    background-color: #ff4d4d;
+    color: #fff;
+    border-color: #ff4d4d;
+}
+
 .pagination a {
     display: flex;
     align-items: center;
