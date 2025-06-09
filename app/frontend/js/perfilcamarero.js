@@ -1,18 +1,15 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Obtener datos del usuario desde sessionStorage
+document.addEventListener('DOMContentLoaded', function () {
     const userData = JSON.parse(sessionStorage.getItem('userData'));
-    
-    // Verificar que el usuario es un camarero
+
     if (!userData || userData.tipo_usuario !== 'camarero') {
         window.location.href = '../html/index.html';
         return;
     }
 
-    // Cargar datos del camarero
     cargarDatosCamarero(userData.id_usuario);
-    
-    // Configurar eventos
+
     document.querySelector('.edit-profile-btn').addEventListener('click', editarPerfil);
+
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', cambiarTab);
     });
@@ -35,116 +32,96 @@ function cargarDatosCamarero(id) {
 }
 
 function actualizarUI(camarero, recetasFavoritas, restaurantesFavoritos) {
-    // Actualizar información del perfil
     const avatar = document.querySelector('.profile-avatar');
-    if (camarero.imagen) {
-        avatar.style.backgroundImage = `url('${camarero.imagen}')`;
-    } else {
-        avatar.style.backgroundImage = "url('../../img/default-avatar.jpg')";
+    if (avatar) {
+        const rutaImagen = camarero.imagen
+            ? camarero.imagen
+            : '../../img/default-avatar.jpg';
+        avatar.style.backgroundImage = `url('${rutaImagen}')`;
     }
-    
-    document.querySelector('.profile-info h2').textContent = camarero.nombre;
-    document.querySelector('.profile-type').textContent = `Camarero (${camarero.idiomas})`;
-    document.querySelector('.profile-details').innerHTML = `
-        ${camarero.descripcion}<br>
-        Experiencia: ${camarero.experiencia}<br>
-        Correo: ${camarero.correo}
-    `;
-    
-    // Actualizar recetas favoritas
+
+    const h2 = document.querySelector('.profile-info h2');
+    if (h2) h2.textContent = camarero.nombre;
+
+    const tipo = document.querySelector('.profile-type');
+    if (tipo) tipo.textContent = `Camarero (${camarero.idiomas})`;
+
+    const detalles = document.querySelector('.profile-details');
+    if (detalles) {
+        detalles.innerHTML = `
+            ${camarero.descripcion}<br>
+            Experiencia: ${camarero.experiencia}<br>
+            Correo: ${camarero.correo}
+        `;
+    }
+
+    // Mostrar recetas por defecto al cargar
     actualizarRecetasFavoritas(recetasFavoritas);
-    
-    // Configurar eventos de tabs
-    document.querySelector('.tab-btn:nth-child(1)').addEventListener('click', () => {
-        actualizarRecetasFavoritas(recetasFavoritas);
-    });
-    
-    document.querySelector('.tab-btn:nth-child(2)').addEventListener('click', () => {
-        actualizarRestaurantesFavoritos(restaurantesFavoritos);
-    });
+
+    // Guardar datos para los tabs
+    window.recetasGuardadas = recetasFavoritas;
+    window.restaurantesGuardados = restaurantesFavoritos;
 }
 
 function actualizarRecetasFavoritas(recetas) {
-    const gridRecetas = document.querySelector('.recipes-grid');
+    const gridRecetas = document.getElementById('favoritos-grid');
     gridRecetas.innerHTML = '';
-    
-    if (recetas.length === 0) {
+
+    if (!recetas || recetas.length === 0) {
         gridRecetas.innerHTML = '<p>No hay recetas favoritas guardadas.</p>';
         return;
     }
-    
+
     recetas.forEach(receta => {
-        const card = document.createElement('div');
-        card.className = 'recipe-card';
+        const card = document.createElement('a');
+        card.className = 'mini-card';
+        card.href = `detalle_recetas.html?id=${receta.id_receta}`;
         card.innerHTML = `
-            <div class="recipe-image" style="background-image: url('${receta.img_receta || '../../img/recetas/default.jpg'}')"></div>
-            <div class="recipe-content">
-                <h4 class="recipe-title">${receta.titulo}</h4>
-                <div class="recipe-chef">Chef: ${receta.nombre_chef || 'Desconocido'}</div>
-                <div class="recipe-time">${receta.tiempo_preparacion} min - ${receta.dificultad}</div>
-                <div class="recipe-actions">
-                    <button class="view-recipe-btn" data-id="${receta.id_receta}">Ver receta</button>
-                    <div class="recipe-icons">
-                        <button class="icon-btn heart-icon" data-id="${receta.id_receta}">♥</button>
-                        <button class="icon-btn bookmark-icon" data-id="${receta.id_receta}">🔖</button>
-                    </div>
-                </div>
+            <div class="mini-image">
+                <img src="${receta.img_receta || '../../img/recetas/default.jpg'}" alt="${receta.titulo}">
             </div>
+            <div class="mini-title">${receta.titulo}</div>
         `;
         gridRecetas.appendChild(card);
-    });
-    
-    // Agregar eventos a los botones
-    document.querySelectorAll('.view-recipe-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const idReceta = this.getAttribute('data-id');
-            window.location.href = `detalle_recetas.html?id=${idReceta}`;
-        });
     });
 }
 
 function actualizarRestaurantesFavoritos(restaurantes) {
-    const gridRecetas = document.querySelector('.recipes-grid');
+    const gridRecetas = document.getElementById('favoritos-grid');
     gridRecetas.innerHTML = '';
-    
-    if (restaurantes.length === 0) {
+
+    if (!restaurantes || restaurantes.length === 0) {
         gridRecetas.innerHTML = '<p>No hay restaurantes favoritos guardados.</p>';
         return;
     }
-    
+
     restaurantes.forEach(restaurante => {
-        const card = document.createElement('div');
-        card.className = 'restaurant-card';
+        const card = document.createElement('a');
+        card.className = 'mini-card';
+        card.href = `detalles_restaurantes.html?id=${restaurante.id_restaurante}`;
         card.innerHTML = `
-            <div class="restaurant-image" style="background-image: url('${restaurante.img_usuario || '../../img/default-avatar.jpg'}')"></div>
-            <div class="restaurant-content">
-                <h4 class="restaurant-title">${restaurante.nombre}</h4>
-                <div class="restaurant-type">${restaurante.tipo_restaurante || 'Tipo no especificado'}</div>
-                <div class="restaurant-actions">
-                    <button class="view-restaurant-btn" data-id="${restaurante.id_restaurante}">Ver restaurante</button>
-                    <div class="restaurant-icons">
-                        <button class="icon-btn heart-icon" data-id="${restaurante.id_restaurante}">♥</button>
-                    </div>
-                </div>
+            <div class="mini-image">
+                <img src="${restaurante.img_usuario || '../../img/default-avatar.jpg'}" alt="${restaurante.nombre}">
             </div>
+            <div class="mini-title">${restaurante.nombre}</div>
         `;
         gridRecetas.appendChild(card);
     });
-    
-    // Agregar eventos a los botones
-    document.querySelectorAll('.view-restaurant-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const idRestaurante = this.getAttribute('data-id');
-            window.location.href = `perfil_restaurante.html?id=${idRestaurante}`;
-        });
-    });
 }
+
 
 function cambiarTab(e) {
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.classList.remove('active');
     });
     e.target.classList.add('active');
+
+    const tab = e.target.textContent.trim();
+    if (tab === 'Recetas') {
+        actualizarRecetasFavoritas(window.recetasGuardadas);
+    } else {
+        actualizarRestaurantesFavoritos(window.restaurantesGuardados);
+    }
 }
 
 function mostrarError(mensaje) {
@@ -153,15 +130,18 @@ function mostrarError(mensaje) {
     errorDiv.className = 'error-message';
     errorDiv.textContent = mensaje;
     main.prepend(errorDiv);
-    
+
     setTimeout(() => {
         errorDiv.remove();
     }, 5000);
 }
 
 function editarPerfil() {
-    // Implementar lógica para editar perfil
-    console.log('Editar perfil');
-    // Aquí puedes redirigir a una página de edición o mostrar un modal
-    window.location.href = 'editar_perfil.html';
+    const userData = JSON.parse(sessionStorage.getItem('userData'));
+    if (userData && userData.id_usuario) {
+        window.location.href = `edit_camarero.html?id=${userData.id_usuario}`;
+    } else {
+        mostrarError('No se pudo acceder al perfil');
+    }
 }
+
