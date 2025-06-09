@@ -29,7 +29,7 @@
     --border-radius-lg: 20px;
     
     /* Tipografía */
-    --font-family: 'Port Lligat Sans';
+    --font-family: 'Poppins-Regular';
     --font-size-xs: 12px;
     --font-size-sm: 13px;
     --font-size-md: 14px;
@@ -53,17 +53,23 @@
     --card-height: 100%;
     --image-height: 180px;
 }
-
+@font-face {
+  font-family: 'Poppins-Regular';
+  src: url('../../fonts/Poppins-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 /* Estilos generales */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: var(--font-family);
 }
 
 body {
     background-color: var(--color-background);
+    font-family: var(--font-family);
 }
 
 .container {
@@ -146,6 +152,7 @@ a {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    font-family: var(--font-family);
 }
 
 .restaurant-name {
@@ -153,6 +160,7 @@ a {
     font-weight: 600;
     margin-bottom: var(--spacing-xs);
     color: var(--color-text-dark);
+    font-family: var(--font-family);
 }
 
 .restaurant-type {
@@ -163,6 +171,7 @@ a {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-family: var(--font-family); 
 }
 
 .restaurant-meta {
@@ -204,6 +213,7 @@ a {
 
 .restaurant-description {
     color: var(--color-text-medium);
+    font-family: var(--font-family); 
 }
 
 /* Estilos para la paginación */
@@ -257,6 +267,7 @@ a {
 }
 
 .filter-btn {
+    font-family: var(--font-family);
     padding: var(--spacing-sm) var(--spacing-md);
     background-color: var(--color-filter-bg);
     border: none;
