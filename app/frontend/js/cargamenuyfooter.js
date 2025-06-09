@@ -87,8 +87,6 @@ async function setupMenuAndSearch() {
 
     // 2.2.1 Función para filtrar elementos por tipo de usuario
     function filterByUserType(userType) {
-        console.log(`Aplicando filtros para usuario tipo: ${userType}`);
-        
         // Ejemplo: Ocultar/mostrar elementos del menú según el tipo de usuario
         const menuItems = document.querySelectorAll('.dropdown-menu li');
         
