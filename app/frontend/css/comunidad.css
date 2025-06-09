@@ -213,7 +213,11 @@ a {
     transition: all 0.3s;
 }
 
-
+.pagination a.active {
+    background-color: #ff4d4d;
+    color: #fff;
+    border-color: #ff4d4d;
+}
 
 .pagination a:hover {
     background-color: #f0f0f0;
