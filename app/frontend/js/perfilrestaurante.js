@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert(editandoOfertaId ? 'Oferta actualizada' : 'Oferta creada con éxito');
+                    mostrarPopupExito(editandoOfertaId ? 'Oferta actualizada con éxito' : 'Oferta creada con éxito');
                     ofertaPopup.style.display = 'none';
                     ofertaForm.reset();
                     cargarDatosRestaurante(userData.id_usuario);
@@ -207,15 +207,23 @@ function cambiarSeccion(e) {
     }
 }
 
-document.getElementById('filtro-tipo').addEventListener('change', cargarFavoritos);
+document.querySelectorAll('#filtro-tabs .tab').forEach(tab => {
+    tab.addEventListener('click', function () {
+        document.querySelectorAll('#filtro-tabs .tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        cargarFavoritos();
+    });
+});
+
 function cargarFavoritos() {
     const userData = JSON.parse(sessionStorage.getItem('userData'));
-    const filtro = document.getElementById('filtro-tipo').value;
+    const filtro = document.querySelector('#filtro-tabs .tab.active')?.dataset.filtro || 'todos';
 
     fetch(`../../backend/php/get_favoritos.php?id_usuario=${userData.id_usuario}`)
         .then(res => res.json())
         .then(data => {
-            const contenedor = document.querySelector('.favoritos-list');
+            const contenedor = document.getElementById('favoritos-grid');
+
             contenedor.innerHTML = '';
 
             if (!data.success || (!data.restaurantes.length && !data.recetas.length)) {
@@ -226,26 +234,30 @@ function cargarFavoritos() {
             if (filtro === 'todos' || filtro === 'restaurantes') {
                 data.restaurantes.forEach(fav => {
                     contenedor.innerHTML += `
-                        <div class="favorito-item">
-                            <div class="favorito-avatar" style="background-image: url('${fav.img_usuario || '../../img/default-avatar.jpg'}')"></div>
-                            <div class="favorito-info">
-                                <h4>${fav.nombre}</h4>
+                        <a href="../html/detalles_restaurantes.html?id=${fav.id_usuario}" class="recipe-card">
+                        <div class="recipe-card">
+                            <div class="recipe-image">
+                                <img src="${fav.img_usuario || '../../img/default-avatar.jpg'}" alt="${fav.nombre}">
                             </div>
-                        </div>
-                    `;
+                            <div class="recipe-details">
+                                <h3 class="recipe-title">${fav.nombre}</h3>
+                            </div>
+                        </div>`;
                 });
             }
 
             if (filtro === 'todos' || filtro === 'recetas') {
                 data.recetas.forEach(receta => {
                     contenedor.innerHTML += `
-                        <div class="favorito-item">
-                            <div class="favorito-avatar" style="background-image: url('${receta.imagen || '../../img/default-avatar.jpg'}')"></div>
-                            <div class="favorito-info">
-                                <h4>${receta.nombre}</h4>
+                        <a href="../html/detalle_recetas.html?id=${receta.id_receta}" class="recipe-card">
+                        <div class="recipe-card">
+                            <div class="recipe-image">
+                                <img src="${receta.imagen || '../../img/default-avatar.jpg'}" alt="${receta.nombre}">
                             </div>
-                        </div>
-                    `;
+                            <div class="recipe-details">
+                                <h3 class="recipe-title">${receta.nombre}</h3>
+                            </div>
+                        </div>`;
                 });
             }
         })
@@ -310,7 +322,7 @@ document.getElementById('confirm-delete').addEventListener('click', () => {
         })
         .then(data => {
             if (data.success) {
-                alert('Oferta eliminada con éxito');
+                mostrarPopupExito('Oferta eliminada con éxito');
                 cargarDatosRestaurante(userData.id_usuario);
             } else {
                 throw new Error(data.message || 'Error desconocido');
@@ -358,3 +370,17 @@ function limpiarErrorInput(input) {
     const error = input.parentElement.querySelector('.error-message');
     if (error) error.remove();
 }
+
+function mostrarPopupExito(mensaje) {
+    const popup = document.getElementById('success-popup');
+    document.getElementById('success-message').textContent = mensaje;
+    popup.style.display = 'flex';
+}
+
+document.getElementById('close-success-popup').addEventListener('click', () => {
+    document.getElementById('success-popup').style.display = 'none';
+});
+document.getElementById('ok-success-btn').addEventListener('click', () => {
+    document.getElementById('success-popup').style.display = 'none';
+});
+
