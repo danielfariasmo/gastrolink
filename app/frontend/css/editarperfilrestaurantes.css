@@ -92,9 +92,11 @@ body::before {
   font-size: var(--font-size-medium);
   opacity: 0.9;
 }
+
 #menu-container {
   margin-bottom: 2rem;
 }
+
 .form-container {
   background: var(--white);
   border-radius: var(--border-radius-lg);
@@ -250,7 +252,7 @@ textarea {
   accent-color: var(--primary-color);
 }
 
-.price-option input[type="radio"]:checked + label {
+.price-option input[type="radio"]:checked+label {
   color: var(--primary-color);
   font-weight: 600;
 }
@@ -343,15 +345,25 @@ textarea {
   color: var(--primary-color);
 }
 
-  .btn-outline:hover {
-      background-color: #667eea;
-      color: white;
-  }
+.btn-outline:hover {
+  background-color: #667eea;
+  color: white;
+}
 
-  @media (max-width: 768px) {
-      .container {
-          padding: 10px;
-      }
+.input-error {
+  color: red;
+  font-size: 0.8em;
+  margin-top: 4px;
+}
+
+.input-invalid {
+  border-color: red;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
 
   .header1 h1 {
     font-size: var(--font-size-large);
