@@ -377,7 +377,7 @@ a:hover {
 
 .feature-item h3 {
   font-size: var(--font-size-xl);
-  color: var(--color-gray-800);
+  color: black;
   margin-bottom: var(--spacing-md);
   font-weight: var(--font-weight-semibold);
 }
@@ -403,7 +403,12 @@ a:hover {
   overflow: hidden;
   box-shadow: var(--shadow-lg);
 }
-
+.a1{
+  color: #000000;
+}
+.comunidad{
+  color: #000000;
+}
 .community-image {
   flex: 1;
   min-height: 300px;
