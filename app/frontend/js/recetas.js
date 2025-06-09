@@ -95,26 +95,43 @@ function actualizarPaginacion() {
     paginacion.appendChild(next);
 }
 
-// Función para cargar los filtros
+// FILTROS DE BÚSQUEDA
+let filtroActivo = 'todos';
+
 function cargarFiltros(filtros) {
     const filtersContainer = document.querySelector('.filters');
     filtersContainer.innerHTML = '';
 
     const allBtn = document.createElement('button');
-    allBtn.classList.add('filter-btn', 'active');
+    allBtn.classList.add('filter-btn');
+    if (filtroActivo === 'todos') allBtn.classList.add('active');
     allBtn.textContent = 'Todos';
-    allBtn.onclick = () => cargarRecetas('todos');
+    allBtn.onclick = function () {
+        filtroActivo = 'todos';
+        cargarRecetas('todos');
+        activarBoton(this);
+    };
     filtersContainer.appendChild(allBtn);
 
     filtros.forEach(filtro => {
         const filterBtn = document.createElement('button');
         filterBtn.classList.add('filter-btn');
+        if (filtroActivo === filtro) filterBtn.classList.add('active');
         filterBtn.textContent = filtro;
-        filterBtn.onclick = () => cargarRecetas(filtro);
+        filterBtn.onclick = function () {
+            filtroActivo = filtro;
+            cargarRecetas(filtro);
+            activarBoton(this);
+        };
         filtersContainer.appendChild(filterBtn);
     });
 }
 
+function activarBoton(botonSeleccionado) {
+    const botones = document.querySelectorAll('.filter-btn');
+    botones.forEach(boton => boton.classList.remove('active'));
+    botonSeleccionado.classList.add('active');
+}
 // Función para cargar las recetas desde el backend
 function cargarRecetas(tipo = 'todos') {
     const url = tipo === 'todos' ? '../../backend/php/get_recetas.php' : `../../backend/php/get_recetas.php?tipo=${tipo}`;
@@ -132,21 +149,6 @@ function cargarRecetas(tipo = 'todos') {
         })
         .catch(error => console.error('Error fetching recetas:', error));
 }
-// FUnción para los botones del filtro
-document.addEventListener('DOMContentLoaded', () => {
-    const filterButtons = document.querySelectorAll('.filter-btn');
-
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-
-            button.classList.add('active');
-
-            const tipoSeleccionado = button.dataset.tipo;
-            console.log('Filtrar por tipo:', tipoSeleccionado);
-        });
-    });
-});
 // Inicializar la carga de recetas y filtros
 document.addEventListener('DOMContentLoaded', () => {
     cargarRecetas();
