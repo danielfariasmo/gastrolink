@@ -41,7 +41,7 @@
   --spacing-4xl: 80px;
   
   /* Fuentes */
-  --font-family: 'Port Lligat Sans';
+  --font-family: 'Poppins-Regular';
   --font-weight-light: 300;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
@@ -67,12 +67,12 @@
   /* Contenedor */
   --container-width: 1200px;
 }
-/* @font-face {
-  font-family: 'Port Lligat Sans';
-  src: url('../fonts/PortLligatSans-Regular.ttf') format('truetype');
+@font-face {
+  font-family: 'Poppins-Regular';
+  src: url('../../fonts/Poppins-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
-} */
+}
 /* Reset y estilos generales */
 * {
   margin: 0;
@@ -103,24 +103,29 @@ h1, h2, h3, h4 {
   margin-bottom: var(--spacing-md);
   font-weight: var(--font-weight-bold);
   color: var(--color-gray-800);
+  font-family: var(--font-family);
 }
 
 section {
   padding: var(--spacing-4xl) 0;
+  font-family: var(--font-family);
 }
 
 ul {
   list-style: none;
+  font-family: var(--font-family);
 }
 
 a {
   text-decoration: none;
   color: inherit;
   transition: color var(--transition-normal);
+  font-family: var(--font-family);
 }
 
 a:hover {
   color: var(--color-primary);
+  font-family: var(--font-family);
 }
 
 .btn {
@@ -154,6 +159,7 @@ a:hover {
   position: sticky;
   top: 0;
   z-index: 100;
+  font-family: var(--font-family);
 }
 
 .header .container {
@@ -264,6 +270,7 @@ a:hover {
   font-size: var(--font-size-xl);
   margin-bottom: var(--spacing-xl);
   color:black;
+  font-family: var(--font-family);
 }
 .hero span {
   font-weight: var(--font-weight-semibold);
@@ -312,11 +319,13 @@ a:hover {
   font-size: var(--font-size-4xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-gray-800);
+  font-family: var(--font-family);
 }
 
 .connections-content p {
   font-size: var(--font-size-xl);
   color: var(--color-gray-600);
+  font-family: var(--font-family);
 }
 
 /* Features Section */
@@ -349,6 +358,7 @@ a:hover {
   background-color: var(--color-white);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-sm);
+  font-family: var(--font-family);
 }
 
 .feature-item:hover {
@@ -386,6 +396,7 @@ a:hover {
   font-size: var(--font-size-md);
   color: var(--color-gray-600);
   max-width: 200px;
+  font-family: var(--font-family);
 }
 
 /* Community Section */
@@ -435,6 +446,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  font-family: var(--font-family);
 }
 
 .community-content h2 {
@@ -442,6 +454,7 @@ a:hover {
   margin-bottom: var(--spacing-lg);
   font-weight: var(--font-weight-bold);
   color: var(--color-gray-800);
+  font-family: var(--font-family);
 }
 
 .community-content p {
@@ -449,6 +462,7 @@ a:hover {
   font-size: var(--font-size-md);
   line-height: 1.6;
   color: var(--color-gray-600);
+  font-family: var(--font-family);
 }
 
 .community-stats {
@@ -541,6 +555,7 @@ a:hover {
   font-size: var(--font-size-md);
   color: var(--color-gray-700);
   line-height: 1.5;
+  font-family: var(--font-family);
 }
 
 /* CTA Section */
@@ -583,6 +598,7 @@ a:hover {
   margin-left: auto;
   margin-right: auto;
   color: black;
+  font-family: var(--font-family);
 }
 
 .cta .btn.primary {
