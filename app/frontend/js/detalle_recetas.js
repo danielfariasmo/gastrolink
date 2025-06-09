@@ -7,6 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
+    // Verificar si hay usuario logeado
+    const userData = sessionStorage.getItem('userData');
+    const editarBtn = document.querySelector('.editar-btn');
+    const guardarBtn = document.querySelector('.guardar-btn');
+    
+    if (!userData) {
+        // Ocultar botones si no hay usuario logeado
+        editarBtn.style.display = 'none';
+        guardarBtn.style.display = 'none';
+    }
+
     fetch(`../../backend/php/receta.php?id=${id}`)
         .then(res => res.json())
         .then(data => {
@@ -14,6 +25,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelector('.recipe-detail').innerHTML = `<p>${data.error}</p>`;
             } else {
                 cargarReceta(data);
+                
+                // Verificar si la receta está guardada (solo si hay usuario logeado)
+                if (userData) {
+                    const usuario = JSON.parse(userData);
+                    verificarRecetaGuardada(id, usuario.id_usuario);
+                }
             }
         })
         .catch(error => {
@@ -24,11 +41,34 @@ document.addEventListener('DOMContentLoaded', () => {
     // Botones funcionales
     document.querySelector('.imprimir-btn').addEventListener('click', () => window.print());
 
-    document.querySelector('.guardar-btn').addEventListener('click', function() {
-        this.innerHTML = '<span class="action-icon">✓</span> Receta guardada';
-        setTimeout(() => {
-            this.innerHTML = '<span class="action-icon">💾</span> Guardar receta';
-        }, 2000);
+    // Modificar el evento de guardar receta
+    document.querySelector('.guardar-btn')?.addEventListener('click', function() {
+        if (!userData) {
+            alert('Debes iniciar sesión para guardar recetas');
+            return;
+        }
+        
+        const usuario = JSON.parse(userData);
+        const recetaId = new URLSearchParams(window.location.search).get('id');
+        
+        // Verificar si ya está guardada
+        const isSaved = this.classList.contains('saved');
+        
+        if (isSaved) {
+            // Eliminar de favoritos
+            eliminarRecetaGuardada(recetaId, usuario.id_usuario)
+                .then(() => {
+                    this.classList.remove('saved');
+                    this.innerHTML = '<span class="action-icon">💾</span> Guardar receta';
+                });
+        } else {
+            // Guardar en favoritos
+            guardarRecetaFavorita(recetaId, usuario.id_usuario)
+                .then(() => {
+                    this.classList.add('saved');
+                    this.innerHTML = '<span class="action-icon">✓</span> Receta guardada';
+                });
+        }
     });
 
     document.querySelector('.compartir-btn').addEventListener('click', function() {
@@ -44,6 +84,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// Nueva función para verificar si la receta está guardada
+function verificarRecetaGuardada(recetaId, usuarioId) {
+    fetch(`../../backend/php/verificar_favorito.php?receta_id=${recetaId}&usuario_id=${usuarioId}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.isSaved) {
+                const guardarBtn = document.querySelector('.guardar-btn');
+                guardarBtn.classList.add('saved');
+                guardarBtn.innerHTML = '<span class="action-icon">✓</span> Receta guardada';
+            }
+        })
+        .catch(error => {
+            console.error('Error al verificar receta guardada:', error);
+        });
+}
+
+// Nueva función para guardar receta en favoritos
+function guardarRecetaFavorita(recetaId, usuarioId) {
+    return fetch('../../backend/php/guardar_favorito.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            receta_id: recetaId,
+            usuario_id: usuarioId
+        })
+    })
+    .then(res => res.json());
+}
+
+// Nueva función para eliminar receta de favoritos
+function eliminarRecetaGuardada(recetaId, usuarioId) {
+    return fetch('../../backend/php/eliminar_favorito.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            receta_id: recetaId,
+            usuario_id: usuarioId
+        })
+    })
+    .then(res => res.json());
+}
 
 function configurarPopupEdicion(receta) {
     const popup = document.getElementById('edit-popup');
