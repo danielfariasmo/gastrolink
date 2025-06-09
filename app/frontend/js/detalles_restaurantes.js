@@ -7,6 +7,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     const id = getIdFromUrl();
     if (!id) return;
 
+    // Verificar si hay usuario logeado
+    const userData = sessionStorage.getItem('userData');
+    const saveBtn = document.querySelector('.action-button:nth-child(2)');
+    
+    if (!userData && saveBtn) {
+        saveBtn.style.display = 'none';
+    }
+
     try {
         const response = await fetch(`../../backend/php/get_detalle_restaurante.php?id=${id}`);
         const data = await response.json();
@@ -128,16 +136,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
 
-        // Botón Guardar
-        const saveBtn = document.querySelector('.action-button:nth-child(2)');
-        if (saveBtn) {
-            saveBtn.addEventListener('click', function () {
-                this.innerHTML = '<span class="action-icon">✓</span> Guardado';
-                setTimeout(() => {
-                    this.innerHTML = '<span class="action-icon">💾</span> Guardar';
-                }, 2000);
-            });
-        }
+        
 
         // Botón Compartir
         const shareBtn = document.querySelector('.action-button.primary');
@@ -156,7 +155,79 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
 
-    } catch (err) {
-        console.error('Error al cargar datos:', err);
+    // Botón Guardar - Nueva implementación
+    if (saveBtn) {
+        // Verificar si el restaurante está guardado (solo si hay usuario logeado)
+        if (userData) {
+            const usuario = JSON.parse(userData);
+            await verificarRestauranteGuardado(id, usuario.id_usuario, saveBtn);
+        }
+
+        saveBtn.addEventListener('click', async function() {
+            if (!userData) {
+                alert('Debes iniciar sesión para guardar restaurantes');
+                return;
+            }
+            
+            const usuario = JSON.parse(userData);
+            const isSaved = this.classList.contains('saved');
+            
+            if (isSaved) {
+                // Eliminar de favoritos
+                await eliminarRestauranteGuardado(id, usuario.id_usuario);
+                this.classList.remove('saved');
+                this.innerHTML = '<span class="action-icon">💾</span> Guardar';
+            } else {
+                // Guardar en favoritos
+                await guardarRestauranteFavorito(id, usuario.id_usuario);
+                this.classList.add('saved');
+                this.innerHTML = '<span class="action-icon">✓</span> Guardado';
+            }
+        });
     }
+
+} catch (err) {
+    console.error('Error al cargar datos:', err);
+}
 });
+
+// Funciones auxiliares para restaurantes favoritos
+async function verificarRestauranteGuardado(restauranteId, usuarioId, saveBtn) {
+    try {
+        const response = await fetch(`../../backend/php/verificar_favorito_restaurante.php?restaurante_id=${restauranteId}&usuario_id=${usuarioId}`);
+        const data = await response.json();
+        
+        if (data.isSaved && saveBtn) {
+            saveBtn.classList.add('saved');
+            saveBtn.innerHTML = '<span class="action-icon">✓</span> Guardado';
+        }
+    } catch (error) {
+        console.error('Error al verificar restaurante guardado:', error);
+    }
+}
+
+async function guardarRestauranteFavorito(restauranteId, usuarioId) {
+    return fetch('../../backend/php/guardar_favorito_restaurante.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            restaurante_id: restauranteId,
+            usuario_id: usuarioId
+        })
+    }).then(res => res.json());
+}
+
+async function eliminarRestauranteGuardado(restauranteId, usuarioId) {
+    return fetch('../../backend/php/eliminar_favorito_restaurante.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            restaurante_id: restauranteId,
+            usuario_id: usuarioId
+        })
+    }).then(res => res.json());
+}
