@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="../css/editarperfilrestaurantes.css">
     <link rel="icon" type="image/png" href="../../img/menu/logo.png" sizes="16x16">
 </head>
+
 <body>
     <!-- Menu -->
     <div id="menu-container"></div>
@@ -20,7 +22,7 @@
         <form class="form-container" id="restaurant-form">
             <!-- Información Básica -->
             <div class="form-section">
-                <h2 class="section-title">🏪 Información Básica</h2>
+                <h2 class="section-title">Información Básica</h2>
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="restaurant-name">🍽️ Nombre del Restaurante</label>
@@ -29,33 +31,30 @@
                     <div class="form-group">
                         <label for="cuisine-type">🍳 Tipo de Cocina</label>
                         <select id="cuisine-type" name="cuisine-type">
-                            <option value="">Selecciona un tipo</option>
-                            <option value="italiana">Italiana</option>
-                            <option value="española">Española</option>
-                            <option value="mexicana">Mexicana</option>
-                            <option value="china">China</option>
-                            <option value="japonesa">Japonesa</option>
-                            <option value="francesa">Francesa</option>
-                            <option value="mediterranea">Mediterránea</option>
-                            <option value="fusion">Fusión</option>
-                            <option value="vegetariana">Vegetariana</option>
-                            <option value="otra">Otra</option>
+                            <option value="">Cargando tipos...</option>
                         </select>
                     </div>
                     <div class="form-group full-width">
                         <label for="description">📝 Descripción</label>
-                        <textarea id="description" name="description" placeholder="Describe tu restaurante, especialidades, ambiente, etc."></textarea>
+                        <textarea id="description" name="description"
+                            placeholder="Describe tu restaurante, especialidades, ambiente, etc."></textarea>
                     </div>
+                    <div class="form-group full-width">
+                        <label for="history">📖 Historia del Restaurante</label>
+                        <textarea id="history" name="history" rows="5"
+                            placeholder="Cuenta la historia del restaurante..."></textarea>
+                    </div>
+
                 </div>
             </div>
 
             <!-- Ubicación y Contacto -->
             <div class="form-section">
-                <h2 class="section-title">📍 Ubicación y Contacto</h2>
+                <h2 class="section-title">Ubicación y Contacto</h2>
                 <div class="form-grid">
                     <div class="form-group full-width">
-                        <label for="address">🏠 Dirección Completa</label>
-                        <input type="text" id="address" name="address">
+                        <label for="address">📍 Dirección</label>
+                        <input type="text" id="address" name="address" placeholder="Ej: Calle Falsa 123, Madrid">
                     </div>
                     <div class="form-group">
                         <label for="phone">📞 Teléfono</label>
@@ -74,18 +73,19 @@
 
             <!-- Rango de Precios -->
             <div class="form-section">
-                <h2 class="section-title">💰 Rango de Precios</h2>
+                <h2 class="section-title">Rango de Precios</h2>
                 <div class="price-range">
                     <label><input type="radio" name="price-range" value="€"> € (Económico)</label>
                     <label><input type="radio" name="price-range" value="€€"> €€ (Moderado)</label>
                     <label><input type="radio" name="price-range" value="€€€"> €€€ (Alto)</label>
                     <label><input type="radio" name="price-range" value="€€€€"> €€€€ (Lujo)</label>
                 </div>
+                <input type="hidden" id="rango_precio_real" name="rango_precio_real">
             </div>
 
             <!-- Imágenes -->
             <div class="form-section">
-                <h2 class="section-title">📸 Imágenes</h2>
+                <h2 class="section-title">Imágenes</h2>
                 <div class="form-group">
                     <label>🖼️ Imagen Principal</label>
                     <div class="image-upload" onclick="document.getElementById('cover-image').click()">
@@ -100,9 +100,7 @@
 
                 <div class="form-group full-width">
                     <label>🎨 Galería de Imágenes</label>
-                    <div class="gallery-manager" id="gallery-container">
-                        <!-- Se insertan dinámicamente -->
-                    </div>
+                    <div class="gallery-manager" id="gallery-container"></div>
                 </div>
             </div>
 
@@ -114,11 +112,12 @@
         </form>
     </div>
 
-     <!-- Footer -->
+    <!-- Footer -->
     <div id="footer-container"></div>
 
     <!-- Scripts -->
     <script src="../js/cargamenuyfooter.js"></script>
     <script src="../js/edit_restaurante.js"></script>
 </body>
+
 </html>

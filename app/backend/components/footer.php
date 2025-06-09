@@ -133,7 +133,6 @@
                     </div>
                     
                     <div class="footer-section">
-                        <h3><a href="../../frontend/html/preguntas_frecuentes.html">Preguntas Frecuentes</a></h3>
                         <h3><a href="../../frontend/html/contacto.html">Contacto</a></h3>
                     </div>
                     

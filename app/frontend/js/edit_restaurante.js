@@ -1,28 +1,87 @@
 document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const id_restaurante = params.get('id');
-
     console.log("ID capturado:", id_restaurante);
-
 
     if (!id_restaurante) {
         console.error("ID del restaurante no especificado");
         return;
     }
 
-    fetch(`../../backend/php/get_restaurante_by_id.php?id_restaurante=${id_restaurante}`)
+    fetch('../../backend/php/get_tipos_cocina.php')
+        .then(res => res.json())
+        .then(data => {
+            if (data.success && data.tipos) {
+                const select = document.getElementById('cuisine-type');
+                select.innerHTML = '<option value="">Selecciona un tipo</option>';
+                data.tipos.forEach(tipo => {
+                    const option = document.createElement('option');
+                    option.value = tipo;
+                    option.textContent = tipo;
+                    select.appendChild(option);
+                });
+                cargarDatosRestaurante(id_restaurante);
+            }
+        })
+        .catch(err => {
+            console.error('Error cargando tipos de cocina:', err);
+            cargarDatosRestaurante(id_restaurante);
+        });
+
+    const form = document.getElementById('restaurant-form');
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!validarFormulario()) return;
+        const seleccionado = document.querySelector('input[name="price-range"]:checked');
+        if (seleccionado) {
+            document.getElementById('rango_precio_real').value = convertirSimboloAPrecio(seleccionado.value);
+        }
+
+        const formData = new FormData(form);
+        formData.append('id_restaurante', id_restaurante);
+
+        fetch('../../backend/php/save_restaurante.php', {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Cambios guardados correctamente");
+                    volverAlPerfil();
+                } else {
+                    alert("Error: " + data.message);
+                }
+            })
+            .catch(err => {
+                console.error("Error en el envío:", err);
+                alert("Ocurrió un error al guardar.");
+            });
+    });
+
+    ['restaurant-name', 'cuisine-type', 'description', 'address', 'phone', 'email', 'website'].forEach(id => {
+        const campo = document.getElementById(id);
+        campo.addEventListener('input', () => validarFormulario());
+    });
+
+    document.getElementById('phone').addEventListener('blur', formatearTelefono);
+});
+
+function cargarDatosRestaurante(id) {
+    fetch(`../../backend/php/get_restaurante_by_id.php?id_restaurante=${id}`)
         .then(response => response.json())
         .then(data => {
             if (data.success && data.restaurante) {
                 const r = data.restaurante;
 
                 document.getElementById('restaurant-name').value = r.nombre_restaurante || '';
-                document.getElementById('cuisine-type').value = normalizarTipo(r.tipo_restaurante) || '';
+                document.getElementById('cuisine-type').value = r.tipo_restaurante || '';
                 document.getElementById('description').value = r.descripcion || '';
                 document.getElementById('address').value = r.direccion || '';
                 document.getElementById('phone').value = r.telefono || '';
                 document.getElementById('email').value = r.correo || '';
                 document.getElementById('website').value = r.web || '';
+                document.getElementById('history').value = r.historial || '';
 
                 const radios = document.getElementsByName('price-range');
                 radios.forEach(radio => {
@@ -73,21 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(err => {
             console.error("Error al obtener datos del restaurante", err);
         });
-
-    const form = document.getElementById('restaurant-form');
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        if (!validarFormulario()) return;
-        console.log("✅ Validación OK. Listo para enviar.");
-    });
-
-    ['restaurant-name', 'cuisine-type', 'description', 'address', 'phone', 'email', 'website'].forEach(id => {
-        const campo = document.getElementById(id);
-        campo.addEventListener('input', () => validarFormulario());
-    });
-
-    document.getElementById('phone').addEventListener('blur', formatearTelefono);
-});
+}
 
 function validarCampo(campo, condicion, mensaje) {
     const errorId = campo.id + '-error';
@@ -179,7 +224,7 @@ function volverAlPerfil() {
     const params = new URLSearchParams(window.location.search);
     const id = params.get('id');
     if (id) {
-        window.location.href = `perfil_restaurante.html?id=${id}`;
+        window.location.href = `perfilrestaurante.html?id=${id}`;
     } else {
         window.history.back();
     }
@@ -209,7 +254,15 @@ function convertirPrecioASimbolo(precio) {
     return '€€€€';
 }
 
-
+function convertirSimboloAPrecio(simbolo) {
+    const mapa = {
+        '€': '10-15',
+        '€€': '15-30',
+        '€€€': '30-50',
+        '€€€€': '50-120'
+    };
+    return mapa[simbolo] || '0-0';
+}
 
 function mostrarGaleria(imagenes) {
     const galleryManager = document.querySelector('.gallery-manager');
@@ -232,6 +285,11 @@ function mostrarGaleria(imagenes) {
         input.accept = 'image/*';
         input.style.display = 'none';
 
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'existing_images[]';
+        hiddenInput.value = imgData.url_imagen;
+
         const deleteBtn = document.createElement('button');
         deleteBtn.type = 'button';
         deleteBtn.textContent = '❌';
@@ -243,6 +301,7 @@ function mostrarGaleria(imagenes) {
 
         item.appendChild(img);
         item.appendChild(input);
+        item.appendChild(hiddenInput);
         item.appendChild(deleteBtn);
 
         item.onclick = () => input.click();
@@ -272,7 +331,7 @@ function agregarCampoGaleria() {
 
     const input = document.createElement('input');
     input.type = 'file';
-    input.name = 'gallery[]';
+    input.name = 'gallery[]'; // Muy importante
     input.accept = 'image/*';
     input.style.display = 'none';
 
@@ -306,7 +365,7 @@ function agregarCampoGaleria() {
                 img.style.borderRadius = '8px';
                 img.style.marginBottom = '8px';
 
-                if (placeholder) placeholder.remove();
+                placeholder.remove();
                 item.insertBefore(img, input);
             };
             reader.readAsDataURL(file);
@@ -335,7 +394,7 @@ function mostrarHorarioEditable(horarios) {
     contenedor.classList.add('horario-container');
 
     const h2 = document.createElement('h2');
-    h2.textContent = '⏰ Horario Semanal';
+    h2.textContent = 'Horario Semanal';
     h2.classList.add('section-title');
 
     diasSemana.forEach(dia => {
