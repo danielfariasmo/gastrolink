@@ -183,15 +183,17 @@ body {
     gap: 16px;
     margin-bottom: 20px;
 }
-
-.profile-avatar {
-    width: 64px;
-    height: 64px;
+.profile-avatar  {
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background: var(--text-gray);
     flex-shrink: 0;
+    margin-right: 16px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
-
 .profile-info h2 {
     font-size: 18px;
     font-weight: 600;
@@ -301,6 +303,9 @@ body {
     background: var(--text-gray);
     flex-shrink: 0;
     margin-right: 16px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .oferta-info {
