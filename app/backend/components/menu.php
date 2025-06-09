@@ -372,7 +372,6 @@
                         </div>
                         <div class="user-dropdown">
                             <ul>
-                                <li><a href="/ajustes">Ajustes</a></li>
                                 <li><a href="#" id="profile-link">Mi Cuenta</a></li>
                                 <li><a href="#" id="logout-btn">Cerrar Sesión</a></li>
                             </ul>
