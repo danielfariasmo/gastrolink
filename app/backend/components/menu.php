@@ -257,7 +257,8 @@
         .search-results {
             position: absolute;
             top: 100%;
-            left: 0;
+            left: 50%;
+            transform: translateX(-50%);
             width: 100%;
             max-width: 400px;
             background-color: #fff;
@@ -269,6 +270,7 @@
             max-height: 300px;
             overflow-y: auto;
         }
+
 
         .result-item {
             padding: 8px;
