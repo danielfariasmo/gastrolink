@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Perfil del Restaurante</title>
+    <title>Editar Perfil</title>
     <link rel="stylesheet" href="../css/editarperfilrestaurantes.css">
     <link rel="icon" type="image/png" href="../../img/menu/logo.png" sizes="16x16">
 </head>
@@ -15,7 +15,7 @@
 
     <div class="container">
         <div class="header1">
-            <h1>✏️ Editar Perfil del Restaurante</h1>
+            <h1>Editar Perfil</h1>
             <p>Actualiza la información de tu restaurante para que los clientes tengan los datos más recientes</p>
         </div>
 
@@ -25,22 +25,22 @@
                 <h2 class="section-title">Información Básica</h2>
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="restaurant-name">🍽️ Nombre del Restaurante</label>
+                        <label for="restaurant-name">Nombre del Restaurante</label>
                         <input type="text" id="restaurant-name" name="restaurant-name">
                     </div>
                     <div class="form-group">
-                        <label for="cuisine-type">🍳 Tipo de Cocina</label>
+                        <label for="cuisine-type">Tipo de Cocina</label>
                         <select id="cuisine-type" name="cuisine-type">
                             <option value="">Cargando tipos...</option>
                         </select>
                     </div>
                     <div class="form-group full-width">
-                        <label for="description">📝 Descripción</label>
+                        <label for="description">Descripción</label>
                         <textarea id="description" name="description"
                             placeholder="Describe tu restaurante, especialidades, ambiente, etc."></textarea>
                     </div>
                     <div class="form-group full-width">
-                        <label for="history">📖 Historia del Restaurante</label>
+                        <label for="history">Historia del Restaurante</label>
                         <textarea id="history" name="history" rows="5"
                             placeholder="Cuenta la historia del restaurante..."></textarea>
                     </div>
@@ -53,19 +53,19 @@
                 <h2 class="section-title">Ubicación y Contacto</h2>
                 <div class="form-grid">
                     <div class="form-group full-width">
-                        <label for="address">📍 Dirección</label>
+                        <label for="address">Dirección</label>
                         <input type="text" id="address" name="address" placeholder="Ej: Calle Falsa 123, Madrid">
                     </div>
                     <div class="form-group">
-                        <label for="phone">📞 Teléfono</label>
+                        <label for="phone">Teléfono</label>
                         <input type="tel" id="phone" name="phone" placeholder="+34 911 111 111">
                     </div>
                     <div class="form-group">
-                        <label for="email">✉️ Email</label>
+                        <label for="email">Correo Electrónicol</label>
                         <input type="email" id="email" name="email">
                     </div>
                     <div class="form-group full-width">
-                        <label for="website">🌐 Sitio Web</label>
+                        <label for="website">Sitio Web</label>
                         <input type="text" id="website" name="website" placeholder="www.turestaurante.com">
                     </div>
                 </div>
@@ -87,7 +87,7 @@
             <div class="form-section">
                 <h2 class="section-title">Imágenes</h2>
                 <div class="form-group">
-                    <label>🖼️ Imagen Principal</label>
+                    <label>Imagen de Perfil</label>
                     <div class="image-upload" onclick="document.getElementById('cover-image').click()">
                         <span class="upload-icon">📷</span>
                         <div class="upload-text">
@@ -99,15 +99,15 @@
                 </div>
 
                 <div class="form-group full-width">
-                    <label>🎨 Galería de Imágenes</label>
+                    <label>Galería de Imágenes</label>
                     <div class="gallery-manager" id="gallery-container"></div>
                 </div>
             </div>
 
             <!-- Acciones -->
             <div class="actions">
-                <button type="button" class="btn btn-outline" onclick="volverAlPerfil()">⬅️ Volver</button>
-                <button type="submit" class="btn btn-primary">💾 Guardar Cambios</button>
+                <button type="button" class="btn btn-outline" onclick="volverAlPerfil()">Volver</button>
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
             </div>
         </form>
     </div>
