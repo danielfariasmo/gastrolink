@@ -6,9 +6,9 @@ $tipo = isset($_GET['tipo']) ? $_GET['tipo'] : 'cocinero';
 
 try {
     if ($tipo === 'cocinero') {
-        $query = "SELECT u.id_usuario, u.nombre, u.img_usuario, c.descripcion, c.especialidad FROM usuario u INNER JOIN cocinero c ON u.id_usuario = c.id_cocinero";
+        $query = "SELECT u.id_usuario, u.nombre, u.img_usuario, c.descripcion, c.especialidad, c.experiencia FROM usuario u INNER JOIN cocinero c ON u.id_usuario = c.id_cocinero";
     } elseif ($tipo === 'camarero') {
-        $query = "SELECT u.id_usuario, u.nombre, u.img_usuario, c.descripcion, c.idiomas FROM usuario u INNER JOIN camarero c ON u.id_usuario = c.id_camarero";
+        $query = "SELECT u.id_usuario, u.nombre, u.img_usuario, c.descripcion, c.idiomas, c.experiencia FROM usuario u INNER JOIN camarero c ON u.id_usuario = c.id_camarero";
     } else {
         echo json_encode(['error' => 'Tipo no válido']);
         exit;
