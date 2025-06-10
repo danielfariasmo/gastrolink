@@ -42,11 +42,11 @@ async function setupMenuAndSearch() {
         if (userData) {
             try {
                 const user = JSON.parse(userData);
-                
+
                 // Mostrar vista según tipo de usuario
                 guestView.style.display = 'none';
                 userView.style.display = 'flex';
-                
+
                 // Actualizar datos del usuario
                 document.getElementById('username-display').textContent = user.nombre || user.correo?.split('@')[0];
                 if (user.img_usuario) {
@@ -60,12 +60,12 @@ async function setupMenuAndSearch() {
                         'camarero': '../../frontend/html/perfilcamarero.html',
                         'restaurante': '../../frontend/html/perfilrestaurante.html'
                     };
-                    
+
                     profileLink.href = profilePages[user.tipo_usuario] || '#';
                     profileLink.textContent = user.tipo_usuario === 'restaurante' ? 'Mi Restaurante' : 'Mi Perfil';
-                    
+
                     // Manejador de clic seguro
-                    profileLink.onclick = function(e) {
+                    profileLink.onclick = function (e) {
                         if (!this.href.includes('#')) {
                             window.location.href = this.href;
                         }
@@ -89,14 +89,14 @@ async function setupMenuAndSearch() {
     function filterByUserType(userType) {
         // Ejemplo: Ocultar/mostrar elementos del menú según el tipo de usuario
         const menuItems = document.querySelectorAll('.dropdown-menu li');
-        
+
         menuItems.forEach(item => {
             const dataType = item.dataset.userType;
             if (dataType) {
                 item.style.display = dataType.split(',').includes(userType) ? 'block' : 'none';
             }
         });
-        
+
         // Puedes añadir más lógica de filtrado aquí según necesites
     }
 
@@ -112,78 +112,64 @@ async function setupMenuAndSearch() {
         });
     }
 
-    // 2.4 Búsqueda global con filtrado por tipo de usuario (se mantiene igual)
+    /* 2.4 Búsqueda global */
     const searchInput = document.getElementById('global-search');
     const searchResults = document.getElementById('search-results');
-    if (!searchInput || !searchResults) {
-        console.warn('Buscador no encontrado en el menú');
-        return;
-    }
 
     searchInput.addEventListener('input', async e => {
         const query = e.target.value.trim();
-        if (!query) {
+
+        if (!query) {                   // si se borra el texto
             searchResults.style.display = 'none';
             searchResults.innerHTML = '';
             return;
         }
 
         try {
-            const response = await fetch(`../../backend/php/search.php?query=${encodeURIComponent(query)}`);
-            const data = await response.json();
+            const res = await fetch(`../../backend/php/search.php?query=${encodeURIComponent(query)}`);
+            const data = await res.json();
 
-            // Filtrar resultados según tipo de usuario logueado
-            const userData = sessionStorage.getItem('userData');
-            const userType = userData ? JSON.parse(userData).tipo_usuario : null;
-            
-            const filteredData = userType 
-                ? data.filter(item => item.tipo === userType || item.tipo === 'general') 
-                : data;
-
-            if (filteredData.length > 0) {
-                searchResults.innerHTML = filteredData
-                    .map(item =>
-                        `<div class="result-item" data-id="${item.id_usuario}" data-tipo="${item.tipo}">` +
-                        `<strong>${item.nombre}</strong> <small>(${item.tipo})</small>` +
-                        `</div>`
-                    )
-                    .join('');
+            if (data.length) {
+                searchResults.innerHTML = data.map(item => `
+                <div class="result-item"
+                     data-id="${item.id}"
+                     data-tipo="${item.tipo}">
+                    <strong>${item.nombre}</strong>
+                    <small>(${item.tipo})</small>
+                </div>
+            `).join('');
             } else {
-                searchResults.innerHTML = `<div class="result-item">Sin resultados</div>`;
+                searchResults.innerHTML = '<div class="result-item">Sin resultados</div>';
             }
+
             searchResults.style.display = 'block';
-        } catch (error) {
-            console.error('Error en la petición de búsqueda:', error);
-            searchResults.innerHTML = `<div class="result-item">Error al cargar resultados</div>`;
+
+        } catch (err) {
+            console.error('Error en la búsqueda:', err);
+            searchResults.innerHTML = '<div class="result-item">Error al cargar resultados</div>';
             searchResults.style.display = 'block';
         }
     });
 
-    // 2.5 Navegación desde resultados de búsqueda (se mantiene igual)
+    /* 2.5 Navegación desde resultados */
     searchResults.addEventListener('click', e => {
         const item = e.target.closest('.result-item');
         if (!item) return;
 
-        const tipo = item.dataset.tipo;
-        const id = item.dataset.id;
+        const { id, tipo } = item.dataset;
         let url = '';
 
-        switch (tipo) {
-            case 'receta':
-                url = `/gastrolink/app/frontend/html/recetas.html`;
-                break;
-            case 'restaurante':
-                url = `/gastrolink/app/frontend/html/restaurantes.html`;
-                break;
-            case 'camarero':
-            case 'cocinero':
-                url = `/gastrolink/app/frontend/html/comunidad.html`;
-                break;
-            default:
-                console.warn(`Tipo desconocido: ${tipo}`);
-                return;
+        if (tipo === 'receta') {
+            url = `/gastrolink/app/frontend/html/detalle_recetas.html?id=${id}`;
+        } else if (tipo === 'restaurante') {
+            url = `/gastrolink/app/frontend/html/detalles_restaurantes.html?id=${id}`;
+        } else {
+            console.warn('Tipo desconocido:', tipo);
+            return;
         }
 
+        /* Ocultar la lista y navegar */
+        searchResults.style.display = 'none';
         window.location.href = url;
     });
 }

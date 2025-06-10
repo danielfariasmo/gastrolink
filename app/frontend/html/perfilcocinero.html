@@ -31,26 +31,14 @@
                 </div>
                 <button class="edit-profile-btn">Editar Perfil</button>
             </div>
-
-            <div class="container progress-bars">
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 75%"></div>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 60%"></div>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 90%"></div>
-                </div>
-            </div>
         </section>
 
         <!-- Sección lateral y recetas -->
         <div class="main-container container">
             <!-- Sidebar -->
             <aside class="sidebar">
-                <div class="sidebar-item">Guardados</div>
-                <div class="sidebar-item active">Recetas</div>
+                <div class="sidebar-item" id="btn-guardados">Guardados</div>
+                <div class="sidebar-item active" id="btn-recetas">Recetas</div>
             </aside>
 
             <!-- Recetas -->
@@ -60,27 +48,23 @@
                     <button class="add-recipe-btn">Añadir receta</button>
                 </div>
 
-                <div class="recipes-grid">
-                    <!-- Tarjetas de receta repetidas -->
-                    <!-- Para una implementación dinámica, puedes usar JS para inyectar este bloque -->
-                    <div class="recipe-card">
-                        <div class="recipe-image">Imagen del plato</div>
-                        <div class="recipe-content">
-                            <h4 class="recipe-title">Plato</h4>
-                            <div class="recipe-time">Tiempo de receta</div>
-                            <div class="recipe-actions">
-                                <button class="view-recipe-btn">Ver receta</button>
-                                <div class="recipe-icons">
-                                    <button class="icon-btn"><i class="fa-solid fa-pen"></i></button>
-                                    <button class="icon-btn"><i class="fa-solid fa-trash"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Repite o genera dinámicamente más recipe-card aquí -->
-                </div>
+                <div class="recipes-grid"></div>
             </section>
         </div>
+
+        <!-- Guardados -->
+        <section class="contenido-guardados" style="display: none;">
+            <div class="filtro-favoritos" style="margin-bottom: 1rem;">
+                <div class="container">
+                    <div class="tabs" id="filtro-tabs">
+                        <div class="tab active" data-filtro="todos">Todos</div>
+                        <div class="tab" data-filtro="restaurante">Restaurantes</div>
+                        <div class="tab" data-filtro="receta">Recetas</div>
+                    </div>
+                </div>
+            </div>
+            <div class="recipes-grid" id="favoritos-grid"></div>
+        </section>
 
         <!-- Popup para añadir receta -->
         <div id="add-recipe-popup" class="popup-container">
@@ -145,12 +129,12 @@
 
                     <h3>Información Nutricional</h3>
                     <div class="form-group">
-                        <label for="recipe-calories">Calorias</label>
+                        <label for="recipe-calories">Calorías</label>
                         <input type="number" id="recipe-calories" name="calories" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="recipe-proteins">Proteinas (g)</label>
+                        <label for="recipe-proteins">Proteínas (g)</label>
                         <input type="number" id="recipe-proteins" name="proteins" required>
                     </div>
 
@@ -175,10 +159,7 @@
 
     <!-- JavaScript -->
     <script src="../js/cargamenuyfooter.js"></script>
-    <!-- <script src="../js/crear_receta.js"></script> -->
     <script src="../js/perfilcocinero.js"></script>
-    <!-- <script src="../js/perfilcamarero.js"></script> -->
-    <!-- <script src="../js/perfilrestaurante.js"></script> -->
 </body>
 
 </html>

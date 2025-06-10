@@ -17,18 +17,15 @@ if (!isset($_POST['action']) || !isset($_POST['id_receta'])) {
 }
 
 // Verificar sesión de usuario
-// Obtener el ID del usuario directamente del POST
-if (!isset($_POST['id_usuario'])) {
-    echo json_encode(['success' => false, 'message' => 'ID de usuario no proporcionado']);
+if (!isset($_SESSION['userData'])) {
+    echo json_encode(['success' => false, 'message' => 'Usuario no autenticado']);
     exit;
 }
 
-$userId = mysqli_real_escape_string($connection, $_POST['id_usuario']);
-
-// $userData = json_decode($_SESSION['userData'], true);
+$userData = json_decode($_SESSION['userData'], true);
 $recetaId = mysqli_real_escape_string($connection, $_POST['id_receta']);
 
-// Verificar que el usuario sea el creador
+// Primero verificar que el usuario sea el creador de la receta
 $query = "SELECT id_cocinero FROM receta WHERE id_receta = '$recetaId'";
 $result = mysqli_query($connection, $query);
 
@@ -38,13 +35,22 @@ if (!$result || mysqli_num_rows($result) === 0) {
 }
 
 $receta = mysqli_fetch_assoc($result);
-if ($receta['id_cocinero'] != $userId) {
+if ($receta['id_cocinero'] != $userData['id_usuario']) {
     echo json_encode(['success' => false, 'message' => 'No tienes permiso para editar esta receta']);
     exit;
 }
 
-// Procesar actualización
+// Procesar actualización de receta
 if ($_POST['action'] === 'update_recipe') {
+    // Validar datos requeridos
+    $requiredFields = ['title', 'type', 'description', 'ingredients', 'steps', 'time', 'portions', 'difficulty'];
+    foreach ($requiredFields as $field) {
+        if (empty($_POST[$field])) {
+            echo json_encode(['success' => false, 'message' => "El campo $field es requerido"]);
+            exit;
+        }
+    }
+
     // Procesar imagen (si se subió una nueva)
     $imageUpdate = '';
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
@@ -61,7 +67,7 @@ if ($_POST['action'] === 'update_recipe') {
             $imagePath = '/gastrolink/app/img/recetas/' . $filename;
             $imageUpdate = ", img_receta = '" . mysqli_real_escape_string($connection, $imagePath) . "'";
             
-            // Eliminar la imagen anterior si existe
+            // Opcional: eliminar la imagen anterior si existe
             $oldImageQuery = "SELECT img_receta FROM receta WHERE id_receta = '$recetaId'";
             $oldImageResult = mysqli_query($connection, $oldImageQuery);
             if ($oldImageResult && $oldImage = mysqli_fetch_assoc($oldImageResult)) {
@@ -72,31 +78,41 @@ if ($_POST['action'] === 'update_recipe') {
         }
     }
 
-    // Preparar datos
+    // Preparar datos para actualización
     $title = mysqli_real_escape_string($connection, $_POST['title']);
+    $type = mysqli_real_escape_string($connection, $_POST['type']);
     $description = mysqli_real_escape_string($connection, $_POST['description']);
     $ingredients = mysqli_real_escape_string($connection, $_POST['ingredients']);
     $steps = mysqli_real_escape_string($connection, $_POST['steps']);
     $time = mysqli_real_escape_string($connection, $_POST['time']);
     $portions = mysqli_real_escape_string($connection, $_POST['portions']);
     $difficulty = mysqli_real_escape_string($connection, $_POST['difficulty']);
+    $calories = mysqli_real_escape_string($connection, $_POST['calories'] ?? 0);
+    $proteins = mysqli_real_escape_string($connection, $_POST['proteins'] ?? 0);
+    $carbohydrates = mysqli_real_escape_string($connection, $_POST['carbohydrates'] ?? 0);
+    $fats = mysqli_real_escape_string($connection, $_POST['fats'] ?? 0);
 
-    // Construir consulta
+    // Construir consulta de actualización
     $query = "UPDATE receta SET
         titulo = '$title',
+        tipo_receta = '$type',
         introduccion = '$description',
         ingredientes = '$ingredients',
         pasos = '$steps',
         tiempo_preparacion = '$time',
         porciones = '$portions',
-        dificultad = '$difficulty'
+        dificultad = '$difficulty',
+        calorias = '$calories',
+        proteinas = '$proteins',
+        carbohidratos = '$carbohydrates',
+        grasas = '$fats'
         $imageUpdate
         WHERE id_receta = '$recetaId'";
     
     if (mysqli_query($connection, $query)) {
         echo json_encode(['success' => true, 'message' => 'Receta actualizada con éxito']);
     } else {
-        echo json_encode(['success' => false, 'message' => 'Error al actualizar: ' . mysqli_error($connection)]);
+        echo json_encode(['success' => false, 'message' => 'Error al actualizar la receta: ' . mysqli_error($connection)]);
     }
 } else {
     echo json_encode(['success' => false, 'message' => 'Acción no válida']);
