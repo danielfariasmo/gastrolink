@@ -1,7 +1,7 @@
 /* Variables CSS con :root */
 :root {
   /* Colores principales */
-  --color-primary: #ff4d4d;
+  --primary-color: #ff6B6f;
   --color-primary-dark: #e63939;
   --color-secondary: #333333;
   --color-secondary-light: #555555;
@@ -141,7 +141,7 @@ a:hover {
 }
 
 .btn.primary {
-  background-color: var(--color-primary);
+  background-color: #ff4d4d;
   color: var(--color-white);
 }
 

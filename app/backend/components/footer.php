@@ -11,13 +11,14 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins-Regular';
         }
         
         body {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            font-family: 'Poppins-Regular';
         }
         
         main {
