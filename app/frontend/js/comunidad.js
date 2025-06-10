@@ -40,6 +40,7 @@ function renderMiembros() {
                 <p class="member-bio">${miembro.descripcion}</p>
                 ${miembro.especialidad ? `<p class="member-specialty">Especialidad: ${miembro.especialidad}</p>` : ''}
                 ${miembro.idiomas ? `<p class="member-languages">Idiomas: ${miembro.idiomas}</p>` : ''}
+                ${miembro.experiencia ? `<p class="member-experiencia">Experiencia: ${miembro.experiencia}</p>` : ''}
             </div>
         `;
         membersContainer.appendChild(memberCard);
