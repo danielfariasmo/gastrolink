@@ -1,56 +1,59 @@
 <?php
 header('Content-Type: application/json');
-include '../../../server/database.php';
+require_once '../../../server/database.php';      
 
-$searchQuery = isset($_GET['query']) ? '%' . $_GET['query'] . '%' : '%';
+/* 1. Sanitizar término de búsqueda */
+$term = isset($_GET['query']) && $_GET['query'] !== ''
+        ? '%'.$_GET['query'].'%'
+        : '%';
 
 try {
-    $resultados = [];
+    /* 2. Consulta única (restaurante + receta) */
+    $sql = "
+        /* Restaurantes */
+        SELECT
+            u.id_usuario           AS id,
+            u.nombre               AS nombre,
+            'restaurante'          AS tipo
+        FROM   usuario u
+        WHERE  u.tipo_usuario = 'restaurante'
+          AND  u.nombre       LIKE ?
 
-    // Camareros
-    $query = "SELECT u.id_usuario, u.nombre, 'camarero' AS tipo FROM usuario u INNER JOIN camarero c ON u.id_usuario = c.id_camarero WHERE u.nombre LIKE ?";
-    $stmt = mysqli_prepare($connection, $query);
-    mysqli_stmt_bind_param($stmt, 's', $searchQuery);
-    mysqli_stmt_execute($stmt);
-    $res = mysqli_stmt_get_result($stmt);
-    while ($row = mysqli_fetch_assoc($res)) {
-        $resultados[] = $row;
+        UNION ALL
+
+        /* Recetas */
+        SELECT
+            r.id_receta            AS id,
+            r.titulo               AS nombre,
+            'receta'               AS tipo
+        FROM   receta r
+        WHERE  r.titulo LIKE ?
+
+        ORDER BY nombre
+        LIMIT 30
+    ";
+
+    $stmt = $connection->prepare($sql);
+    if (!$stmt) {
+        throw new Exception('Prepare failed: '.$connection->error);
     }
 
-    // Cocineros
-    $query = "SELECT u.id_usuario, u.nombre, 'cocinero' AS tipo FROM usuario u INNER JOIN cocinero c ON u.id_usuario = c.id_cocinero WHERE u.nombre LIKE ?";
-    $stmt = mysqli_prepare($connection, $query);
-    mysqli_stmt_bind_param($stmt, 's', $searchQuery);
-    mysqli_stmt_execute($stmt);
-    $res = mysqli_stmt_get_result($stmt);
-    while ($row = mysqli_fetch_assoc($res)) {
-        $resultados[] = $row;
+    /* 3. Ejecutar */
+    $stmt->bind_param('ss', $term, $term);
+    $stmt->execute();
+    $res = $stmt->get_result();
+
+    /* 4. Formatear salida */
+    $data = [];
+    while ($row = $res->fetch_assoc()) {
+        $data[] = $row;
     }
 
-    // Restaurantes
-    $query = "SELECT u.id_usuario, u.nombre, 'restaurante' AS tipo FROM usuario u INNER JOIN restaurante r ON u.id_usuario = r.id_restaurante WHERE u.nombre LIKE ?";
-    $stmt = mysqli_prepare($connection, $query);
-    mysqli_stmt_bind_param($stmt, 's', $searchQuery);
-    mysqli_stmt_execute($stmt);
-    $res = mysqli_stmt_get_result($stmt);
-    while ($row = mysqli_fetch_assoc($res)) {
-        $resultados[] = $row;
-    }
+    echo json_encode($data);
 
-    // Recetas
-    $query = "SELECT id_receta AS id_usuario, titulo AS nombre, 'receta' AS tipo FROM receta WHERE titulo LIKE ?";
-    $stmt = mysqli_prepare($connection, $query);
-    mysqli_stmt_bind_param($stmt, 's', $searchQuery);
-    mysqli_stmt_execute($stmt);
-    $res = mysqli_stmt_get_result($stmt);
-    while ($row = mysqli_fetch_assoc($res)) {
-        $resultados[] = $row;
-    }
-
-    echo json_encode($resultados);
-
-} catch (Exception $e) {
+} catch (Throwable $e) {
+    /* 5. Manejo de errores */
     http_response_code(500);
     echo json_encode(['error' => $e->getMessage()]);
 }
-?>
+
