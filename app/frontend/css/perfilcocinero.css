@@ -9,13 +9,14 @@
 }
 
 * {
+    font-family: 'Poppins-Regular';
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 body {
-    font-family: 'Port Lligat Sans';
+    font-family: 'Poppins-Regular';
     background-color: var(--background-gray);
     color: var(--text-dark);
     line-height: 1.5;

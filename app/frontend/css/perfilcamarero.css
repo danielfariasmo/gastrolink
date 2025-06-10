@@ -7,7 +7,12 @@
     --white: #ffffff;
     --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
+@font-face {
+    font-family: 'Poppins-Regular';
+    src: url('../../fonts/Poppins-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    }
 * {
     margin: 0;
     padding: 0;
@@ -15,7 +20,7 @@
 }
 
 body {
-    font-family: 'Port Lligat Sans';
+     font-family: 'Poppins-Regular';
     background-color: var(--background-gray);
     color: var(--text-dark);
     line-height: 1.5;

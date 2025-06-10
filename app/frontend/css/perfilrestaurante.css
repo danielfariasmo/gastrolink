@@ -37,7 +37,7 @@
     --border-radius-lg: 20px;
     
     /* Tipografía */
-    --font-family: 'Port Lligat Sans';
+    --font-family: 'Poppins-Regular';
     --font-size-xs: 12px;
     --font-size-sm: 13px;
     --font-size-md: 14px;
@@ -56,6 +56,12 @@
     --grid-columns-md: 2;
     --grid-columns-sm: 1;
 }
+@font-face {
+    font-family: 'Poppins-Regular';
+    src: url('../../fonts/Poppins-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    }
 /* Añade esto al principio de tu CSS, después de los :root */
 html, body {
     height: 100%;

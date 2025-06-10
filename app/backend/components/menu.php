@@ -6,16 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Menú</title>
     <style>
+        @font-face {
+        font-family: 'Poppins-Regular';
+        src: url('../../fonts/Poppins-Regular.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+        }
         /* Estilos generales */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins-Regular';
         }
 
         body {
             background-color: #f5f5f5;
+            font-family: 'Poppins-Regular';
         }
 
         /* Encabezado y navegación */
@@ -124,10 +131,12 @@
             font-size: 14px;
             outline: none;
             transition: border-color 0.3s ease;
+            font-family: 'Poppins-Regular';
         }
 
         .search-container input:focus {
             border-color: #ff4d4d;
+            font-family: 'Poppins-Regular';
         }
 
         .search-icon {
