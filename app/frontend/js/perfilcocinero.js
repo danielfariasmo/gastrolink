@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('.edit-profile-btn').addEventListener('click', editarPerfil);
     document.querySelector('.add-recipe-btn').addEventListener('click', mostrarPopupReceta);
     document.querySelector('.close-popup').addEventListener('click', ocultarPopupReceta);
-    document.getElementById('recipe-form').addEventListener('submit', guardarReceta);
+    // document.getElementById('recipe-form').addEventListener('submit', guardarReceta);
 
     const btnGuardados = document.getElementById('btn-guardados');
     const btnRecetas = document.getElementById('btn-recetas');
@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
         btnRecetas.classList.add('active');
         btnGuardados.classList.remove('active');
     });
+    configurarValidacionesFormulario();
 });
 
 function cargarDatosCocinero(id) {
@@ -225,6 +226,83 @@ function ocultarPopupReceta() {
     document.getElementById('add-recipe-popup').style.display = 'none';
 }
 
+// Añadir estas funciones al archivo perfilcocinero.js
+
+function configurarValidacionesFormulario() {
+    const form = document.getElementById('recipe-form');
+    const inputs = form.querySelectorAll('input, textarea, select');
+    
+    // Validación en tiempo real
+    inputs.forEach(input => {
+        input.addEventListener('input', () => validarCampo(input));
+        input.addEventListener('blur', () => validarCampo(input));
+    });
+    
+    // Validación al enviar
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        let formularioValido = true;
+        inputs.forEach(input => {
+            if (!validarCampo(input)) {
+                formularioValido = false;
+            }
+        });
+        
+        if (formularioValido) {
+            guardarReceta(e);
+        } else {
+            mostrarError('Por favor, corrige los errores en el formulario');
+        }
+    });
+}
+
+function validarCampo(input) {
+    const value = input.value.trim();
+    const errorId = `${input.id}-error`;
+    let errorElement = document.getElementById(errorId);
+    
+    if (!errorElement) {
+        errorElement = document.createElement('div');
+        errorElement.id = errorId;
+        errorElement.className = 'input-error';
+        input.parentNode.appendChild(errorElement);
+    }
+    
+    // Validaciones específicas por tipo de campo
+    let valido = true;
+    let mensajeError = '';
+    
+    if (input.required && !value) {
+        valido = false;
+        mensajeError = 'Este campo es obligatorio';
+    } else if (input.type === 'email' && !/^\S+@\S+\.\S+$/.test(value)) {
+        valido = false;
+        mensajeError = 'Ingresa un email válido';
+    } else if (input.type === 'number' && value < 0) {
+        valido = false;
+        mensajeError = 'El valor no puede ser negativo';
+    } else if (input.id === 'recipe-time' && (value < 1 || value > 1000)) {
+        valido = false;
+        mensajeError = 'El tiempo debe estar entre 1 y 1000 minutos';
+    } else if (input.id === 'recipe-portions' && (value < 1 || value > 50)) {
+        valido = false;
+        mensajeError = 'Las porciones deben estar entre 1 y 50';
+    }
+    
+    // Aplicar estilos según validación
+    if (valido) {
+        input.classList.remove('input-invalid');
+        errorElement.style.display = 'none';
+    } else {
+        input.classList.add('input-invalid');
+        errorElement.textContent = mensajeError;
+        errorElement.style.display = 'block';
+    }
+    
+    return valido;
+}
+
 function guardarReceta(e) {
     e.preventDefault();
 
@@ -241,16 +319,17 @@ function guardarReceta(e) {
         .then(data => {
             if (data.success) {
                 alert('Receta creada con éxito');
+                document.getElementById('recipe-form').reset();
                 ocultarPopupReceta();
                 cargarDatosCocinero(userData.id_usuario);
             } else {
-                alert('Error: ' + data.message);
+                mostrarError('Error: ' + (data.message || 'Error desconocido al guardar'));
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error al guardar la receta');
-        });
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        mostrarError('Error de conexión al guardar la receta');
+    });
 }
 
 function editarReceta(idReceta) {
