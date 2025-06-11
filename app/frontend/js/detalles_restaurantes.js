@@ -26,6 +26,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const r = data.restaurante;
 
+        // Ocultar botón Guardar si el usuario es el dueño del restaurante
+        if (userData) {
+            
+            const usuario = JSON.parse(userData);
+            if (usuario.id_usuario == id && saveBtn) {
+                
+                saveBtn.style.display = 'none';
+            }
+        } else if (saveBtn) {
+            // Ocultar si no hay usuario logeado
+            saveBtn.style.display = 'none';
+        }
+
         // Portada
         document.querySelector('.restaurant-cover').src = r.img_usuario;
         document.querySelector('.restaurant-title').textContent = r.nombre;
