@@ -394,18 +394,20 @@ body {
 }
 
 .submit-btn {
-    background-color: #ff4d4d;
+    background-color: #ff6b6b !important;
     color: white;
+    padding: 10px 15px;
     border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
+    border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    width: 100%;
     margin-top: 10px;
+    height: 35px;
 }
 
 .submit-btn:hover {
-    background-color: #e63c3c;
+    background-color: #e63939 !important;
 }
 /* MAS ESTILOS PARA EL POPUP */
 /* Estilos para validaciones */
@@ -472,70 +474,69 @@ body {
 /*--------------------------------------------
 Estilo de cartas para guardados
 --------------------------------------------*/
-.recipes-section {
-    padding: var(--spacing-lg) 0 var(--spacing-xxl);
-    background-color: var(--color-white);
-}
-
-.recipes-grid {
-    display: grid;
-    grid-template-columns: repeat(var(--grid-columns-xl), 1fr);
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-xl);
-}
-
-.recipe-card {
-    background-color: var(--color-card-bg);
-    border-radius: var(--border-radius-md);
+/* Estilos para las cartas de guardados */
+.card-receta, .card-restaurante {
+    background: var(--white);
+    border-radius: 8px;
+    border: 1px solid var(--border-gray);
     overflow: hidden;
-    box-shadow: 0 2px 10px var(--color-shadow);
-    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
-    display: block;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    text-align: center;
+    padding: 0;
+    margin-bottom: 20px;
 }
 
-.recipe-card:hover {
+.card-receta:hover, .card-restaurante:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px var(--color-shadow-hover);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.recipe-image {
-    height: 180px;
-    background-color: #eee;
-    position: relative;
+/* Contenedor de la imagen */
+.card-image-container {
+    width: 100%;
+    height: 150px; /* Altura reducida para mostrar la imagen completa */
     overflow: hidden;
+    position: relative;
 }
 
-.recipe-image img {
+.card-image-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform var(--transition-slow);
+    transition: transform 0.5s ease;
 }
 
-.recipe-card:hover .recipe-image img {
+.card-receta:hover .card-image-container img,
+.card-restaurante:hover .card-image-container img {
     transform: scale(1.05);
 }
 
-.recipe-details {
-    padding: var(--spacing-md);
-}
-
-.recipe-title {
-    font-size: var(--font-size-lg);
-    font-weight: 600;
-    margin-bottom: var(--spacing-xs);
-    color: var(--color-text-dark);
-}
-
-.card-receta, .card-restaurante {
-    cursor: pointer;
-    text-align: center;
-    padding: 10px;
+/* Contenido de la carta */
+.card-content {
+    padding: 15px;
 }
 
 .card-receta h4, .card-restaurante h4 {
-    margin-top: 0.5rem;
-    font-size: 1rem;
+    margin: 10px 0 5px;
+    font-size: 16px;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.card-meta {
+    font-size: 14px;
+    color: var(--text-gray);
+    margin-bottom: 10px;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-gray);
 }
 
 
