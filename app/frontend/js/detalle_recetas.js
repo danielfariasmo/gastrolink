@@ -165,11 +165,11 @@ function configurarPopupEdicion(receta) {
     // Manejar el envío del formulario
     editForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        guardarCambiosReceta(receta.id_receta);
+        guardarCambiosReceta(receta.id_receta, receta.id_cocinero);
     });
 }
 
-function guardarCambiosReceta(idReceta) {
+function guardarCambiosReceta(idReceta, idCocinero) {
     const userData = sessionStorage.getItem('userData');
     if (!userData) {
         alert('Usuario no autenticado');
@@ -187,7 +187,7 @@ function guardarCambiosReceta(idReceta) {
     // const usuario = JSON.parse(userData);
     formData.append('action', 'update_recipe');
     formData.append('id_receta', idReceta);
-    formData.append('id_usuario', usuario.id_usuario);
+    formData.append('id_usuario', idCocinero);
     formData.append('title', document.getElementById('edit-title').value);
     formData.append('description', document.getElementById('edit-intro').value);
     formData.append('ingredients', document.getElementById('edit-ingredients').value);

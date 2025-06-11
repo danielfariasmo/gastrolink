@@ -16,13 +16,8 @@ if (!isset($_POST['action']) || !isset($_POST['id_receta'])) {
     exit;
 }
 
-// Verificar sesión de usuario
-if (!isset($_SESSION['userData'])) {
-    echo json_encode(['success' => false, 'message' => 'Usuario no autenticado']);
-    exit;
-}
 
-$userData = json_decode($_SESSION['userData'], true);
+$usuarioId = mysqli_real_escape_string($connection, $_POST['id_usuario']);
 $recetaId = mysqli_real_escape_string($connection, $_POST['id_receta']);
 
 // Primero verificar que el usuario sea el creador de la receta
@@ -34,16 +29,10 @@ if (!$result || mysqli_num_rows($result) === 0) {
     exit;
 }
 
-$receta = mysqli_fetch_assoc($result);
-if ($receta['id_cocinero'] != $userData['id_usuario']) {
-    echo json_encode(['success' => false, 'message' => 'No tienes permiso para editar esta receta']);
-    exit;
-}
-
 // Procesar actualización de receta
 if ($_POST['action'] === 'update_recipe') {
     // Validar datos requeridos
-    $requiredFields = ['title', 'type', 'description', 'ingredients', 'steps', 'time', 'portions', 'difficulty'];
+    $requiredFields = ['title', 'description', 'ingredients', 'steps', 'time', 'portions', 'difficulty'];
     foreach ($requiredFields as $field) {
         if (empty($_POST[$field])) {
             echo json_encode(['success' => false, 'message' => "El campo $field es requerido"]);
@@ -80,7 +69,7 @@ if ($_POST['action'] === 'update_recipe') {
 
     // Preparar datos para actualización
     $title = mysqli_real_escape_string($connection, $_POST['title']);
-    $type = mysqli_real_escape_string($connection, $_POST['type']);
+    // $type = mysqli_real_escape_string($connection, $_POST['type']);
     $description = mysqli_real_escape_string($connection, $_POST['description']);
     $ingredients = mysqli_real_escape_string($connection, $_POST['ingredients']);
     $steps = mysqli_real_escape_string($connection, $_POST['steps']);
@@ -95,17 +84,12 @@ if ($_POST['action'] === 'update_recipe') {
     // Construir consulta de actualización
     $query = "UPDATE receta SET
         titulo = '$title',
-        tipo_receta = '$type',
         introduccion = '$description',
         ingredientes = '$ingredients',
         pasos = '$steps',
         tiempo_preparacion = '$time',
         porciones = '$portions',
         dificultad = '$difficulty',
-        calorias = '$calories',
-        proteinas = '$proteins',
-        carbohidratos = '$carbohydrates',
-        grasas = '$fats'
         $imageUpdate
         WHERE id_receta = '$recetaId'";
     

@@ -407,7 +407,67 @@ body {
 .submit-btn:hover {
     background-color: #e63c3c;
 }
+/* MAS ESTILOS PARA EL POPUP */
+/* Estilos para validaciones */
+.input-error {
+    color: var(--primary-hover);
+    font-size: var(--font-size-small);
+    margin-top: var(--spacing-xs);
+    display: none;
+}
 
+.input-invalid {
+    border-color: var(--primary-hover) !important;
+}
+
+.popup-content .form-group {
+    margin-bottom: var(--spacing-md);
+    position: relative;
+}
+
+.popup-content input[type="text"],
+.popup-content input[type="number"],
+.popup-content select,
+.popup-content textarea {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    transition: all var(--transition-fast);
+}
+
+.popup-content input[type="text"]:focus,
+.popup-content input[type="number"]:focus,
+.popup-content select:focus,
+.popup-content textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
+    outline: none;
+}
+
+.popup-content textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.popup-content button[type="submit"] {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+    width: 100%;
+    margin-top: var(--spacing-md);
+}
+
+.popup-content button[type="submit"]:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+}
 
 /*--------------------------------------------
 Estilo de cartas para guardados
