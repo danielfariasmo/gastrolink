@@ -1,71 +1,57 @@
-/* Variables CSS con :root */
 :root {
-  /* Colores principales */
-  --primary-color: #ff6b6b;
-  --color-primary-dark: #e63939;
-  --color-secondary: #333333;
-  --color-secondary-light: #555555;
-  --color-white: #ffffff;
-  --color-black: #000000;
-  --color-gray-100: #f8f8f8;
-  --color-gray-200: #f0f0f0;
-  --color-gray-300: #e0e0e0;
-  --color-gray-400: #cccccc;
-  --color-gray-500: #999999;
-  --color-gray-600: #666666;
-  --color-gray-700: #444444;
-  --color-gray-800: #222222;
-  --color-yellow: #ffc107;
-  
-  /* Sombras */
-  --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 15px 30px rgba(0, 0, 0, 0.2);
-  
-  /* Bordes */
-  --border-radius-sm: 4px;
-  --border-radius-md: 8px;
-  --border-radius-lg: 10px;
-  --border-radius-xl: 20px;
-  --border-radius-full: 50%;
-  
-  /* Espaciado */
-  --spacing-xs: 5px;
-  --spacing-sm: 10px;
-  --spacing-md: 15px;
-  --spacing-lg: 20px;
-  --spacing-xl: 30px;
-  --spacing-2xl: 40px;
-  --spacing-3xl: 60px;
-  --spacing-4xl: 80px;
-  
-  /* Fuentes */
-  --font-family: 'Poppins-Regular';
-  --font-weight-light: 300;
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-  
-  /* Tamaños de fuente */
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-md: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 2rem;
-  --font-size-4xl: 2.5rem;
-  --font-size-5xl: 3rem;
-  
-  /* Transiciones */
-  --transition-fast: 0.2s ease;
-  --transition-normal: 0.3s ease;
-  --transition-slow: 0.5s ease;
-  
-  /* Contenedor */
-  --container-width: 1200px;
+    /* Colores */
+    --color-primary: #ff4d4d;
+    --color-primary-hover: #ff3333;
+    --color-text-dark: #333;
+    --color-text-medium: #555;
+    --color-text-light: #666;
+    --color-background: #f5f5f5;
+    --color-white: #ffffff;
+    --color-card-bg: #f9f9f9;
+    --color-border: #ddd;
+    --color-filter-bg: #f0f0f0;
+    --color-shadow: rgba(0, 0, 0, 0.05);
+    --color-shadow-hover: rgba(0, 0, 0, 0.15);
+    --color-star-empty: #aaa;
+    --color-star-filled: #ff4d4d;
+    
+    /* Espaciado */
+    --spacing-xs: 5px;
+    --spacing-sm: 10px;
+    --spacing-md: 15px;
+    --spacing-lg: 20px;
+    --spacing-xl: 30px;
+    --spacing-xxl: 40px;
+    
+    /* Bordes */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 20px;
+    
+    /* Tipografía */
+    --font-family: 'Poppins-Regular';
+    --font-size-xs: 12px;
+    --font-size-sm: 13px;
+    --font-size-md: 14px;
+    --font-size-lg: 16px;
+    --font-size-xl: 18px;
+    
+    /* Transiciones */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    
+    /* Layout */
+    --container-max-width: 1400px;
+    --grid-columns-xxl: 6;
+    --grid-columns-xl: 4;
+    --grid-columns-lg: 3;
+    --grid-columns-md: 2;
+    --grid-columns-sm: 1;
+    
+    /* Componentes */
+    --card-height: 100%;
+    --image-height: 180px;
 }
 @font-face {
   font-family: 'Poppins-Regular';
@@ -265,7 +251,7 @@ a {
 
 .filter-btn {
     font-family: var(--font-family);
-    padding: 8px var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
     background-color: var(--color-filter-bg);
     border: none;
     border-radius: var(--border-radius-lg);
@@ -274,12 +260,12 @@ a {
     cursor: pointer;
     transition: all var(--transition-normal);
 }
-
-.filter-btn:hover {
+.filter-btn.active {
     background-color: var(--color-primary);
     color: var(--color-white);
 }
-.filter-btn.active {
+
+.filter-btn:hover{
     background-color: var(--color-primary);
     color: var(--color-white);
 }
