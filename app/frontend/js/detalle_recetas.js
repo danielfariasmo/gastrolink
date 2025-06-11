@@ -337,3 +337,134 @@ function cargarReceta(receta) {
         relatedGrid.innerHTML = '<p>No hay recetas relacionadas.</p>';
     }
 }
+
+function configurarPopupEdicion(receta) {
+    const popup = document.getElementById('edit-popup');
+    const cancelBtn = document.querySelector('.cancel-btn');
+    const editForm = document.getElementById('edit-recipe-form');
+
+    // Rellenar el formulario con los datos actuales
+    document.getElementById('edit-title').value = receta.titulo;
+    document.getElementById('edit-intro').value = receta.introduccion;
+    document.getElementById('edit-ingredients').value = receta.ingredientes;
+    document.getElementById('edit-steps').value = receta.pasos;
+    document.getElementById('edit-time').value = receta.tiempo_preparacion;
+    document.getElementById('edit-portions').value = receta.porciones;
+    document.getElementById('edit-difficulty').value = receta.dificultad;
+
+    // Configurar validaciones para el formulario de edición
+    configurarValidacionesEdicion();
+
+    // Mostrar popup al hacer clic en editar
+    document.querySelector('.editar-btn').addEventListener('click', () => {
+        popup.style.display = 'flex';
+    });
+
+    // Ocultar popup al hacer clic en cancelar
+    cancelBtn.addEventListener('click', () => {
+        popup.style.display = 'none';
+    });
+
+    // Ocultar popup al hacer clic fuera del contenido
+    popup.addEventListener('click', (e) => {
+        if (e.target === popup) {
+            popup.style.display = 'none';
+        }
+    });
+
+    // Manejar el envío del formulario
+    editForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Validar todos los campos antes de enviar
+        const inputs = editForm.querySelectorAll('input, textarea, select');
+        let formularioValido = true;
+        
+        inputs.forEach(input => {
+            if (!validarCampoEdicion(input)) {
+                formularioValido = false;
+            }
+        });
+        
+        if (formularioValido) {
+            guardarCambiosReceta(receta.id_receta, receta.id_cocinero);
+        } else {
+            mostrarError('Por favor, corrige los errores en el formulario');
+        }
+    });
+}
+
+function configurarValidacionesEdicion() {
+    const editForm = document.getElementById('edit-recipe-form');
+    const inputs = editForm.querySelectorAll('input, textarea, select');
+    
+    // Validación en tiempo real
+    inputs.forEach(input => {
+        input.addEventListener('input', () => validarCampoEdicion(input));
+        input.addEventListener('blur', () => validarCampoEdicion(input));
+    });
+}
+
+function validarCampoEdicion(input) {
+    const value = input.value.trim();
+    const errorId = `${input.id}-error`;
+    let errorElement = document.getElementById(errorId);
+    
+    if (!errorElement) {
+        errorElement = document.createElement('div');
+        errorElement.id = errorId;
+        errorElement.className = 'input-error';
+        input.parentNode.appendChild(errorElement);
+    }
+    
+    // Validaciones específicas por tipo de campo
+    let valido = true;
+    let mensajeError = '';
+    
+    if (input.required && !value) {
+        valido = false;
+        mensajeError = 'Este campo es obligatorio';
+    } else if (input.type === 'number' && value < 0) {
+        valido = false;
+        mensajeError = 'El valor no puede ser negativo';
+    } else if (input.id === 'edit-time' && (value < 1 || value > 1000)) {
+        valido = false;
+        mensajeError = 'El tiempo debe estar entre 1 y 1000 minutos';
+    } else if (input.id === 'edit-portions' && (value < 1 || value > 50)) {
+        valido = false;
+        mensajeError = 'Las porciones deben estar entre 1 y 50';
+    } else if (input.id === 'edit-title' && value.length > 100) {
+        valido = false;
+        mensajeError = 'El título no puede exceder los 100 caracteres';
+    } else if ((input.id === 'edit-ingredients' || input.id === 'edit-steps') && value.length > 2000) {
+        valido = false;
+        mensajeError = 'El contenido no puede exceder los 2000 caracteres';
+    }
+    
+    // Validación específica para la imagen (si existe)
+    if (input.id === 'edit-image' && input.files.length > 0) {
+        const file = input.files[0];
+        const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        const maxSize = 5 * 1024 * 1024; // 5MB
+        
+        if (!validTypes.includes(file.type)) {
+            valido = false;
+            mensajeError = 'Solo se permiten imágenes JPEG, PNG o GIF';
+        } else if (file.size > maxSize) {
+            valido = false;
+            mensajeError = 'La imagen no puede superar los 5MB';
+        }
+    }
+    
+    // Aplicar estilos según validación
+    if (valido) {
+        input.classList.remove('input-invalid');
+        errorElement.style.display = 'none';
+    } else {
+        input.classList.add('input-invalid');
+        errorElement.textContent = mensajeError;
+        errorElement.style.display = 'block';
+    }
+    
+    return valido;
+}

@@ -16,7 +16,6 @@ if (!isset($_POST['action']) || !isset($_POST['id_receta'])) {
     exit;
 }
 
-
 $usuarioId = mysqli_real_escape_string($connection, $_POST['id_usuario']);
 $recetaId = mysqli_real_escape_string($connection, $_POST['id_receta']);
 
@@ -69,7 +68,6 @@ if ($_POST['action'] === 'update_recipe') {
 
     // Preparar datos para actualización
     $title = mysqli_real_escape_string($connection, $_POST['title']);
-    // $type = mysqli_real_escape_string($connection, $_POST['type']);
     $description = mysqli_real_escape_string($connection, $_POST['description']);
     $ingredients = mysqli_real_escape_string($connection, $_POST['ingredients']);
     $steps = mysqli_real_escape_string($connection, $_POST['steps']);
@@ -89,9 +87,14 @@ if ($_POST['action'] === 'update_recipe') {
         pasos = '$steps',
         tiempo_preparacion = '$time',
         porciones = '$portions',
-        dificultad = '$difficulty',
-        $imageUpdate
-        WHERE id_receta = '$recetaId'";
+        dificultad = '$difficulty'";
+    
+    // Agregar actualización de imagen solo si hay una nueva imagen
+    if (!empty($imageUpdate)) {
+        $query .= $imageUpdate;
+    }
+    
+    $query .= " WHERE id_receta = '$recetaId'";
     
     if (mysqli_query($connection, $query)) {
         echo json_encode(['success' => true, 'message' => 'Receta actualizada con éxito']);

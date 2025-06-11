@@ -83,7 +83,6 @@ function actualizarUI(cocinero, recetas) {
                 <div class="recipe-actions">
                     <button class="view-recipe-btn" data-id="${receta.id_receta}">Ver receta</button>
                     <div class="recipe-icons">
-                        <button class="icon-btn edit-recipe-btn" data-id="${receta.id_receta}"><i class="fa-solid fa-pen"></i></button>
                         <button class="icon-btn delete-recipe-btn" data-id="${receta.id_receta}"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 </div>
