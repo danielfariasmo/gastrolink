@@ -277,35 +277,35 @@
     padding-top: 20px;
     border-top: 1px solid var(--color-border);
   }
-
-  .action-button {
+.action-button {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 10px 20px;
-    background-color: var(--color-background);
-    border: 1px solid var(--color-border);
+    background-color: var(--primary-color); /* Color primario por defecto */
+    border: 1px solid var(--primary-color); /* Borde del mismo color */
     border-radius: 20px;
-    color: var(--color-text);
+    color: white; /* Texto blanco para mejor contraste */
     font-size: 14px;
     cursor: pointer;
     transition: var(--transition);
-  }
+}
 
-  .action-button:hover {
-    background-color: var(--color-background-alt);
-  }
+/* Hover para botones primarios (fondo más oscuro) */
+.action-button:hover {
+    background-color: var(--color-primary-dark); 
+}
 
-  .action-button.primary {
-    background-color: var(--color-primary);
-    color: white;
-    border-color: var(--color-primary);
-  }
+/* Si hay botones secundarios (como el de cancelar) */
+.action-button.secondary {
+    background-color: var(--color-background); /* Fondo blanco */
+    border-color: var(--color-border); /* Borde gris */
+    color: var(--color-text); /* Texto oscuro */
+}
 
-  .action-button.primary:hover {
-    background-color: var(--color-primary-dark);
-  }
-
+.action-button.secondary:hover {
+    background-color: var(--color-background-alt); /* Fondo gris claro al pasar el mouse */
+}
   .action-icon {
     margin-right: 8px;
   }
