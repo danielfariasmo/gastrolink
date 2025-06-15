@@ -21,8 +21,6 @@ foreach ($camposRequeridos as $campo) {
 
 // Sanitizar y validar datos
 $nombre = mysqli_real_escape_string($connection, $_POST['nombre']);
-// $apellidos = mysqli_real_escape_string($connection, $_POST['apellidos']);
-$nombreCompleto = $nombre ;
 $email = mysqli_real_escape_string($connection, $_POST['email']);
 $password = $_POST['password'];
 $rol = mysqli_real_escape_string($connection, $_POST['rol']);
@@ -49,7 +47,7 @@ if (mysqli_num_rows($result) > 0) {
 }
 
 // Procesar imagen de perfil
-$nombreImagen = null;
+$rutaImagen = '/gastrolink/app/img/default-avatar.jpg'; // Valor por defecto
 
 if (isset($_FILES['fotoPerfil']) && $_FILES['fotoPerfil']['error'] === UPLOAD_ERR_OK) {
     // Configuración
@@ -71,7 +69,6 @@ if (isset($_FILES['fotoPerfil']) && $_FILES['fotoPerfil']['error'] === UPLOAD_ER
     // Validar archivo
     $extension = strtolower(pathinfo($_FILES['fotoPerfil']['name'], PATHINFO_EXTENSION));
     $tamanoArchivo = $_FILES['fotoPerfil']['size'];
-    $tipoArchivo = $_FILES['fotoPerfil']['type'];
     
     // Validaciones
     if (!in_array($extension, $extensionesPermitidas)) {
@@ -94,57 +91,72 @@ if (isset($_FILES['fotoPerfil']) && $_FILES['fotoPerfil']['error'] === UPLOAD_ER
     $nombreImagen = uniqid() . '.' . $extension;
     $rutaCompleta = $directorio . $nombreImagen;
     
-    if (!move_uploaded_file($_FILES['fotoPerfil']['tmp_name'], $rutaCompleta)) {
-        // Más información sobre el error
-        $error = error_get_last();
-        echo json_encode([
-            'status' => 'error', 
-            'message' => 'Error al mover el archivo subido',
-            'error_details' => $error ? $error['message'] : 'Error desconocido'
-        ]);
-        exit;
-    }
-    
-    // Verificar que el archivo existe después de moverlo
-    if (!file_exists($rutaCompleta)) {
-        echo json_encode([
-            'status' => 'error', 
-            'message' => 'El archivo no se guardó correctamente en el destino'
-        ]);
-        exit;
+    if (move_uploaded_file($_FILES['fotoPerfil']['tmp_name'], $rutaCompleta)) {
+        $rutaImagen = '/gastrolink/app/img/usuarios/' . $nombreImagen;
     }
 }
 
 // Hash de la contraseña
 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-// Insertar nuevo usuario
-$query = "INSERT INTO usuario (nombre, correo, clave, tipo_usuario, img_usuario)
-          VALUES ('$nombreCompleto', '$email', '$passwordHash', '$rol', " . ($nombreImagen ? "'/gastrolink/app/img/usuarios/$nombreImagen'" : "NULL") . ")";
+// Iniciar transacción para asegurar integridad
+mysqli_begin_transaction($connection);
 
-if (mysqli_query($connection, $query)) {
+try {
+    // Insertar nuevo usuario
+    $query = "INSERT INTO usuario (nombre, correo, clave, tipo_usuario, img_usuario)
+              VALUES ('$nombre', '$email', '$passwordHash', '$rol', '$rutaImagen')";
+    
+    if (!mysqli_query($connection, $query)) {
+        throw new Exception('Error al registrar usuario: ' . mysqli_error($connection));
+    }
+    
     $userId = mysqli_insert_id($connection);
+    
+    // Insertar en la tabla específica según el rol
+    switch($rol) {
+        case 'cocinero':
+            $queryEspecifico = "INSERT INTO cocinero (id_cocinero) VALUES ($userId)";
+            break;
+        case 'restaurante':
+            // Para restaurante, primero modificamos la tabla para hacer campos opcionales
+            $queryEspecifico = "INSERT INTO restaurante (id_restaurante) VALUES ($userId)";
+            break;
+        case 'camarero':
+            $queryEspecifico = "INSERT INTO camarero (id_camarero) VALUES ($userId)";
+            break;
+    }
+    
+    if (!mysqli_query($connection, $queryEspecifico)) {
+        throw new Exception('Error al registrar datos específicos: ' . mysqli_error($connection));
+    }
+    
+    // Confirmar transacción
+    mysqli_commit($connection);
     
     // Configurar datos de sesión
     $_SESSION['id_usuario'] = $userId;
     $_SESSION['correo'] = $email;
     $_SESSION['rol'] = $rol;
-    $_SESSION['nombre'] = $nombreCompleto;
-    $_SESSION['img_usuario'] = $nombreImagen;
+    $_SESSION['nombre'] = $nombre;
+    $_SESSION['img_usuario'] = $rutaImagen;
 
     echo json_encode([
         'status' => 'success',
         'message' => 'Registro exitoso',
         'userData' => [
             'id_usuario' => $userId,
-            'nombre' => $nombreCompleto,
+            'nombre' => $nombre,
             'correo' => $email,
             'tipo_usuario' => $rol,
-            'img_usuario' => $nombreImagen ? '/gastrolink/app/img/usuarios/' . $nombreImagen  : '/gastrolink/app/img/default-avatar.jpg'
+            'img_usuario' => $rutaImagen
         ]
     ]);
-} else {
-    echo json_encode(['status' => 'error', 'message' => 'Error en el registro: ' . mysqli_error($connection)]);
+    
+} catch (Exception $e) {
+    // Revertir transacción en caso de error
+    mysqli_rollback($connection);
+    echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
 }
 
 mysqli_close($connection);

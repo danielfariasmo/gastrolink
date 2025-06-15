@@ -13,6 +13,9 @@ async function loadComponent(url, containerId) {
 
 // 2. Función principal con filtrado por tipo de usuario
 async function setupMenuAndSearch() {
+
+    await loadComponent('../../backend/components/menu.php', 'menu-container');
+    
     // 2.1 Cargar menú (se mantiene igual)
     const menuLoaded = await loadComponent('../../backend/components/menu.php', 'menu-container');
     if (!menuLoaded) return;

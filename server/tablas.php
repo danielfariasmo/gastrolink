@@ -64,14 +64,14 @@ RESTAURANTE
 ---------------------------------------------------------------*/
 $restaurante = "CREATE TABLE IF NOT EXISTS restaurante (
     id_restaurante INT PRIMARY KEY,
-    tipo_restaurante ENUM('Mediterráneo', 'Carnes', 'Gourmet', 'Vegetariano', 'Asiático', 'Italiano', 'Mariscos', 'Tapas', 'Francés', 'Cafés') NOT NULL,
-    descripcion TEXT NOT NULL,
-    direccion VARCHAR(255) NOT NULL,
-    web VARCHAR(100) NOT NULL,
-    telefono VARCHAR(20)NOT NULL,
-    rango_precio VARCHAR(50) NOT NULL,
-    ubicacion VARCHAR(255) NOT NULL,
-    historial TEXT NOT NULL,
+    tipo_restaurante ENUM('Mediterráneo', 'Carnes', 'Gourmet', 'Vegetariano', 'Asiático', 'Italiano', 'Mariscos', 'Tapas', 'Francés', 'Cafés'),
+    descripcion TEXT,
+    direccion VARCHAR(255),
+    web VARCHAR(100),
+    telefono VARCHAR(20),
+    rango_precio VARCHAR(50),
+    ubicacion VARCHAR(255),
+    historial TEXT,
     FOREIGN KEY (id_restaurante) REFERENCES usuario(id_usuario)
 );";
 mysqli_query($connection, $restaurante) or die('ERROR: No se puede crear la tabla restaurante: ' . mysqli_error($connection));
