@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const id_restaurante = params.get('id');
-    console.log("ID capturado:", id_restaurante);
 
     if (!id_restaurante) {
         console.error("ID del restaurante no especificado");
@@ -47,10 +46,16 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    alert("Cambios guardados correctamente");
-                    volverAlPerfil();
-                } else {
-                    alert("Error: " + data.message);
+                    // Actualizar sessionStorage con todos los datos
+                    sessionStorage.setItem('userData', JSON.stringify(data.userData));
+                    
+                    // Actualizar el menú
+                    if (typeof setupMenuAndSearch === 'function') {
+                        setupMenuAndSearch();
+                    }
+                    
+                    // Redirigir
+                    window.location.href = `perfilcocinero.html?id=${id_restaurante}`;
                 }
             })
             .catch(err => {
@@ -203,11 +208,6 @@ function validarFormulario() {
     }
 
     const precio = document.querySelector('input[name="price-range"]:checked');
-    if (!precio) {
-        alert("Selecciona un rango de precio.");
-        valid = false;
-    }
-
     return valid;
 }
 
@@ -247,12 +247,15 @@ function normalizarTipo(tipoBD) {
 }
 
 function convertirPrecioASimbolo(precio) {
+    if (!precio || typeof precio !== 'string' || !precio.includes('-')) return '';
     const valor = parseFloat(precio.split('-')[0]);
+    if (isNaN(valor)) return '';
     if (valor <= 15) return '€';
     if (valor <= 30) return '€€';
     if (valor <= 50) return '€€€';
     return '€€€€';
 }
+
 
 function convertirSimboloAPrecio(simbolo) {
     const mapa = {

@@ -118,15 +118,31 @@ function actualizarUI(restaurante, ofertas, eventos) {
     const avatar = document.querySelector('.profile-avatar');
     avatar.style.backgroundImage = `url('${restaurante.imagen || '../../img/default-avatar.jpg'}')`;
 
-    document.querySelector('.profile-info h2').textContent = restaurante.nombre;
-    document.querySelector('.profile-type').textContent = `Restaurante (${restaurante.tipo_restaurante})`;
+    document.querySelector('.profile-info h2').textContent = restaurante.nombre || '';
 
-    let webUrl = restaurante.web.startsWith('http') ? restaurante.web : 'https://' + restaurante.web;
+    // Mostrar tipo solo si existe
+    const tipoRestaurante = restaurante.tipo_restaurante ? `Restaurante (${restaurante.tipo_restaurante})` : '';
+    document.querySelector('.profile-type').textContent = tipoRestaurante;
+
+    // Web
+    let webHtml = '';
+    if (restaurante.web) {
+        const webUrl = restaurante.web.startsWith('http')
+            ? restaurante.web
+            : 'https://' + restaurante.web;
+        webHtml = `Web: <a href="${webUrl}" target="_blank">${webUrl}</a><br>`;
+    }
+
+    // Descripción, Dirección y Teléfono (solo si existen)
+    const descripcion = restaurante.descripcion ? restaurante.descripcion + '<br>' : '';
+    const direccion = restaurante.direccion ? `Dirección: ${restaurante.direccion}<br>` : '';
+    const telefono = restaurante.telefono ? `Teléfono: ${restaurante.telefono}<br>` : '';
+
     document.querySelector('.profile-details').innerHTML = `
-        ${restaurante.descripcion}<br>
-        Dirección: ${restaurante.direccion}<br>
-        Teléfono: ${restaurante.telefono}<br>
-        Web: <a href="${webUrl}" target="_blank">${webUrl}</a>
+        ${descripcion}
+        ${direccion}
+        ${telefono}
+        ${webHtml}
     `;
 
     actualizarOfertasEmpleo(ofertas, restaurante.imagen);
@@ -135,6 +151,8 @@ function actualizarUI(restaurante, ofertas, eventos) {
         actualizarEventos(eventos);
     }
 }
+
+
 
 function actualizarOfertasEmpleo(ofertas, imagen) {
     const companiesList = document.querySelector('.ofertas-list');
@@ -383,4 +401,5 @@ document.getElementById('close-success-popup').addEventListener('click', () => {
 document.getElementById('ok-success-btn').addEventListener('click', () => {
     document.getElementById('success-popup').style.display = 'none';
 });
+
 

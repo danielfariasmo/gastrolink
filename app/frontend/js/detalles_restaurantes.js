@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Verificar si hay usuario logeado
     const userData = sessionStorage.getItem('userData');
     const saveBtn = document.querySelector('.action-button:nth-child(2)');
-    
+
     if (!userData && saveBtn) {
         saveBtn.style.display = 'none';
     }
@@ -28,10 +28,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Ocultar botón Guardar si el usuario es el dueño del restaurante
         if (userData) {
-            
+
             const usuario = JSON.parse(userData);
             if (usuario.id_usuario == id && saveBtn) {
-                
+
                 saveBtn.style.display = 'none';
             }
         } else if (saveBtn) {
@@ -62,10 +62,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         gallery.innerHTML = '';
         data.imagenes.forEach(img => {
             const div = document.createElement('div');
-            div.className = 'gallery-item';
+            div.className = 'gallery-item restaurant-image'; // ✅ Agrega esta clase
             div.innerHTML = `<img src="${img.url_imagen}" alt="${img.alt}">`;
             gallery.appendChild(div);
         });
+
 
         // Sidebar
         const info = document.querySelectorAll('.info-item');
@@ -149,7 +150,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
 
-        
+
 
         // Botón Compartir
         const shareBtn = document.querySelector('.action-button.primary');
@@ -168,40 +169,40 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
 
-    // Botón Guardar - Nueva implementación
-    if (saveBtn) {
-        // Verificar si el restaurante está guardado (solo si hay usuario logeado)
-        if (userData) {
-            const usuario = JSON.parse(userData);
-            await verificarRestauranteGuardado(id, usuario.id_usuario, saveBtn);
+        // Botón Guardar - Nueva implementación
+        if (saveBtn) {
+            // Verificar si el restaurante está guardado (solo si hay usuario logeado)
+            if (userData) {
+                const usuario = JSON.parse(userData);
+                await verificarRestauranteGuardado(id, usuario.id_usuario, saveBtn);
+            }
+
+            saveBtn.addEventListener('click', async function () {
+                if (!userData) {
+                    alert('Debes iniciar sesión para guardar restaurantes');
+                    return;
+                }
+
+                const usuario = JSON.parse(userData);
+                const isSaved = this.classList.contains('saved');
+
+                if (isSaved) {
+                    // Eliminar de favoritos
+                    await eliminarRestauranteGuardado(id, usuario.id_usuario);
+                    this.classList.remove('saved');
+                    this.innerHTML = '<span class="action-icon">💾</span> Guardar';
+                } else {
+                    // Guardar en favoritos
+                    await guardarRestauranteFavorito(id, usuario.id_usuario);
+                    this.classList.add('saved');
+                    this.innerHTML = '<span class="action-icon">✓</span> Guardado';
+                }
+            });
         }
 
-        saveBtn.addEventListener('click', async function() {
-            if (!userData) {
-                alert('Debes iniciar sesión para guardar restaurantes');
-                return;
-            }
-            
-            const usuario = JSON.parse(userData);
-            const isSaved = this.classList.contains('saved');
-            
-            if (isSaved) {
-                // Eliminar de favoritos
-                await eliminarRestauranteGuardado(id, usuario.id_usuario);
-                this.classList.remove('saved');
-                this.innerHTML = '<span class="action-icon">💾</span> Guardar';
-            } else {
-                // Guardar en favoritos
-                await guardarRestauranteFavorito(id, usuario.id_usuario);
-                this.classList.add('saved');
-                this.innerHTML = '<span class="action-icon">✓</span> Guardado';
-            }
-        });
+    } catch (err) {
+        console.error('Error al cargar datos:', err);
     }
-
-} catch (err) {
-    console.error('Error al cargar datos:', err);
-}
 });
 
 // Funciones auxiliares para restaurantes favoritos
@@ -209,7 +210,7 @@ async function verificarRestauranteGuardado(restauranteId, usuarioId, saveBtn) {
     try {
         const response = await fetch(`../../backend/php/verificar_favorito_restaurante.php?restaurante_id=${restauranteId}&usuario_id=${usuarioId}`);
         const data = await response.json();
-        
+
         if (data.isSaved && saveBtn) {
             saveBtn.classList.add('saved');
             saveBtn.innerHTML = '<span class="action-icon">✓</span> Guardado';
@@ -244,3 +245,30 @@ async function eliminarRestauranteGuardado(restauranteId, usuarioId) {
         })
     }).then(res => res.json());
 }
+
+// Mostrar imagen ampliada
+document.addEventListener('click', function (e) {
+    if (e.target.tagName === 'IMG' && e.target.closest('.restaurant-image')) {
+        const src = e.target.getAttribute('src');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.querySelector('.lightbox-img');
+
+        lightboxImg.src = src;
+        lightbox.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+});
+
+// Cerrar lightbox con la X
+document.querySelector('.close-lightbox').addEventListener('click', () => {
+    document.getElementById('lightbox').style.display = 'none';
+    document.body.style.overflow = 'auto';
+});
+
+// Cerrar haciendo clic fuera de la imagen
+document.getElementById('lightbox').addEventListener('click', (e) => {
+    if (e.target.id === 'lightbox') {
+        e.target.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+});

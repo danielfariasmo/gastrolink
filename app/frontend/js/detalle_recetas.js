@@ -210,7 +210,7 @@ function guardarCambiosReceta(idReceta, idCocinero) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert('Receta actualizada correctamente');
+            // alert('Receta actualizada correctamente');
             document.getElementById('edit-popup').style.display = 'none';
             location.reload();
         } else {

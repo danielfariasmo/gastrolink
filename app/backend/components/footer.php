@@ -124,7 +124,6 @@
                 <div class="footer-sections">
                     <div class="footer-section">
                         <h3><a href="../../frontend/html/recetas.html">Recetas</a></h3>
-                        <h3><a href="../../frontend/html/eventos.html">Eventos</a></h3>
                         <h3><a href="../../frontend/html/empleos.html">Empleos</a></h3>
                     </div>
                     
