@@ -415,14 +415,15 @@ body {
 /* MAS ESTILOS PARA EL POPUP */
 /* Estilos para validaciones */
 .input-error {
-    color: var(--primary-hover);
+    color: red;
+    /* color: var(--primary-hover); */
     font-size: var(--font-size-small);
     margin-top: var(--spacing-xs);
     display: none;
 }
 
 .input-invalid {
-    border-color: var(--primary-hover) !important;
+    border-color: red !important;
 }
 
 .popup-content .form-group {
@@ -436,7 +437,7 @@ body {
 .popup-content textarea {
     width: 100%;
     padding: var(--spacing-md);
-    border: 2px solid var(--border-color);
+    border: 0.5px solid rgb(222, 218, 218); /* borde negro directamente */
     border-radius: var(--border-radius-md);
     transition: all var(--transition-fast);
 }
@@ -451,6 +452,7 @@ body {
 }
 
 .popup-content textarea {
+    border: 0.5px solid rgb(222, 218, 218); /* borde negro directamente */
     min-height: 100px;
     resize: vertical;
 }
