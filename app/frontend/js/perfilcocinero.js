@@ -222,10 +222,10 @@ function mostrarPopupReceta() {
 }
 
 function ocultarPopupReceta() {
+    document.getElementById('recipe-form').reset();
     document.getElementById('add-recipe-popup').style.display = 'none';
 }
 
-// Añadir estas funciones al archivo perfilcocinero.js
 
 function configurarValidacionesFormulario() {
     const form = document.getElementById('recipe-form');
@@ -317,7 +317,7 @@ function guardarReceta(e) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert('Receta creada con éxito');
+                // alert('Receta creada con éxito');
                 document.getElementById('recipe-form').reset();
                 ocultarPopupReceta();
                 cargarDatosCocinero(userData.id_usuario);
@@ -348,7 +348,7 @@ function eliminarReceta(idReceta) {
             })
             .then(data => {
                 if (data.success) {
-                    alert('Receta eliminada con éxito');
+                    // alert('Receta eliminada con éxito');
                     cargarDatosCocinero(userData.id_usuario);
                 } else {
                     throw new Error(data.message || 'Error desconocido al eliminar');
@@ -356,7 +356,7 @@ function eliminarReceta(idReceta) {
             })
             .catch(error => {
                 console.error('Error al eliminar receta:', error);
-                alert(`Error al eliminar la receta: ${error.message}`);
+                // alert(`Error al eliminar la receta: ${error.message}`);
             });
     }
 }

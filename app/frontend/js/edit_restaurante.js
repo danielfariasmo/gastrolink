@@ -47,10 +47,16 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    alert("Cambios guardados correctamente");
-                    volverAlPerfil();
-                } else {
-                    alert("Error: " + data.message);
+                    // Actualizar sessionStorage con todos los datos
+                    sessionStorage.setItem('userData', JSON.stringify(data.userData));
+                    
+                    // Actualizar el menú
+                    if (typeof setupMenuAndSearch === 'function') {
+                        setupMenuAndSearch();
+                    }
+                    
+                    // Redirigir
+                    window.location.href = `perfilcocinero.html?id=${id_restaurante}`;
                 }
             })
             .catch(err => {

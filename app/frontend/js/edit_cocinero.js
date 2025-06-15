@@ -107,9 +107,16 @@ function enviarFormulario(id) {
         .then(res => res.json())
         .then(data => {
             if (data.success) {
+                // Actualizar sessionStorage con todos los datos
+                sessionStorage.setItem('userData', JSON.stringify(data.userData));
+                
+                // Actualizar el menú
+                if (typeof setupMenuAndSearch === 'function') {
+                    setupMenuAndSearch();
+                }
+                
+                // Redirigir
                 window.location.href = `perfilcocinero.html?id=${id}`;
-            } else {
-                mostrarError(data.message || 'Error al guardar los datos.');
             }
         })
         .catch(error => {
