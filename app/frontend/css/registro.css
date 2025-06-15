@@ -282,7 +282,7 @@ select:focus {
     top: 50%;
     width: 25%;
     height: 1px;
-    background-color: var(--border-color);
+    background-color: var(--white);
 }
 
 .alternative-text::before {

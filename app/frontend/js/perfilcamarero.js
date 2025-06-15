@@ -34,25 +34,31 @@ function cargarDatosCamarero(id) {
 function actualizarUI(camarero, recetasFavoritas, restaurantesFavoritos) {
     const avatar = document.querySelector('.profile-avatar');
     if (avatar) {
-        const rutaImagen = camarero.imagen
-            ? camarero.imagen
-            : '../../img/default-avatar.jpg';
+        const rutaImagen = camarero.imagen || '../../img/default-avatar.jpg';
         avatar.style.backgroundImage = `url('${rutaImagen}')`;
     }
 
     const h2 = document.querySelector('.profile-info h2');
-    if (h2) h2.textContent = camarero.nombre;
+    if (h2) h2.textContent = camarero.nombre || '';
 
+    const idiomas = camarero.idiomas || '';
     const tipo = document.querySelector('.profile-type');
-    if (tipo) tipo.textContent = `Camarero (${camarero.idiomas})`;
+    if (tipo) {
+        tipo.textContent = idiomas ? `Camarero (${idiomas})` : 'Camarero';
+    }
+
+    const descripcion = camarero.descripcion || '';
+    const experiencia = camarero.experiencia || '';
+    const correo = camarero.correo || '';
+
+    let html = '';
+    if (descripcion) html += descripcion + '<br>';
+    if (experiencia) html += `Experiencia: ${experiencia}<br>`;
+    if (correo) html += `Correo: ${correo}`;
 
     const detalles = document.querySelector('.profile-details');
     if (detalles) {
-        detalles.innerHTML = `
-            ${camarero.descripcion}<br>
-            Experiencia: ${camarero.experiencia}<br>
-            Correo: ${camarero.correo}
-        `;
+        detalles.innerHTML = html;
     }
 
     // Mostrar recetas por defecto al cargar
@@ -62,6 +68,7 @@ function actualizarUI(camarero, recetasFavoritas, restaurantesFavoritos) {
     window.recetasGuardadas = recetasFavoritas;
     window.restaurantesGuardados = restaurantesFavoritos;
 }
+
 
 function actualizarRecetasFavoritas(recetas) {
     const gridRecetas = document.getElementById('favoritos-grid');

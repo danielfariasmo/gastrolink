@@ -267,7 +267,7 @@ input[type="tel"]:focus {
     text-align: center;
     margin: var(--spacing-lg) 0;
     font-size: var(--font-size-small);
-    color: var(--text-lighter);
+    color: var(--background-color);
     position: relative;
 }
 
@@ -278,7 +278,7 @@ input[type="tel"]:focus {
     top: 50%;
     width: 25%;
     height: 1px;
-    background-color: var(--border-color);
+    background-color: var(--white);
 }
 
 .alternative-text::before {

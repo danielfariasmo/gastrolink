@@ -335,7 +335,6 @@
                     <div class="dropdown-menu">
                         <ul>
                             <li><a href="../../frontend/html/recetas.html">Recetas</a></li>
-                            <li><a href="../../frontend/html/eventos.html">Eventos</a></li>
                             <li><a href="../../frontend/html/restaurantes.html">Restaurantes</a></li>
                             <li><a href="../../frontend/html/comunidad.html">Comunidad</a></li>
                             <li><a href="../../frontend/html/empleos.html">Empleos</a></li>
