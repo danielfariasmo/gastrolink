@@ -16,6 +16,21 @@
     --border-gray: #dee2e6;
     --white: #ffffff;
     --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --color-card-bg: #ffffff;
+    --color-shadow: rgba(0, 0, 0, 0.1);
+    --color-shadow-hover: rgba(0, 0, 0, 0.2);
+    --color-text-dark: #2c3e50;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.6s ease;
+    --spacing-xs: 4px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-xxl: 48px;
+    --border-radius-md: 8px;
+    --grid-columns-xl: 3;
+    --font-size-lg: 18px;
+    --color-white: #ffffff;
 }
 @font-face {
     font-family: 'Poppins-Regular';
